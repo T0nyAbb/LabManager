@@ -355,23 +355,6 @@
 									"subViews": [
 										{
 											"_type": "UMLAttributeView",
-											"_id": "AAAAAAGFlhRNmj2x2pM=",
-											"_parent": {
-												"$ref": "AAAAAAGFIPcANYxUJFc="
-											},
-											"model": {
-												"$ref": "AAAAAAGFlhRNjz2uwTM="
-											},
-											"font": "Arial;13;0",
-											"left": 53,
-											"top": 414,
-											"width": 167,
-											"height": 13,
-											"text": "Piano: int",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLAttributeView",
 											"_id": "AAAAAAGFlhXlKlObYx8=",
 											"_parent": {
 												"$ref": "AAAAAAGFIPcANYxUJFc="
@@ -381,7 +364,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 53,
-											"top": 429,
+											"top": 414,
 											"width": 167,
 											"height": 13,
 											"text": "Numero: int",
@@ -392,7 +375,7 @@
 									"left": 48,
 									"top": 409,
 									"width": 177,
-									"height": 38
+									"height": 23
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -876,7 +859,7 @@
 											"top": 85,
 											"width": 167,
 											"height": 13,
-											"text": "Descrizione: string[0..1]",
+											"text": "Descrizione: string",
 											"horizontalAlignment": 0
 										}
 									],
@@ -1368,7 +1351,7 @@
 											"top": 597,
 											"width": 167,
 											"height": 13,
-											"text": "SchedaTecnica: string[0..1]",
+											"text": "SchedaTecnica: string",
 											"horizontalAlignment": 0
 										}
 									],
@@ -2437,7 +2420,7 @@
 											"top": 288,
 											"width": 151,
 											"height": 13,
-											"text": "Telefono: string[0..*]",
+											"text": "Telefono: string",
 											"horizontalAlignment": 0
 										},
 										{
@@ -2454,7 +2437,7 @@
 											"top": 303,
 											"width": 151,
 											"height": 13,
-											"text": "Email: string[0..*]",
+											"text": "Email: string",
 											"horizontalAlignment": 0
 										}
 									],
@@ -4329,15 +4312,6 @@
 					"attributes": [
 						{
 							"_type": "UMLAttribute",
-							"_id": "AAAAAAGFlhRNjz2uwTM=",
-							"_parent": {
-								"$ref": "AAAAAAGFIPcANYxMQOg="
-							},
-							"name": "Piano",
-							"type": "int"
-						},
-						{
-							"_type": "UMLAttribute",
 							"_id": "AAAAAAGFlhXlHlOYGlM=",
 							"_parent": {
 								"$ref": "AAAAAAGFIPcANYxMQOg="
@@ -4371,8 +4345,7 @@
 								"$ref": "AAAAAAGFIP1gTqPoagE="
 							},
 							"name": "Descrizione",
-							"type": "string",
-							"multiplicity": "0..1"
+							"type": "string"
 						}
 					]
 				},
@@ -4434,8 +4407,7 @@
 								"$ref": "AAAAAAGFIQRA3cdPVp4="
 							},
 							"name": "SchedaTecnica",
-							"type": "string",
-							"multiplicity": "0..1"
+							"type": "string"
 						}
 					]
 				},
@@ -4633,8 +4605,7 @@
 								"$ref": "AAAAAAGFbvONHbW0k5w="
 							},
 							"name": "Telefono",
-							"type": "string",
-							"multiplicity": "0..*"
+							"type": "string"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -4643,8 +4614,7 @@
 								"$ref": "AAAAAAGFbvONHbW0k5w="
 							},
 							"name": "Email",
-							"type": "string",
-							"multiplicity": "0..*"
+							"type": "string"
 						}
 					]
 				},
