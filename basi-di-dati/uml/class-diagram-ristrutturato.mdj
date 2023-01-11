@@ -1930,13 +1930,47 @@
 											"height": 13,
 											"text": "Durata: time",
 											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLAttributeView",
+											"_id": "AAAAAAGFnc9p4781o2Y=",
+											"_parent": {
+												"$ref": "AAAAAAGFIQtIQfW5E1o="
+											},
+											"model": {
+												"$ref": "AAAAAAGFnc9p1r8pRHk="
+											},
+											"font": "Arial;13;0",
+											"left": 405,
+											"top": 619,
+											"width": 175.10009765625,
+											"height": 13,
+											"text": "DataInizio: date",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLAttributeView",
+											"_id": "AAAAAAGFndAol8Aj9nw=",
+											"_parent": {
+												"$ref": "AAAAAAGFIQtIQfW5E1o="
+											},
+											"model": {
+												"$ref": "AAAAAAGFndAokMAX8JE="
+											},
+											"font": "Arial;13;0",
+											"left": 405,
+											"top": 634,
+											"width": 175.10009765625,
+											"height": 13,
+											"text": "DataFine: date",
+											"horizontalAlignment": 0
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 400,
 									"top": 569,
 									"width": 185.10009765625,
-									"height": 53
+									"height": 83
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -4419,6 +4453,24 @@
 							},
 							"name": "Durata",
 							"type": "time"
+						},
+						{
+							"_type": "UMLAttribute",
+							"_id": "AAAAAAGFnc9p1r8pRHk=",
+							"_parent": {
+								"$ref": "AAAAAAGFIQtIQfWxb3Y="
+							},
+							"name": "DataInizio",
+							"type": "date"
+						},
+						{
+							"_type": "UMLAttribute",
+							"_id": "AAAAAAGFndAokMAX8JE=",
+							"_parent": {
+								"$ref": "AAAAAAGFIQtIQfWxb3Y="
+							},
+							"name": "DataFine",
+							"type": "date"
 						}
 					]
 				},
