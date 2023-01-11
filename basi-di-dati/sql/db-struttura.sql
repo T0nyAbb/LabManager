@@ -26,5 +26,7 @@ CREATE SEQUENCE genera_sede_id
   MINVALUE 1
   START WITH 1
   INCREMENT BY 1
-  NOCACHE;    
+  NOCACHE;
+  
+      
   
