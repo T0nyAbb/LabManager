@@ -19,13 +19,18 @@ public class PostazioneDao implements Dao<Postazione>{
     public List<Postazione> getAll() {
         List<Postazione> postazione = new ArrayList<>();
         try{
-            String query = "SELECT * FROM POSTAZIONE";
+            String query = "SELECT * FROM POSTAZIONE JOIN SEDE S on S.ID_SEDE = POSTAZIONE.ID_SEDE";
             PreparedStatement sql = conn.prepareStatement(query);
             ResultSet rs = sql.executeQuery();
-
+            List<Sede> sedi = new SedeDao().getAll();
             while(rs.next()) {
-                Postazione p = new Postazione(rs.getString("NOME"));
-                postazione.add(p);
+                for(Sede sede:sedi) {
+                    if(rs.getString("POSTAZIONE.ID_SEDE").equals(rs.getString("S.ID_SEDE")) && sede.getIndirizzo().equals(rs.getString("INDIRIZZO"))) {
+                        Postazione p = new Postazione(sede, rs.getString("NOME"));
+                        postazione.add(p);
+                    }
+                }
+
             }
 
         } catch(Exception e) {

@@ -6,6 +6,9 @@ import java.sql.*;
 import java.io.*;
 
 public class OracleConnection {
+   private String DB_USERNAME;
+   private String DB_PASSWORD;
+   private String DB_URL;
     //Attributi
     private static OracleConnection oraConn = null;
     private Connection conn = null;
@@ -24,21 +27,19 @@ public class OracleConnection {
 
     //metodo pubblico per ottenere la connessione
     public Connection getConnection() {
-        String DB_USERNAME;
-        String DB_PASSWORD;
-        String DB_URL;
+
         BufferedReader leggiCredenziali = null;
         try {
             if (conn == null || conn.isClosed()) {
                 leggiCredenziali = new BufferedReader(new FileReader("./object-orientation/java/src/DBconnection/credentials.txt"));
-                DB_URL = leggiCredenziali.readLine();
-                DB_USERNAME = leggiCredenziali.readLine();
-                DB_PASSWORD = leggiCredenziali.readLine();
+                this.DB_URL = leggiCredenziali.readLine();
+                this.DB_USERNAME = leggiCredenziali.readLine();
+                this.DB_PASSWORD = leggiCredenziali.readLine();
                 Class.forName("oracle.jdbc.driver.OracleDriver");
                 OracleDataSource ods = new OracleDataSource();
-                ods.setURL(DB_URL);
-                ods.setUser(DB_USERNAME);
-                ods.setPassword(DB_PASSWORD);
+                ods.setURL(this.DB_URL);
+                ods.setUser(this.DB_USERNAME);
+                ods.setPassword(this.DB_PASSWORD);
                 conn = ods.getConnection();
             }
 

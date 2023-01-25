@@ -4,7 +4,6 @@ import DBconnection.OracleConnection;
 import dto.Postazione;
 import dto.Sede;
 import dto.Strumento;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,15 +19,21 @@ public class StrumentoDao implements Dao<Strumento> {
     public List<Strumento> getAll() {
         List<Strumento> strumento = new ArrayList<>();
         try{
-            String query = "SELECT * FROM STRUMENTO";
+            String query = "SELECT * FROM STRUMENTO JOIN POSTAZIONE P on STRUMENTO.ID_POSTAZIONE = P.ID_POSTAZIONE";
             PreparedStatement sql = conn.prepareStatement(query);
             ResultSet rs = sql.executeQuery();
-
+            List<Postazione> postazioni = new PostazioneDao().getAll();
             while(rs.next()) {
-                Strumento s = new Strumento(rs.getString("NOME"), rs.getString("SCHEDATECNICA"));
-                strumento.add(s);
-            }
+                for(Postazione postazione:postazioni) {
+                    if(rs.getString("STRUMENTO.ID_POSTAZIONE").equals(rs.getString("P.ID_POSTAZIONE")) && postazione.getNome().equals(rs.getString("NOME"))) {
+                        Strumento s = new Strumento(postazione, rs.getString("DESCRIZIONE"), rs.getString("SCHEDATECNICA"));
+                        strumento.add(s);
 
+                    }
+                }
+
+            }
+            rs.close();
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -91,11 +96,52 @@ public class StrumentoDao implements Dao<Strumento> {
         }
     }
     public List<Strumento> getStrumentoByDescription(String description) {
-        //TODO
-        return null;
+        List<Strumento> strumento = new ArrayList<>();
+        try{
+            String query = "SELECT * FROM STRUMENTO WHERE STRUMENTO.DESCRIZIONE LIKE ?";
+            PreparedStatement sql = conn.prepareStatement(query);
+            sql.setString(1, "'%"+description+"%'");
+            ResultSet rs = sql.executeQuery();
+            List<Postazione> postazioni = new PostazioneDao().getAll();
+            while(rs.next()) {
+                for(Postazione postazione:postazioni) {
+                    if(rs.getString("STRUMENTO.ID_POSTAZIONE").equals(rs.getString("P.ID_POSTAZIONE")) && postazione.getNome().equals(rs.getString("NOME"))) {
+                        Strumento s = new Strumento(postazione, rs.getString("DESCRIZIONE"), rs.getString("SCHEDATECNICA"));
+                        strumento.add(s);
+
+                    }
+                }
+
+            }
+            rs.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return strumento;
     }
+
     public List<Strumento> getStrumentoBySede(Sede sede) {
-        //TODO
-        return null;
+        List<Strumento> strumento = new ArrayList<>();
+        try{
+            String query = "SELECT * FROM STRUMENTO JOIN POSTAZIONE P on STRUMENTO.ID_POSTAZIONE = P.ID_POSTAZIONE JOIN SEDE S on P.ID_SEDE = S.ID_SEDE WHERE UPPER(S.INDIRIZZO)=UPPER(?)";
+            PreparedStatement sql = conn.prepareStatement(query);
+            sql.setString(1, sede.getIndirizzo());
+            ResultSet rs = sql.executeQuery();
+            List<Postazione> postazioni = new PostazioneDao().getAll();
+            while(rs.next()) {
+                for(Postazione postazione:postazioni) {
+                    if(rs.getString("STRUMENTO.ID_POSTAZIONE").equals(rs.getString("P.ID_POSTAZIONE")) && postazione.getNome().equals(rs.getString("NOME"))) {
+                        Strumento s = new Strumento(postazione, rs.getString("DESCRIZIONE"), rs.getString("SCHEDATECNICA"));
+                        strumento.add(s);
+
+                    }
+                }
+
+            }
+            rs.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return strumento;
     }
 }

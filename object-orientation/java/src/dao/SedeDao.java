@@ -19,13 +19,19 @@ public class SedeDao implements Dao<Sede>{
     public List<Sede> getAll() {
         List<Sede> sede = new ArrayList<>();
         try{
-            String query = "SELECT * FROM SEDE";
+            String query = "SELECT * FROM SEDE JOIN LABORATORIO L on L.ID_LAB = SEDE.ID_LAB";
             PreparedStatement sql = conn.prepareStatement(query);
             ResultSet rs = sql.executeQuery();
-
+            List<Laboratorio> labs = new LaboratorioDao().getAll();
             while(rs.next()) {
-                Sede s = new Sede(rs.getString("INDIRIZZO"));
-                sede.add(s);
+                for(Laboratorio lab:labs) {
+                    if(rs.getString("SEDE.ID_LAB").equals(rs.getString("L.ID_LAB")) && lab.getNome().equals(rs.getString("NOME"))) {
+                        Sede s = new Sede(rs.getString("INDIRIZZO"), lab);
+                        sede.add(s);
+                    }
+
+                }
+
             }
 
         } catch(Exception e) {

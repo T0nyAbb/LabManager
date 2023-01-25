@@ -15,6 +15,22 @@ public class Dipendente {
     private String telefono2;
     private String email;
 
+    //Costruttori
+
+
+    public Dipendente(Sede sede, String matricola, String nome, String cognome, Date dataNascita, String codiceFiscale, String indirizzo, String telefono1, String telefono2, String email) {
+        this.sede = sede;
+        this.matricola = matricola;
+        this.nome = nome;
+        this.cognome = cognome;
+        this.dataNascita = dataNascita;
+        this.codiceFiscale = codiceFiscale;
+        this.indirizzo = indirizzo;
+        this.telefono1 = telefono1;
+        this.telefono2 = telefono2;
+        this.email = email;
+    }
+
     //Getters & Setters
     public Sede getSede() {
         return sede;
