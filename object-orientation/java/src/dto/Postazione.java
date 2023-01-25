@@ -5,6 +5,15 @@ public class Postazione {
     private Sede sede;
     private String nome;
 
+    //Costruttori
+    public Postazione(String nome) {
+        this.nome = nome;
+    }
+    public Postazione(Sede sede, String nome) {
+        this.sede = sede;
+        this.nome = nome;
+    }
+
     //Getters & Setters
     public Sede getSede() {
         return sede;

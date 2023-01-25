@@ -7,6 +7,16 @@ public class Laboratorio {
     private String campo;
     private String descrizione;
 
+    //Costruttori
+
+
+    public Laboratorio(String nome, int annoFondazione, String campo, String descrizione) {
+        this.nome = nome;
+        this.annoFondazione = annoFondazione;
+        this.campo = campo;
+        this.descrizione = descrizione;
+    }
+
     //Getters & Setters
     public String getNome() {
         return nome;

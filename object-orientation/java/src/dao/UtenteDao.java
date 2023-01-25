@@ -24,10 +24,10 @@ public class UtenteDao implements Dao<Utente> {
             ResultSet rs = sql.executeQuery();
 
             while(rs.next()) {
-            Utente user = new Utente(rs.getString("EMAIL"), rs.getString("USERNAME"), rs.getString("USR_PASSWORD"));
-            utente.add(user);
+                Utente user = new Utente(rs.getString("EMAIL"), rs.getString("USERNAME"), rs.getString("USR_PASSWORD"));
+                utente.add(user);
             }
-
+            rs.close();
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -37,7 +37,6 @@ public class UtenteDao implements Dao<Utente> {
 
     @Override
     public void insert(Utente utente) {
-
         try {
             String query = "INSERT INTO UTENTE VALUES(?,(SELECT UTL_I18N.STRING_TO_RAW(LTRIM(RTRIM(?)), 'AL32UTF8') FROM DUAL),?)";
             PreparedStatement sql = conn.prepareStatement(query);
@@ -52,11 +51,10 @@ public class UtenteDao implements Dao<Utente> {
     }
     @Override
     public void update(Utente utente, List<String> params) {
-        //Utente utente = (Utente)o;
         try{
             if(params.size()!=3) throw new RuntimeException("numero di parametri non validi");
 
-            String query = "UPDATE UTENTE SET EMAIL=? USERNAME=? USR_PASSWORD=(SELECT UTL_I18N.STRING_TO_RAW(LTRIM(RTRIM(?)), 'AL32UTF8') FROM DUAL) WHERE USERNAME = ?";
+            String query = "UPDATE UTENTE SET EMAIL=?, USERNAME=?, USR_PASSWORD=(SELECT UTL_I18N.STRING_TO_RAW(LTRIM(RTRIM(?)), 'AL32UTF8') FROM DUAL) WHERE UPPER(USERNAME)=UPPER(?)";
             PreparedStatement sql = conn.prepareStatement(query);
             sql.setString(1, params.get(1));
             sql.setString(2, params.get(2));
@@ -70,7 +68,6 @@ public class UtenteDao implements Dao<Utente> {
 
     @Override
     public void delete(Utente utente) {
-
         try {
             String query = "DELETE FROM UTENTE WHERE USERNAME=? AND EMAIL=?";
             PreparedStatement sql = conn.prepareStatement(query);
