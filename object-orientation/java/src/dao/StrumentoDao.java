@@ -19,14 +19,15 @@ public class StrumentoDao implements Dao<Strumento> {
     public List<Strumento> getAll() {
         List<Strumento> strumento = new ArrayList<>();
         try{
-            String query = "SELECT * FROM STRUMENTO JOIN POSTAZIONE P on STRUMENTO.ID_POSTAZIONE = P.ID_POSTAZIONE";
+            String query = "SELECT * FROM STRUMENTO JOIN POSTAZIONE P on P.ID_POSTAZIONE = STRUMENTO.ID_POSTAZIONE JOIN SEDE S on P.ID_SEDE = S.ID_SEDE";
             PreparedStatement sql = conn.prepareStatement(query);
             ResultSet rs = sql.executeQuery();
             List<Postazione> postazioni = new PostazioneDao().getAll();
             while(rs.next()) {
                 for(Postazione postazione:postazioni) {
-                    if(rs.getString("STRUMENTO.ID_POSTAZIONE").equals(rs.getString("P.ID_POSTAZIONE")) && postazione.getNome().equals(rs.getString("NOME"))) {
-                        Strumento s = new Strumento(postazione, rs.getString("DESCRIZIONE"), rs.getString("SCHEDATECNICA"));
+                    Sede sede = postazione.getSede();
+                    if(rs.getString(4).equals(rs.getString(5)) && postazione.getNome().equals(rs.getString(6)) && sede.getIndirizzo().equals(rs.getString(9))) {
+                        Strumento s = new Strumento(postazione, rs.getString(2), rs.getString(3));
                         strumento.add(s);
 
                     }
@@ -98,15 +99,16 @@ public class StrumentoDao implements Dao<Strumento> {
     public List<Strumento> getStrumentoByDescription(String description) {
         List<Strumento> strumento = new ArrayList<>();
         try{
-            String query = "SELECT * FROM STRUMENTO WHERE STRUMENTO.DESCRIZIONE LIKE ?";
+            String query = "SELECT * FROM STRUMENTO JOIN POSTAZIONE P on P.ID_POSTAZIONE = STRUMENTO.ID_POSTAZIONE JOIN SEDE S on P.ID_SEDE = S.ID_SEDE WHERE UPPER(STRUMENTO.DESCRIZIONE) LIKE UPPER(?)";
             PreparedStatement sql = conn.prepareStatement(query);
-            sql.setString(1, "'%"+description+"%'");
+            sql.setString(1, "%"+description+"%");
             ResultSet rs = sql.executeQuery();
             List<Postazione> postazioni = new PostazioneDao().getAll();
             while(rs.next()) {
                 for(Postazione postazione:postazioni) {
-                    if(rs.getString("STRUMENTO.ID_POSTAZIONE").equals(rs.getString("P.ID_POSTAZIONE")) && postazione.getNome().equals(rs.getString("NOME"))) {
-                        Strumento s = new Strumento(postazione, rs.getString("DESCRIZIONE"), rs.getString("SCHEDATECNICA"));
+                    Sede sede = postazione.getSede();
+                    if(rs.getString(4).equals(rs.getString(5)) && postazione.getNome().equals(rs.getString(6)) && sede.getIndirizzo().equals(rs.getString(9))) {
+                        Strumento s = new Strumento(postazione, rs.getString(2), rs.getString(3));
                         strumento.add(s);
 
                     }
@@ -130,8 +132,8 @@ public class StrumentoDao implements Dao<Strumento> {
             List<Postazione> postazioni = new PostazioneDao().getAll();
             while(rs.next()) {
                 for(Postazione postazione:postazioni) {
-                    if(rs.getString("STRUMENTO.ID_POSTAZIONE").equals(rs.getString("P.ID_POSTAZIONE")) && postazione.getNome().equals(rs.getString("NOME"))) {
-                        Strumento s = new Strumento(postazione, rs.getString("DESCRIZIONE"), rs.getString("SCHEDATECNICA"));
+                    if(rs.getString(4).equals(rs.getString(5)) && postazione.getNome().equals(rs.getString(6))) {
+                        Strumento s = new Strumento(postazione, rs.getString(2), rs.getString(3));
                         strumento.add(s);
 
                     }

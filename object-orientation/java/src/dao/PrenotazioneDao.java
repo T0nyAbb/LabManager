@@ -28,8 +28,8 @@ public class PrenotazioneDao implements Dao<Prenotazione> {
             while(rs.next()) {
                 for(Utente utente:utenti) {
                     for(Strumento strumento:strumenti) {
-                        if(rs.getString("PRENOTAZIONE.USERNAME").equals(utente.getUsername()) && rs.getString("DESCRIZIONE").equals(strumento.getDescrizione()) && rs.getString("SCHEDATECNICA").equals(strumento.getSchedaTecnica())) {
-                            Prenotazione p = new Prenotazione(strumento, utente, rs.getDate("DATAPRENOTAZIONE"), rs.getInt("DURATA"), rs.getDate("DATAINIZIO"));
+                        if(rs.getString(6).equals(utente.getUsername()) && rs.getString(11).equals(strumento.getDescrizione()) && rs.getString(12).equals(strumento.getSchedaTecnica())) {
+                            Prenotazione p = new Prenotazione(strumento, utente, rs.getTimestamp(4), rs.getInt(3), rs.getTimestamp(2));
                             prenotazione.add(p);
                         }
                     }

@@ -24,8 +24,8 @@ public class ResponsabileDao implements Dao<Responsabile> {
             List<Sede> sedi = new SedeDao().getAll();
             while(rs.next()) {
                 for(Sede sede:sedi) {
-                    if(rs.getString("RESPONSABILE.ID_SEDE").equals(rs.getString("S.ID_SEDE")) && sede.getIndirizzo().equals(rs.getString("S.INDIRIZZO"))) {
-                        Responsabile r = new Responsabile(sede, rs.getString("MATRICOLA"), rs.getString("NOME"), rs.getString("COGNOME"), rs.getDate("DATANASCITA"), rs.getString("CODICEFISCALE"), rs.getString("TECNICO.INDIRIZZO"), rs.getString("TELEFONO1"), rs.getString("TELEFONO2"), rs.getString("EMAIL"));
+                    if(rs.getString(10).equals(rs.getString(11)) && sede.getIndirizzo().equals(rs.getString(12))) {
+                        Responsabile r = new Responsabile(sede, rs.getString(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
                         responsabile.add(r);
                     }
                 }

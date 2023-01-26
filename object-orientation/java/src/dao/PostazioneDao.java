@@ -25,8 +25,8 @@ public class PostazioneDao implements Dao<Postazione>{
             List<Sede> sedi = new SedeDao().getAll();
             while(rs.next()) {
                 for(Sede sede:sedi) {
-                    if(rs.getString("POSTAZIONE.ID_SEDE").equals(rs.getString("S.ID_SEDE")) && sede.getIndirizzo().equals(rs.getString("INDIRIZZO"))) {
-                        Postazione p = new Postazione(sede, rs.getString("NOME"));
+                    if(rs.getString(3).equals(rs.getString(4)) && sede.getIndirizzo().equals(rs.getString(5))) {
+                        Postazione p = new Postazione(sede, rs.getString(2));
                         postazione.add(p);
                     }
                 }
