@@ -1,6 +1,7 @@
 package dao;
 
 import dto.*;
+import exceptions.NoDataFoundException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -80,6 +81,40 @@ public class PrenotazioneDao implements Dao<Prenotazione> {
         sql.setInt(2, prenotazione.getDurata());
         sql.executeUpdate();
         sql.close();
+
+    }
+    public int getNumPrenByUsername(String username) throws SQLException, NoDataFoundException {
+        int numeroPrenotazioni;
+        String query = "SELECT COUNT(*) AS NUM_PREN FROM PRENOTAZIONE P WHERE P.USERNAME=?";
+        PreparedStatement sql = conn.prepareStatement(query);
+        sql.setString(1, username);
+        ResultSet rs = sql.executeQuery();
+
+        if(rs.next()) {
+            numeroPrenotazioni= rs.getInt(1);
+        } else {
+            throw new NoDataFoundException();
+        }
+
+        return numeroPrenotazioni;
+    }
+    public String getUsageByStrumento(Strumento strumento) throws SQLException {
+        String utilizzo;
+        Postazione post = strumento.getPostazione();
+        Sede sede = post.getSede();
+        String query = "SELECT SUM(DURATA), PRENOTAZIONE.ID_STRUMENTO, S.DESCRIZIONE,S.SCHEDATECNICA  FROM PRENOTAZIONE JOIN STRUMENTO S on S.ID_STRUMENTO = PRENOTAZIONE.ID_STRUMENTO WHERE S.DESCRIZIONE=? AND S.SCHEDATECNICA=? AND PRENOTAZIONE.DATAINIZIO<(SELECT SYSDATE FROM DUAL) GROUP BY PRENOTAZIONE.ID_STRUMENTO, S.DESCRIZIONE , S.SCHEDATECNICA";
+        PreparedStatement sql = conn.prepareStatement(query);
+        sql.setString(1, strumento.getDescrizione());
+        sql.setString(2, strumento.getSchedaTecnica());
+        ResultSet rs = sql.executeQuery();
+
+        if(rs.next()) {
+            utilizzo = "Lo strumento " + strumento.getDescrizione() + " è stato utilizzato per " + rs.getInt(1) + " ore.";
+        } else {
+            utilizzo = "Lo strumento " + strumento.getDescrizione() + " non è mai stato utilizzato.";
+        }
+        return utilizzo;
+
 
     }
 }
