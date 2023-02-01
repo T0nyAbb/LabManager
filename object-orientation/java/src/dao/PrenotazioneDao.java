@@ -84,10 +84,10 @@ public class PrenotazioneDao implements Dao<Prenotazione> {
     public void update(Prenotazione prenotazione, List<String> params) throws SQLException {
         if(params.size()!=2) throw new RuntimeException("numero di parametri non validi");
 
-        String query = "UPDATE PRENOTAZIONE SET DATAINIZIO=(SELECT TO_DATE(?, 'YYYY/MM/DD HH24:MI') FROM DUAL), DURATA=? WHERE ID_PRENOTAZIONE = ?";
+        String query = "UPDATE PRENOTAZIONE SET DATAINIZIO= TO_DATE(?, 'YYYY/MM/DD HH24:MI'), DURATA=? WHERE ID_PRENOTAZIONE = ?";
         PreparedStatement sql = conn.prepareStatement(query);
-        sql.setString(1, params.get(1));
-        sql.setInt(2, Integer.parseInt(params.get(2)));
+        sql.setString(1, params.get(0));
+        sql.setInt(2, Integer.parseInt(params.get(1)));
         sql.setInt(3, prenotazione.getId());
         sql.executeUpdate();
         sql.close();
