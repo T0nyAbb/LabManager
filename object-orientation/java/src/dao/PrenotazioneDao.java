@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,13 +47,13 @@ public class PrenotazioneDao implements Dao<Prenotazione> {
     public void insert(Prenotazione prenotazione) throws SQLException {
         Utente u = prenotazione.getUtente();
         Strumento s = prenotazione.getStrumento();
-        String query = "INSERT INTO PRENOTAZIONE(DATAINIZIO, DURATA, USERNAME, ID_STRUMENTO) VALUES((SELECT TO_DATE(?, 'YYYY/MM/DD HH24:MI') FROM DUAL), ?, ?,(SELECT ID_STRUMENTO FROM STRUMENTO WHERE UPPER(STRUMENTO.DESCRIZIONE)=UPPER(?) AND UPPER(STRUMENTO.SCHEDATECNICA)=UPPER(?) FETCH NEXT 1 ROWS ONLY))";
+        String query = "INSERT INTO PRENOTAZIONE(DATAINIZIO, DURATA, USERNAME, ID_STRUMENTO) VALUES(TO_DATE(?, 'YYYY/MM/DD HH24:MI'), ?, ?, ?)";
+		DateFormat timeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm"); 
         PreparedStatement sql = conn.prepareStatement(query);
-        sql.setString(1, prenotazione.getDataInizio().toString());
+        sql.setString(1, timeFormat.format(prenotazione.getDataInizio()));
         sql.setInt(2, prenotazione.getDurata());
         sql.setString(3, u.getUsername());
-        sql.setString(4, s.getDescrizione());
-        sql.setString(5, s.getSchedaTecnica());
+        sql.setInt(4, s.getId());
         sql.executeUpdate();
         sql.close();
 

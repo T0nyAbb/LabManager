@@ -2,6 +2,7 @@ package dto;
 
 public class Sede {
     //Attributi
+	private int id_sede;
     private Laboratorio laboratorio;
     private String indirizzo;
 
@@ -19,7 +20,13 @@ public class Sede {
         return laboratorio;
     }
 
-    public void setLaboratorio(Laboratorio laboratorio) {
+    public int getId() {
+		return id_sede;
+	}
+	public void setId(int id_sede) {
+		this.id_sede = id_sede;
+	}
+	public void setLaboratorio(Laboratorio laboratorio) {
         this.laboratorio = laboratorio;
     }
 

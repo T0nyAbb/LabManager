@@ -2,6 +2,7 @@ package dto;
 
 public class Postazione {
     //Attributi
+	private int id_postazione;
     private Sede sede;
     private String nome;
 
@@ -19,7 +20,13 @@ public class Postazione {
         return sede;
     }
 
-    public void setSede(Sede sede) {
+    public int getId() {
+		return id_postazione;
+	}
+	public void setId(int id_postazione) {
+		this.id_postazione = id_postazione;
+	}
+	public void setSede(Sede sede) {
         this.sede = sede;
     }
 

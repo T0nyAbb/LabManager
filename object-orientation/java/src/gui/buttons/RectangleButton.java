@@ -22,7 +22,7 @@ public class RectangleButton extends JButton{
 		setEnteredColor(Color.GRAY);
 		setPressedColor(Color.LIGHT_GRAY);
 		
-        setFont(new Font("Arial", Font.BOLD, 18));
+        setFont(new Font("Century Gothic", Font.BOLD, 18));
         setBackground(defaultColor);
         setForeground(Color.BLACK);
 		setBorderPainted(false);
@@ -52,6 +52,14 @@ public class RectangleButton extends JButton{
                 setBackground(defaultColor);
         	}
         });
+        
+	}
+	
+	public RectangleButton(Color defaultColor, Color enteredColor, Color pressedColor) {
+		this();
+		setDefaultColor(defaultColor);
+		setEnteredColor(enteredColor);
+		setPressedColor(pressedColor);
         
 	}
 

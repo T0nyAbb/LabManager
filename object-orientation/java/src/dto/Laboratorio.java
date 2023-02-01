@@ -2,6 +2,7 @@ package dto;
 
 public class Laboratorio {
     //Attributi
+	private int id_lab;
     private String nome;
     private int annoFondazione;
     private String campo;
@@ -22,7 +23,15 @@ public class Laboratorio {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public int getId() {
+		return id_lab;
+	}
+
+	public void setId(int id_lab) {
+		this.id_lab = id_lab;
+	}
+
+	public void setNome(String nome) {
         this.nome = nome;
     }
 

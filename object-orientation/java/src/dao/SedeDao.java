@@ -26,8 +26,9 @@ public class SedeDao implements Dao<Sede>{
         List<Laboratorio> labs = new LaboratorioDao(conn).getAll();
         while(rs.next()) {
             for(Laboratorio lab:labs) {
-                if(rs.getString(3).equals(rs.getString(4)) && lab.getNome().equals(rs.getString(5))) {
-                    Sede s = new Sede(rs.getString(2), lab);
+                if(lab.getId() == rs.getInt("ID_LAB")) {
+                    Sede s = new Sede(rs.getString("INDIRIZZO"), lab);
+                    s.setId(rs.getInt("ID_SEDE"));
                     sede.add(s);
                 }
 

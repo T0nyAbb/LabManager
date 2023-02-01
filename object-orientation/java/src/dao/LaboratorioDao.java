@@ -24,6 +24,7 @@ public class LaboratorioDao implements Dao<Laboratorio>{
         ResultSet rs = sql.executeQuery();
         while(rs.next()) {
             Laboratorio lab = new Laboratorio(rs.getString("NOME"), rs.getInt("ANNOFONDAZIONE"), rs.getString("CAMPO"), rs.getString("DESCRIZIONE"));
+            lab.setId(rs.getInt("ID_LAB"));
             laboratorio.add(lab);
         }
         rs.close();

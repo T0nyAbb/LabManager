@@ -4,7 +4,7 @@ import oracle.jdbc.pool.OracleDataSource;
 
 import java.sql.*;
 
-import exceptions.InvalidFileContentException;
+import exceptions.InvalidTextFileContentException;
 
 import java.io.*;
 
@@ -26,7 +26,7 @@ public class OracleConnection {
     }
     
     //metodo pubblico per ottenere la connessione
-    public Connection getConnection() throws SQLException, ClassNotFoundException, IOException, InvalidFileContentException {
+    public Connection getConnection() throws SQLException, ClassNotFoundException, IOException, InvalidTextFileContentException {
     	if(conn == null || conn.isClosed()) {
     		establishConnection();
     	}
@@ -34,14 +34,14 @@ public class OracleConnection {
     }
 
     //metodo privato per stabilire la connessione
-    private void establishConnection() throws ClassNotFoundException, SQLException, IOException, InvalidFileContentException {
+    private void establishConnection() throws ClassNotFoundException, SQLException, IOException, InvalidTextFileContentException {
         BufferedReader leggiCredenziali = new BufferedReader(new FileReader("src/DBconnection/credentials.txt"));
         String DB_URL = leggiCredenziali.readLine();
         String DB_USERNAME = leggiCredenziali.readLine();
         String DB_PASSWORD = leggiCredenziali.readLine();
         leggiCredenziali.close();
         if(DB_URL==null || DB_USERNAME==null || DB_PASSWORD==null) {
-        	throw new InvalidFileContentException("File credentials.txt contiene campi vuoti per le credenziali di accesso al database.", null);
+        	throw new InvalidTextFileContentException("File credentials.txt contiene campi vuoti per le credenziali di accesso al database.", null);
         }
         
         Class.forName("oracle.jdbc.driver.OracleDriver");

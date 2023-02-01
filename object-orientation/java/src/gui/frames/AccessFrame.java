@@ -1,9 +1,9 @@
 package gui.frames;
 
 import control.Controller;
-import gui.panels.BackgroundPanel;
-import gui.panels.LoginPanel;
-import gui.panels.SignupPanel;
+import gui.panels.accessframe.BackgroundPanel;
+import gui.panels.accessframe.LoginPanel;
+import gui.panels.accessframe.SignupPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -85,7 +85,7 @@ public class AccessFrame extends JFrame {
         setTitle("LabManager");
         Image icon = null;
         try {
-        	icon = Toolkit.getDefaultToolkit().getImage(AccessFrame.class.getResource("/icone/labmanager-website-favicon-grey.png"));
+        	icon = Toolkit.getDefaultToolkit().getImage(AccessFrame.class.getResource("/icone/labmanager-website-favicon-blue.png"));
         }catch(Exception e) {
         	e.printStackTrace();
         }

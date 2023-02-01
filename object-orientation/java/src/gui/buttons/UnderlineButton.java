@@ -3,6 +3,8 @@ package gui.buttons;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 
@@ -12,15 +14,70 @@ public class UnderlineButton extends JButton{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private Color defaultColor;
+	private Color enteredColor;
+	private Color pressedColor;
 	
 	public UnderlineButton() {
-		setFont(new Font("Arial", Font.BOLD, 14));
+		setDefaultColor(Color.DARK_GRAY);
+		setEnteredColor(Color.GRAY);
+		setPressedColor(Color.LIGHT_GRAY);
+		
+		setFont(new Font("Century Gothic", Font.BOLD, 14));
         setFocusable(false);
+		setForeground(defaultColor);
         setContentAreaFilled(false);
         setBorderPainted(false);
-        setOpaque(true);
-        setBackground(Color.WHITE);
+        setOpaque(false);
         setCursor(new Cursor(Cursor.HAND_CURSOR));
+        addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseEntered(MouseEvent e) {
+                setForeground(enteredColor);
+        	}
+        	
+        	@Override
+        	public void mouseExited(MouseEvent e) {
+                setForeground(defaultColor);
+        	}
+        	
+        	@Override
+        	public void mousePressed(MouseEvent e) {
+                setForeground(pressedColor);
+        	}
+        	
+        	@Override
+        	public void mouseReleased(MouseEvent e) {
+                setForeground(defaultColor);
+        	}
+        });
+	}
+	
+
+	public void setDefaultColor(Color defaultColor) {
+		this.defaultColor = defaultColor;
+		setForeground(defaultColor);
+	}
+
+	public Color getEnteredColor() {
+		return enteredColor;
+	}
+
+	public void setEnteredColor(Color enteredColor) {
+		this.enteredColor = enteredColor;
+	}
+
+	public Color getPressedColor() {
+		return pressedColor;
+	}
+
+	public void setPressedColor(Color pressedColor) {
+		this.pressedColor = pressedColor;
+	}
+	
+	@Override
+	public void setText(String text) {
+		super.setText("<HTML><U>"+text+"</U></HTML>");
 	}
 
 }

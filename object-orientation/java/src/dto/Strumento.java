@@ -2,6 +2,7 @@ package dto;
 
 public class Strumento {
     //Attributi
+	private int id_strumento;
     private Postazione postazione;
     private String descrizione;
     private String schedaTecnica;
@@ -19,11 +20,20 @@ public class Strumento {
     }
 
     //Getters & Setters
+    
     public Postazione getPostazione() {
         return postazione;
     }
 
-    public void setPostazione(Postazione postazione) {
+    public int getId() {
+		return id_strumento;
+	}
+
+	public void setId(int id_strumento) {
+		this.id_strumento = id_strumento;
+	}
+
+	public void setPostazione(Postazione postazione) {
         this.postazione = postazione;
     }
 
