@@ -97,9 +97,9 @@ public class HandleReservationPanel extends JPanel{
 		list.setVisibleRowCount(-1);
 		loadListContent();
 		
-//		JScrollPane listScroller = new JScrollPane(list);
-//		listScroller.setViewportView(list);
-//		listScroller.setPreferredSize(new Dimension(250, 80));
+		JScrollPane listScroller = new JScrollPane(list);
+		listScroller.setViewportView(list);
+		listScroller.setPreferredSize(new Dimension(250, 80));
 	}
 	
 	public void loadListContent() {

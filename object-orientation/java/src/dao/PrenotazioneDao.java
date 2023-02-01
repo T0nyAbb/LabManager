@@ -1,6 +1,7 @@
 package dao;
 
 import dto.*;
+import oracle.jdbc.proxy.annotation.Pre;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -101,6 +102,27 @@ public class PrenotazioneDao implements Dao<Prenotazione> {
         sql.setInt(1, prenotazione.getId());
         sql.executeUpdate();
         sql.close();
+
+    }
+    public List<Prenotazione> getByStrumento(Strumento strumento) throws SQLException {
+        List<Prenotazione> prenotazioni = new ArrayList<>();
+        String query = "SELECT * FROM PRENOTAZIONE WHERE ID_STRUMENTO=?";
+        PreparedStatement sql = conn.prepareStatement(query);
+        sql.setInt(1, strumento.getId());
+        ResultSet rs = sql.executeQuery();
+        List<Strumento> strumenti = new StrumentoDao(conn).getAll();
+
+        while(rs.next()) {
+            for(Strumento s:strumenti) {
+                if(rs.getInt("ID_STRUMENTO") == strumento.getId()) {
+
+                }
+
+            }
+
+        }
+
+        return prenotazioni;
 
     }
 }

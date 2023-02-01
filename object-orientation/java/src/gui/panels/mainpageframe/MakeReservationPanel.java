@@ -36,7 +36,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.DefaultComboBoxModel;
 
-public class MakeReservationPanel extends JPanel{
+public class 	MakeReservationPanel extends JPanel{
 	
 	/**
 	 * 

@@ -22,7 +22,8 @@ public class MainpageFrame extends JFrame {
 	private ProfilePanel profilePanel;
 	private MakeReservationPanel makeReservationPanel;
 	private HandleReservationPanel handleReservationPanel;
-	
+	private StrumentoStatsPanel strumentoStatsPanel;
+
 	public MainpageFrame(Controller controller) throws SQLException {
 		this.controller = controller;
 		
@@ -32,6 +33,7 @@ public class MainpageFrame extends JFrame {
 		generateProfilePanel();
 		generateMakeReservationPanel();
 		generateHandleReservationPanel();
+		generateStatsPanel();
 	}
 
 	public void showProfilePanel() {
@@ -56,6 +58,7 @@ public class MainpageFrame extends JFrame {
 		profilePanel.setVisible(false);
         handleReservationPanel.setVisible(true);
         handleReservationPanel.loadListContent();
+		strumentoStatsPanel.setVisible(false);
         getContentPane().add(handleReservationPanel, BorderLayout.CENTER);
 	}
 	
@@ -64,9 +67,21 @@ public class MainpageFrame extends JFrame {
 		makeReservationPanel.setVisible(false);
 		profilePanel.setVisible(false);
         welcomePanel.setVisible(true);
+		strumentoStatsPanel.setVisible(false);
         getContentPane().add(welcomePanel, BorderLayout.CENTER);
 	}
-	
+	public void showStatsPanel() {
+		handleReservationPanel.setVisible(false);
+		makeReservationPanel.setVisible(false);
+		profilePanel.setVisible(false);
+		welcomePanel.setVisible(false);
+		strumentoStatsPanel.setVisible(true);
+		getContentPane().add(strumentoStatsPanel, BorderLayout.CENTER);
+	}
+
+
+
+
 	public SidebarPanel getSidebarPanel() {
 		return sidebarPanel;
 	}
@@ -126,4 +141,11 @@ public class MainpageFrame extends JFrame {
 	private void generateHandleReservationPanel() {
 		handleReservationPanel = new HandleReservationPanel(controller);
 	}
+
+	private void generateStatsPanel() throws SQLException {
+		strumentoStatsPanel = new StrumentoStatsPanel(controller);
+	}
+
+
 }
+

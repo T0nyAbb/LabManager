@@ -28,6 +28,8 @@ public class SidebarPanel extends JPanel {
 	private UnderlineButton makeReservationButton;
 	private UnderlineButton handleReservationButton;
 	private UnderlineButton logoutButton;
+
+	private UnderlineButton statsButton;
 	
 	public SidebarPanel(Controller controller) {
 		this.controller = controller;
@@ -110,6 +112,24 @@ public class SidebarPanel extends JPanel {
         		logout();
         	}
         });
+		statsButton = new UnderlineButton();
+		statsButton.setIcon(new ImageIcon(SidebarPanel.class.getResource("/icone/dot2.png")));
+		statsButton.setFont(new Font("Century Gothic", Font.BOLD, 28));
+		statsButton.setHorizontalAlignment(SwingConstants.LEFT);
+		statsButton.setText("Statistiche");
+		statsButton.setDefaultColor(Color.white);
+		statsButton.setEnteredColor(Color.white);
+		statsButton.setPressedColor(Color.white);
+		statsButton.setBackground(new Color(0, 40, 83));
+		statsButton.setVerticalAlignment(SwingConstants.TOP);
+		statsButton.setOpaque(true);
+		statsButton.setForeground(Color.WHITE);
+		statsButton.setBorder(new EmptyBorder(0, 15, 0, 15));
+		statsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.showStats();
+			}
+		});
 	}
 	
 	private void setLayoutComponents() {
@@ -123,9 +143,13 @@ public class SidebarPanel extends JPanel {
         		.addGroup(groupLayout.createSequentialGroup()
         			.addComponent(handleReservationButton, GroupLayout.PREFERRED_SIZE, 368, GroupLayout.PREFERRED_SIZE)
         			.addContainerGap())
+				.addGroup(groupLayout.createSequentialGroup()
+					.addComponent(statsButton, GroupLayout.PREFERRED_SIZE, 368, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
         		.addGroup(groupLayout.createSequentialGroup()
         			.addComponent(logoutButton, GroupLayout.PREFERRED_SIZE, 368, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap())
+						.addContainerGap())
+
         );
         groupLayout.setVerticalGroup(
         	groupLayout.createParallelGroup(Alignment.LEADING)
@@ -136,6 +160,8 @@ public class SidebarPanel extends JPanel {
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addComponent(handleReservationButton, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
         			.addPreferredGap(ComponentPlacement.RELATED, 172, Short.MAX_VALUE)
+					.addComponent(statsButton, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 172, Short.MAX_VALUE)
         			.addComponent(logoutButton, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE))
         );
         setLayout(groupLayout);

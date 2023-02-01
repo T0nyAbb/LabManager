@@ -1,14 +1,21 @@
 package control;
 
-import dto.*;
+import DBconnection.OracleConnection;
+import dao.PrenotazioneDao;
+import dao.SedeDao;
+import dao.StrumentoDao;
+import dao.UtenteDao;
+import dto.Prenotazione;
+import dto.Strumento;
+import dto.Utente;
 import exceptions.EmptyFieldException;
 import exceptions.IncorrectCredentialsException;
 import exceptions.InvalidTextFileContentException;
 import exceptions.PasswordsNotMatchingException;
-import dao.*;
-import gui.frames.*;
-import DBconnection.OracleConnection;
+import gui.frames.AccessFrame;
+import gui.frames.MainpageFrame;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,9 +25,6 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.swing.JOptionPane;
-import javax.swing.Timer;
 
 public class Controller {
 	
@@ -216,6 +220,9 @@ public class Controller {
     public void showHandleReservation() {
     	mainpageFrame.showHandleReservationPanel();
     }
+	public void showStats() {
+		mainpageFrame.showStatsPanel();
+	}
     
     public void showWelcome() {
     	mainpageFrame.showWelcomePanel();
