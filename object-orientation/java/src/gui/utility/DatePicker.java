@@ -55,7 +55,6 @@ public class DatePicker extends JPanel
     	} else {
 	        calendar.set(selectionBarPanel.getYear(), selectionBarPanel.getMonth(), Integer.parseInt(calendarPanel.getDay()));
 	        pickedDate = dateFormat.format(calendar.getTime());
-	        setVisible(false);
 	        if(formattedTextField != null) {
 	        	formattedTextField.setValue(calendar.getTime());
 	        }

@@ -53,7 +53,6 @@ public class 	MakeReservationPanel extends JPanel{
 	private JLabel oraInizioLabel;
 	private JLabel durataLabel;
 	private JLabel errorLabel;
-	private JLabel successLabel;
 	private JSpinner spinner;
 	private JComboBox<String> strumentoComboBox;
 	private JComboBox<String> sedeComboBox;

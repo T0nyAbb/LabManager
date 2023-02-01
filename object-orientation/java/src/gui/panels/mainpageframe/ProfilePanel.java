@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 
 import control.Controller;
 import gui.buttons.RectangleButton;
+import gui.buttons.UnderlineButton;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -13,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
@@ -41,6 +43,7 @@ public class ProfilePanel extends JPanel{
 		
 		setPanelSettings();
 		generateLabels();
+		generateButtons();
 		layoutComponents();
 	}
 
@@ -82,6 +85,9 @@ public class ProfilePanel extends JPanel{
 		
 	}
 	
+	private void generateButtons() {
+		}
+	
 	private void layoutComponents() {
 		
 		
@@ -98,7 +104,7 @@ public class ProfilePanel extends JPanel{
 									.addComponent(emailLabel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 									.addComponent(usernameLabel, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 799, GroupLayout.PREFERRED_SIZE))
 								.addComponent(lineLabel, GroupLayout.PREFERRED_SIZE, 750, GroupLayout.PREFERRED_SIZE))))
-					.addContainerGap(21, Short.MAX_VALUE))
+					.addContainerGap(33, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -110,7 +116,7 @@ public class ProfilePanel extends JPanel{
 					.addComponent(emailLabel, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addComponent(lineLabel, GroupLayout.PREFERRED_SIZE, 5, GroupLayout.PREFERRED_SIZE)
-					.addGap(317))
+					.addGap(318))
 		);
 		setLayout(groupLayout);
 	}

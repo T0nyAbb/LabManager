@@ -18,6 +18,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
@@ -106,9 +108,10 @@ public class HandleReservationPanel extends JPanel{
 		try {
 			prenotazioni = (ArrayList<Prenotazione>) controller.getPrenotazioneDao().getByUtente(controller.getLoggedUser());
 			if(prenotazioni.size()>0) {
+				DateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
 				String[] stringArr = new String[prenotazioni.size()];
 				for(int x=0; x<prenotazioni.size(); ++x) {
-					stringArr[x] = prenotazioni.get(x).getDataInizio() +
+					stringArr[x] = timeFormat.format(prenotazioni.get(x).getDataInizio()) +
 							" [" + prenotazioni.get(x).getDurata() + " ore] - " + prenotazioni.get(x).getStrumento().getDescrizione() +
 							" - " + prenotazioni.get(x).getStrumento().getPostazione().getSede().getIndirizzo() + "-" +
 							prenotazioni.get(x).getStrumento().getPostazione().getNome();
@@ -142,8 +145,6 @@ public class HandleReservationPanel extends JPanel{
 	
 	private void setLayoutComponents() {
 		
-
-
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -190,10 +191,7 @@ public class HandleReservationPanel extends JPanel{
 	
 	private void modifyPrenotazione() {
 		int listIndex = list.getSelectedIndex();
-		try {
-			controller.getPrenotazioneDao().delete(prenotazioni.get(listIndex));
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+		if(listIndex != -1)
+			controller.updatePrenotazione(prenotazioni.get(listIndex));
 	}
 }

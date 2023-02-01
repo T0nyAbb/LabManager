@@ -12,6 +12,10 @@ import exceptions.EmptyFieldException;
 import exceptions.IncorrectCredentialsException;
 import exceptions.InvalidTextFileContentException;
 import exceptions.PasswordsNotMatchingException;
+import dao.*;
+import gui.frames.*;
+import gui.utility.ModifyDialog;
+import DBconnection.OracleConnection;
 import gui.frames.AccessFrame;
 import gui.frames.MainpageFrame;
 
@@ -22,9 +26,15 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 public class Controller {
 	
@@ -208,7 +218,28 @@ public class Controller {
 		}
 	}
 	
-    
+	public void updatePrenotazione(Prenotazione prenotazione) {
+		mainpageFrame.getHandleReservationPanel().clearErrorMessage();
+
+		ModifyDialog modifyDialog = new ModifyDialog(mainpageFrame);
+		modifyDialog.setVisible(true);
+		DateFormat timeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		ArrayList<String> params = new ArrayList<>();
+		params.add(timeFormat.format(modifyDialog.getDataInizio()));
+		params.add(modifyDialog.getDurata() + "");
+
+		try {
+			getPrenotazioneDao().update(prenotazione, params);
+			mainpageFrame.getHandleReservationPanel().loadListContent();
+		}catch(SQLException e){
+			String SQLErrorMessage = e.toString().toUpperCase();
+
+			if(SQLErrorMessage.indexOf("DELETE_OR_MODIFY_PREN") != -1)
+				mainpageFrame.getHandleReservationPanel().showErrorMessage("Non si puo' modificare una prenotazione passata!");
+			e.printStackTrace();
+		}
+	}
+
     public void showProfile() {
     	mainpageFrame.showProfilePanel();
     }
@@ -223,7 +254,7 @@ public class Controller {
 	public void showStats() {
 		mainpageFrame.showStatsPanel();
 	}
-    
+
     public void showWelcome() {
     	mainpageFrame.showWelcomePanel();
 
@@ -274,6 +305,8 @@ public class Controller {
     	}
     }
 
-    
+
+
+
     
 }
