@@ -54,18 +54,18 @@ public class ProfilePanel extends JPanel{
 		if(controller != null && controller.getLoggedUser() != null) {
 			username = controller.getLoggedUser().getUsername();
 		}
-		usernameLabel.setText("<html><b><font color = \"#00448C\">Username:</font></b> \""+username+"\"</html>");
+		usernameLabel.setText("<html><font color = \"#00448C\">Username:</font> \""+username+"\"</html>");
 		usernameLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		usernameLabel.setFont(new Font("Century Gothic", Font.PLAIN, 24));
+		usernameLabel.setFont(new Font("Century Gothic", Font.PLAIN, 22));
 		
 		emailLabel = new JLabel();
 		String email = "n/a";
 		if(controller != null && controller.getLoggedUser() != null) {
 			email = controller.getLoggedUser().getEmail();
 		}
-		emailLabel.setText("<html><b><font color = \"#00448C\">Email:</font></b> \""+email+"\"</html>");
+		emailLabel.setText("<html><font color = \"#00448C\">Email:</font> \""+email+"\"</html>");
 		emailLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		emailLabel.setFont(new Font("Century Gothic", Font.PLAIN, 24));
+		emailLabel.setFont(new Font("Century Gothic", Font.PLAIN, 22));
 		
 		headerLabel = new JLabel();
 		headerLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -90,21 +90,20 @@ public class ProfilePanel extends JPanel{
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(56)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(emailLabel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(usernameLabel, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 799, GroupLayout.PREFERRED_SIZE)))
 						.addComponent(headerLabel, GroupLayout.PREFERRED_SIZE, 843, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(32)
-							.addComponent(lineLabel, GroupLayout.PREFERRED_SIZE, 750, GroupLayout.PREFERRED_SIZE)))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+									.addComponent(emailLabel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(usernameLabel, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 799, GroupLayout.PREFERRED_SIZE))
+								.addComponent(lineLabel, GroupLayout.PREFERRED_SIZE, 750, GroupLayout.PREFERRED_SIZE))))
 					.addContainerGap(21, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(headerLabel, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
+					.addComponent(headerLabel, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
 					.addGap(37)
 					.addComponent(usernameLabel, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)

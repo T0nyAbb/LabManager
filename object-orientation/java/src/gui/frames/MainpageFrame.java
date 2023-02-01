@@ -4,6 +4,8 @@ import java.awt.*;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import control.Controller;
 import gui.panels.mainpageframe.*;
 import gui.utility.DatePicker;
@@ -20,7 +22,6 @@ public class MainpageFrame extends JFrame {
 	private ProfilePanel profilePanel;
 	private MakeReservationPanel makeReservationPanel;
 	private HandleReservationPanel handleReservationPanel;
-
 	
 	public MainpageFrame(Controller controller) throws SQLException {
 		this.controller = controller;
@@ -54,6 +55,7 @@ public class MainpageFrame extends JFrame {
 		makeReservationPanel.setVisible(false);
 		profilePanel.setVisible(false);
         handleReservationPanel.setVisible(true);
+        handleReservationPanel.loadListContent();
         getContentPane().add(handleReservationPanel, BorderLayout.CENTER);
 	}
 	

@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Prenotazione {
     //Attributi
+	private int id_prenotazione;
     private Strumento strumento;
     private Utente utente;
     private Date dataPrenotazione;
@@ -11,8 +12,9 @@ public class Prenotazione {
     private Date dataInizio;
 
     //Costruttori
-    public Prenotazione(Strumento strumento, Utente utente, Date dataPrenotazione, int durata, Date dataInizio) {
-        this.strumento = strumento;
+    public Prenotazione(int id_prenotazione, Strumento strumento, Utente utente, Date dataPrenotazione, int durata, Date dataInizio) {
+        this.id_prenotazione = id_prenotazione;
+    	this.strumento = strumento;
         this.utente = utente;
         this.dataPrenotazione = dataPrenotazione;
         this.durata = durata;
@@ -24,7 +26,15 @@ public class Prenotazione {
         return strumento;
     }
 
-    public void setStrumento(Strumento strumento) {
+    public int getId() {
+		return id_prenotazione;
+	}
+
+	public void setId(int id_prenotazione) {
+		this.id_prenotazione = id_prenotazione;
+	}
+
+	public void setStrumento(Strumento strumento) {
         this.strumento = strumento;
     }
 

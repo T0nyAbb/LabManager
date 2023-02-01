@@ -63,6 +63,11 @@ public class RectangleButton extends JButton{
         
 	}
 
+	public RectangleButton(String string) {
+		this();
+		setText(string);
+	}
+
 	public Color getDefaultColor() {
 		return defaultColor;
 	}

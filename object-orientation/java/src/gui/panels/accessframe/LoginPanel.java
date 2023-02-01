@@ -79,12 +79,12 @@ public class LoginPanel extends JPanel {
         add(iconLabel);
         
         usernameLabel = new JLabel("Username");
-        usernameLabel.setFont(new Font("Century Gothic", Font.BOLD, 18));
+        usernameLabel.setFont(new Font("Century Gothic", Font.PLAIN, 16));
         usernameLabel.setBounds(130, 249, 177, 20);
         add(usernameLabel);
         
         passwordLabel = new JLabel("Password");
-        passwordLabel.setFont(new Font("Century Gothic", Font.BOLD, 18));
+        passwordLabel.setFont(new Font("Century Gothic", Font.PLAIN, 16));
         passwordLabel.setBounds(130, 309, 177, 20);
         add(passwordLabel);
         

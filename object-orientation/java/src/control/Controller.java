@@ -58,7 +58,9 @@ public class Controller {
 	}
 
     //COSTRUTTORI:
-    private Controller(){}
+    public Controller(){
+    	
+    }
    
     //ALTRI METODI:
     public Connection getDatabaseConnection() {
@@ -69,13 +71,28 @@ public class Controller {
 		return loggedUser;
 	}
 
-    public void startApplication() throws ClassNotFoundException, SQLException, IOException, InvalidTextFileContentException {
+    public UtenteDao getUtenteDao() {
+		return utenteDao;
+	}
+
+	public SedeDao getSedeDao() {
+		return sedeDao;
+	}
+
+	public StrumentoDao getStrumentoDao() {
+		return strumentoDao;
+	}
+
+	public PrenotazioneDao getPrenotazioneDao() {
+		return prenotazioneDao;
+	}
+
+	public void startApplication() throws ClassNotFoundException, SQLException, IOException, InvalidTextFileContentException {
 		databaseConnection = OracleConnection.getOracleConnection().getConnection();
 		utenteDao = new UtenteDao(databaseConnection);
 		sedeDao = new SedeDao(databaseConnection);
 		strumentoDao = new StrumentoDao(databaseConnection);
 		prenotazioneDao = new PrenotazioneDao(databaseConnection);
-				
 		accessFrame = new AccessFrame(this);
 		accessFrame.setVisible(true);
     }
@@ -150,8 +167,8 @@ public class Controller {
     	loggedUser = null;
     }
     
-	public void makeReservationMainpageFrame(Strumento strumento, Date data_inizio, int durata) {
-		Prenotazione newPrenotazione = new Prenotazione(strumento, loggedUser, null, durata, data_inizio);
+	public void makePrenotazione(Strumento strumento, Date data_inizio, int durata) {
+		Prenotazione newPrenotazione = new Prenotazione(0, strumento, loggedUser, null, durata, data_inizio);
 		mainpageFrame.getMakeReservationPanel().clearErrorMessage();
 		mainpageFrame.getMakeReservationPanel().setErrorMessageColor(Color.RED);
 		try {
@@ -172,6 +189,21 @@ public class Controller {
 		}
 		
 	}
+	
+	public void deletePrenotazione(Prenotazione pren) {
+		try {
+			mainpageFrame.getHandleReservationPanel().clearErrorMessage();
+			getPrenotazioneDao().delete(pren);
+			mainpageFrame.getHandleReservationPanel().loadListContent();
+		} catch (SQLException e) {
+			String SQLErrorMessage = e.toString().toUpperCase();
+			
+			if(SQLErrorMessage.indexOf("DELETE_OR_MODIFY_PREN") != -1)
+				mainpageFrame.getHandleReservationPanel().showErrorMessage("Non si puo' cancellare una prenotazione passata!");
+			e.printStackTrace();
+		}
+	}
+	
     
     public void showProfile() {
     	mainpageFrame.showProfilePanel();

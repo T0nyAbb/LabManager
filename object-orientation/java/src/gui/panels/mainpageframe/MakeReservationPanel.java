@@ -127,7 +127,7 @@ public class MakeReservationPanel extends JPanel{
 				String post_nome = strumenti.get(x).getPostazione().getNome();
 				String sede_indirizzo = strumenti.get(x).getPostazione().getSede().getIndirizzo();
 				String lab_nome = strumenti.get(x).getPostazione().getSede().getLaboratorio().getNome();
-				stringStrumenti[x] = id + ": " +desc + ", "+ lab_nome + sede_indirizzo + post_nome;
+				stringStrumenti[x] = id + ": " +desc + ", "+ lab_nome + ", " + sede_indirizzo + ", " + post_nome;
 			}
 		strumentoComboBox.setModel(new DefaultComboBoxModel<String> (stringStrumenti));
 		}
@@ -140,7 +140,7 @@ public class MakeReservationPanel extends JPanel{
 	private void generateDatePicker() {
 		datePicker = new DatePicker();
 		datePicker.setFormattedTextField(dateTextField);
-		datePicker.setBorder(new LineBorder(Color.GRAY));
+		datePicker.setBorder(new LineBorder(new Color(128, 128, 128), 1, true));
 		datePicker.setVisible(false);
 	}
 	
@@ -207,17 +207,17 @@ public class MakeReservationPanel extends JPanel{
 		
 		errorLabel = new JLabel("ERROR");
         errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        errorLabel.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+        errorLabel.setFont(new Font("Century Gothic", Font.PLAIN, 14));
         errorLabel.setForeground(Color.RED);
         errorLabel.setBounds(0, 196, 440, 31);
 	}
 	
 	private void generateComboBox() {
 		strumentoComboBox = new JComboBox<String>();
-		strumentoComboBox.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		strumentoComboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
 		sedeComboBox = new JComboBox<String>();
-		sedeComboBox.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		sedeComboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		sedeComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -244,84 +244,79 @@ public class MakeReservationPanel extends JPanel{
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(headerLabel, GroupLayout.PREFERRED_SIZE, 851, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(19, Short.MAX_VALUE))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(sedeLabel, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
-						.addComponent(dataInizioLabel, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)
-						.addComponent(oraInizioLabel)
-						.addComponent(durataLabel, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
-						.addComponent(strumentoLabel))
-					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(6)
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(timeComboBox, 0, 308, Short.MAX_VALUE)
+							.addGap(20)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(sedeLabel, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
+								.addComponent(dataInizioLabel, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)
+								.addComponent(oraInizioLabel)
+								.addComponent(durataLabel, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
+								.addComponent(strumentoLabel))
+							.addGap(28)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+									.addComponent(timeComboBox, 0, 360, Short.MAX_VALUE)
+									.addGroup(groupLayout.createSequentialGroup()
+										.addComponent(dateTextField, GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+										.addPreferredGap(ComponentPlacement.UNRELATED)
+										.addComponent(dateButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+									.addGroup(groupLayout.createSequentialGroup()
+										.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+											.addComponent(strumentoComboBox, Alignment.LEADING, 0, 358, Short.MAX_VALUE)
+											.addComponent(sedeComboBox, 0, 358, Short.MAX_VALUE))
+										.addGap(2)))
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(dateTextField, GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(dateButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-										.addComponent(strumentoComboBox, Alignment.LEADING, 0, 306, Short.MAX_VALUE)
-										.addComponent(sedeComboBox, 0, 306, Short.MAX_VALUE))
-									.addGap(2)))
-							.addGap(6))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(15)
-							.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)))
+									.addGap(9)
+									.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE))))
+						.addComponent(errorLabel, GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE))
 					.addGap(18)
 					.addComponent(datePicker, GroupLayout.PREFERRED_SIZE, 316, GroupLayout.PREFERRED_SIZE)
-					.addGap(67))
+					.addGap(41))
+				.addComponent(headerLabel, GroupLayout.DEFAULT_SIZE, 922, Short.MAX_VALUE)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(298)
-					.addComponent(effettuaPrenotazioneButton, GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
-					.addGap(285))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap(200, Short.MAX_VALUE)
-					.addComponent(errorLabel, GroupLayout.PREFERRED_SIZE, 482, GroupLayout.PREFERRED_SIZE)
-					.addGap(188))
+					.addGap(128)
+					.addComponent(effettuaPrenotazioneButton, GroupLayout.DEFAULT_SIZE, 670, Short.MAX_VALUE)
+					.addGap(124))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(headerLabel, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
-					.addGap(26)
+					.addComponent(headerLabel, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
+					.addGap(27)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE, false)
-								.addComponent(sedeComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(sedeLabel))
-							.addGap(18)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(strumentoComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(strumentoLabel))
-							.addGap(17)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(dateTextField, GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
-								.addComponent(dataInizioLabel)
-								.addComponent(dateButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
-							.addGap(18)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(timeComboBox, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-								.addComponent(oraInizioLabel, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))
-							.addGap(18)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(durataLabel)
-								.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
-							.addGap(161))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(datePicker, GroupLayout.PREFERRED_SIZE, 310, GroupLayout.PREFERRED_SIZE)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(sedeComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addGap(18)
+									.addComponent(strumentoComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addGap(17)
+									.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+										.addComponent(dateTextField, GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+										.addComponent(dateButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+									.addGap(18)
+									.addComponent(timeComboBox, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+									.addGap(18)
+									.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+									.addGap(27)
+									.addComponent(errorLabel, GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)))
+							.addGap(26))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(datePicker, GroupLayout.PREFERRED_SIZE, 310, GroupLayout.PREFERRED_SIZE)
-							.addGap(56)))
-					.addGap(5)
-					.addComponent(errorLabel)
-					.addGap(18)
-					.addComponent(effettuaPrenotazioneButton, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
+							.addComponent(sedeLabel)
+							.addGap(18)
+							.addComponent(strumentoLabel)
+							.addGap(17)
+							.addComponent(dataInizioLabel)
+							.addGap(18)
+							.addComponent(oraInizioLabel, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(durataLabel)
+							.addGap(154)))
+					.addGap(91)
+					.addComponent(effettuaPrenotazioneButton, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+					.addGap(24))
 		);
 		setLayout(groupLayout);
 	}
@@ -342,7 +337,6 @@ public class MakeReservationPanel extends JPanel{
 		}
 		
 		int durata = (int) spinner.getValue();
-		System.out.println(dataInizio + " " + durata);
-		controller.makeReservationMainpageFrame(strumento, dataInizio, durata);
+		controller.makePrenotazione(strumento, dataInizio, durata);
 	}
 }
