@@ -236,6 +236,8 @@ public class Controller {
 
 			if(SQLErrorMessage.indexOf("DELETE_OR_MODIFY_PREN") != -1)
 				mainpageFrame.getHandleReservationPanel().showErrorMessage("Non si puo' modificare una prenotazione passata!");
+			else if(SQLErrorMessage.indexOf("VALID_PREN_INIZIO") != -1)
+				mainpageFrame.getHandleReservationPanel().showErrorMessage("Non credo tu abbia una macchina del tempo.");
 			e.printStackTrace();
 		}
 	}

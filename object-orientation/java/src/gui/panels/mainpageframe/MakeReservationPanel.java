@@ -30,6 +30,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import java.util.Locale;
 import javax.swing.JSpinner;
 import javax.swing.JComboBox;
 import javax.swing.border.LineBorder;
@@ -177,7 +178,7 @@ public class 	MakeReservationPanel extends JPanel{
 		headerLabel = new JLabel();
 		headerLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		headerLabel.setForeground(Color.WHITE);
-		headerLabel.setText("Effetua Prenotazione");
+		headerLabel.setText("Effettua Prenotazione");
 		headerLabel.setFont(new Font("Century Gothic", Font.ITALIC, 25));
 		headerLabel.setBackground(Color.GRAY);
 		headerLabel.setOpaque(true);
@@ -228,7 +229,7 @@ public class 	MakeReservationPanel extends JPanel{
 		});
 		
 		timeComboBox = new JComboBox<String>();
-		timeComboBox.setModel(new DefaultComboBoxModel<String> (new String[] {"00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00 ", "13:00 ", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"}));
+		timeComboBox.setModel(new DefaultComboBoxModel<String> (new String[] {"00:00", "00:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30", "04:00", "04:30", "05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",  "15:00", "15:30",  "16:00", "16:30",  "17:00", "17:30",  "18:00", "18:30",  "19:00", "19:30",  "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30"}));
 		timeComboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
 	}
 	
@@ -325,16 +326,19 @@ public class 	MakeReservationPanel extends JPanel{
 		Strumento strumento = new Strumento(null, null, null);
 		strumento.setId(id_strumento);
 		
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");  
-		DateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ITALY);
+		SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ITALY);
         String strDate = dateFormat.format((Date) dateTextField.getValue());  
-        Date dataInizio = null;
-		try {
-			dataInizio = timeFormat.parse(strDate + " " + timeComboBox.getSelectedItem());
-		} catch (ParseException e) {
+        String dataInizioString;
+		Date dataInizio = null;
+		String ora = (String) timeComboBox.getSelectedItem();
+		dataInizioString = strDate + " " + ora;
+		try{
+			dataInizio = timeFormat.parse(dataInizioString);
+		} catch(ParseException e) {
 			e.printStackTrace();
 		}
-		
+
 		int durata = (int) spinner.getValue();
 		controller.makePrenotazione(strumento, dataInizio, durata);
 	}
