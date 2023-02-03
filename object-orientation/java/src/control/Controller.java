@@ -1,5 +1,7 @@
 package control;
 
+import DBconnection.OracleConnection;
+import dao.*;
 import dto.*;
 import exceptions.EmptyFieldException;
 import exceptions.IncorrectCredentialsException;
@@ -198,6 +200,7 @@ public class Controller {
 		mainpageFrame.getHandleReservationPanel().clearErrorMessage();
 		
 		try {
+			mainpageFrame.getHandleReservationPanel().clearErrorMessage();
 			getPrenotazioneDao().delete(prenotazione);
 			mainpageFrame.getHandleReservationPanel().loadListContent();
 		} catch (SQLException e) {

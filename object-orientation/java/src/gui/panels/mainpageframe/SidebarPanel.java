@@ -114,16 +114,15 @@ public class SidebarPanel extends JPanel {
         });
 		statsButton = new UnderlineButton();
 		statsButton.setIcon(new ImageIcon(SidebarPanel.class.getResource("/icone/dot2.png")));
-		statsButton.setFont(new Font("Century Gothic", Font.BOLD, 28));
+		statsButton.setFont(new Font("Century Gothic", Font.BOLD, 20));
 		statsButton.setHorizontalAlignment(SwingConstants.LEFT);
 		statsButton.setText("Statistiche");
 		statsButton.setDefaultColor(Color.white);
 		statsButton.setEnteredColor(Color.white);
 		statsButton.setPressedColor(Color.white);
-		statsButton.setBackground(new Color(0, 40, 83));
-		statsButton.setVerticalAlignment(SwingConstants.TOP);
 		statsButton.setOpaque(true);
 		statsButton.setForeground(Color.WHITE);
+		statsButton.setBackground(new Color(0, 68, 140));
 		statsButton.setBorder(new EmptyBorder(0, 15, 0, 15));
 		statsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -159,7 +158,7 @@ public class SidebarPanel extends JPanel {
         			.addComponent(makeReservationButton, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addComponent(handleReservationButton, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
-        			.addPreferredGap(ComponentPlacement.RELATED, 172, Short.MAX_VALUE)
+        			.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(statsButton, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED, 172, Short.MAX_VALUE)
         			.addComponent(logoutButton, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE))
