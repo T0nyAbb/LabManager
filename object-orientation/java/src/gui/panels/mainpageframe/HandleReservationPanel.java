@@ -37,10 +37,12 @@ public class HandleReservationPanel extends JPanel{
 	/**
 	 * 
 	 */
+	
 	private static final long serialVersionUID = 1L;
 	private Controller controller;
 	private JLabel headerLabel;
 	private JList<String> list;
+	private JScrollPane listScroller;
 	private ArrayList<Prenotazione> prenotazioni;
 	private RectangleButton modificaButton;
 	private RectangleButton eliminaButton;
@@ -93,13 +95,13 @@ public class HandleReservationPanel extends JPanel{
 	private void generateLists() {
 		list = new JList<String>();
 		list.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		list.setBorder(new LineBorder(Color.GRAY, 2, true));
 		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		list.setLayoutOrientation(JList.VERTICAL);
 		list.setVisibleRowCount(-1);
 		loadListContent();
 		
-		JScrollPane listScroller = new JScrollPane(list);
+		listScroller = new JScrollPane(list);
+		listScroller.setViewportBorder(new LineBorder(Color.GRAY, 1, true));
 		listScroller.setViewportView(list);
 		listScroller.setPreferredSize(new Dimension(250, 80));
 	}
@@ -117,6 +119,8 @@ public class HandleReservationPanel extends JPanel{
 							prenotazioni.get(x).getStrumento().getPostazione().getNome();
 				}
 				list.setListData(stringArr);
+			}else {
+				list.setListData(new String[0]);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -150,35 +154,35 @@ public class HandleReservationPanel extends JPanel{
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addComponent(headerLabel, GroupLayout.DEFAULT_SIZE, 829, Short.MAX_VALUE)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(28)
+					.addGap(27)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(list, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+						.addComponent(listScroller, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(selezionaLabel)
 							.addPreferredGap(ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
 							.addComponent(eliminaButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(modificaButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addGap(33))
+					.addGap(34))
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(225)
-					.addComponent(errorLabel, GroupLayout.PREFERRED_SIZE, 367, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(237, Short.MAX_VALUE))
+					.addGap(94)
+					.addComponent(errorLabel, GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE)
+					.addGap(111))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addComponent(headerLabel, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+					.addGap(29)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(modificaButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(eliminaButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(selezionaLabel))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(list, GroupLayout.PREFERRED_SIZE, 355, GroupLayout.PREFERRED_SIZE)
-					.addGap(15)
-					.addComponent(errorLabel)
-					.addContainerGap())
+					.addComponent(listScroller, GroupLayout.PREFERRED_SIZE, 355, GroupLayout.PREFERRED_SIZE)
+					.addGap(41)
+					.addComponent(errorLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGap(42))
 		);
 		setLayout(groupLayout);
 	}

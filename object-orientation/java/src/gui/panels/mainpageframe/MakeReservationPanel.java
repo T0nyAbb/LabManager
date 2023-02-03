@@ -36,7 +36,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.DefaultComboBoxModel;
 
-public class 	MakeReservationPanel extends JPanel{
+public class MakeReservationPanel extends JPanel{
 	
 	/**
 	 * 
@@ -242,10 +242,11 @@ public class 	MakeReservationPanel extends JPanel{
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addComponent(headerLabel, GroupLayout.DEFAULT_SIZE, 922, Short.MAX_VALUE)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+					.addGap(20)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(20)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(sedeLabel, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
 								.addComponent(dataInizioLabel, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)
@@ -267,16 +268,16 @@ public class 	MakeReservationPanel extends JPanel{
 										.addGap(2)))
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGap(9)
-									.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE))))
-						.addComponent(errorLabel, GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE))
-					.addGap(18)
-					.addComponent(datePicker, GroupLayout.PREFERRED_SIZE, 316, GroupLayout.PREFERRED_SIZE)
-					.addGap(41))
-				.addComponent(headerLabel, GroupLayout.DEFAULT_SIZE, 922, Short.MAX_VALUE)
+									.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)))
+							.addGap(18))
+						.addComponent(errorLabel, GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE))
+					.addGap(14)
+					.addComponent(datePicker, GroupLayout.PREFERRED_SIZE, 322, GroupLayout.PREFERRED_SIZE)
+					.addGap(21))
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(128)
-					.addComponent(effettuaPrenotazioneButton, GroupLayout.DEFAULT_SIZE, 670, Short.MAX_VALUE)
-					.addGap(124))
+					.addGap(224)
+					.addComponent(effettuaPrenotazioneButton, GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
+					.addGap(210))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -286,7 +287,6 @@ public class 	MakeReservationPanel extends JPanel{
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(datePicker, GroupLayout.PREFERRED_SIZE, 310, GroupLayout.PREFERRED_SIZE)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(sedeComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 									.addGap(18)
@@ -300,20 +300,23 @@ public class 	MakeReservationPanel extends JPanel{
 									.addGap(18)
 									.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
 									.addGap(27)
-									.addComponent(errorLabel, GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)))
-							.addGap(26))
+									.addComponent(errorLabel, GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+									.addGap(26))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(sedeLabel)
+									.addGap(18)
+									.addComponent(strumentoLabel)
+									.addGap(17)
+									.addComponent(dataInizioLabel)
+									.addGap(18)
+									.addComponent(oraInizioLabel, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
+									.addGap(18)
+									.addComponent(durataLabel)
+									.addGap(154)))
+							.addGap(91))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(sedeLabel)
-							.addGap(18)
-							.addComponent(strumentoLabel)
-							.addGap(17)
-							.addComponent(dataInizioLabel)
-							.addGap(18)
-							.addComponent(oraInizioLabel, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(durataLabel)
-							.addGap(154)))
-					.addGap(91)
+							.addComponent(datePicker, GroupLayout.PREFERRED_SIZE, 310, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)))
 					.addComponent(effettuaPrenotazioneButton, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
 					.addGap(24))
 		);

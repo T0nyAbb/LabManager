@@ -1,13 +1,6 @@
 package control;
 
-import DBconnection.OracleConnection;
-import dao.PrenotazioneDao;
-import dao.SedeDao;
-import dao.StrumentoDao;
-import dao.UtenteDao;
-import dto.Prenotazione;
-import dto.Strumento;
-import dto.Utente;
+import dto.*;
 import exceptions.EmptyFieldException;
 import exceptions.IncorrectCredentialsException;
 import exceptions.InvalidTextFileContentException;
@@ -16,10 +9,7 @@ import dao.*;
 import gui.frames.*;
 import gui.utility.ModifyDialog;
 import DBconnection.OracleConnection;
-import gui.frames.AccessFrame;
-import gui.frames.MainpageFrame;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -204,42 +194,49 @@ public class Controller {
 		
 	}
 	
-	public void deletePrenotazione(Prenotazione pren) {
+	public void deletePrenotazione(Prenotazione prenotazione) {
+		mainpageFrame.getHandleReservationPanel().clearErrorMessage();
+		
 		try {
-			mainpageFrame.getHandleReservationPanel().clearErrorMessage();
-			getPrenotazioneDao().delete(pren);
+			getPrenotazioneDao().delete(prenotazione);
 			mainpageFrame.getHandleReservationPanel().loadListContent();
 		} catch (SQLException e) {
 			String SQLErrorMessage = e.toString().toUpperCase();
 			
 			if(SQLErrorMessage.indexOf("DELETE_OR_MODIFY_PREN") != -1)
 				mainpageFrame.getHandleReservationPanel().showErrorMessage("Non si puo' cancellare una prenotazione passata!");
-			e.printStackTrace();
+			else
+				mainpageFrame.getHandleReservationPanel().showErrorMessage("Campi non validi!");
 		}
 	}
 	
 	public void updatePrenotazione(Prenotazione prenotazione) {
 		mainpageFrame.getHandleReservationPanel().clearErrorMessage();
-
+		
 		ModifyDialog modifyDialog = new ModifyDialog(mainpageFrame);
 		modifyDialog.setVisible(true);
-		DateFormat timeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		DateFormat timeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm"); 
 		ArrayList<String> params = new ArrayList<>();
 		params.add(timeFormat.format(modifyDialog.getDataInizio()));
 		params.add(modifyDialog.getDurata() + "");
-
+		
 		try {
 			getPrenotazioneDao().update(prenotazione, params);
 			mainpageFrame.getHandleReservationPanel().loadListContent();
 		}catch(SQLException e){
 			String SQLErrorMessage = e.toString().toUpperCase();
-
+			
 			if(SQLErrorMessage.indexOf("DELETE_OR_MODIFY_PREN") != -1)
 				mainpageFrame.getHandleReservationPanel().showErrorMessage("Non si puo' modificare una prenotazione passata!");
-			e.printStackTrace();
+			else if(SQLErrorMessage.indexOf("VALID_PREN_INIZIO") != -1)
+				mainpageFrame.getHandleReservationPanel().showErrorMessage("La data prenotazione non puo' essere una data presente o passata!");
+			else if(SQLErrorMessage.indexOf("VALID_PREN_DURATA") != -1)
+				mainpageFrame.getHandleReservationPanel().showErrorMessage("La durata deve essere compresa tra 1 e 24!");
+			else
+				mainpageFrame.getHandleReservationPanel().showErrorMessage("Campi non validi!");
 		}
 	}
-
+    
     public void showProfile() {
     	mainpageFrame.showProfilePanel();
     }
@@ -251,10 +248,7 @@ public class Controller {
     public void showHandleReservation() {
     	mainpageFrame.showHandleReservationPanel();
     }
-	public void showStats() {
-		mainpageFrame.showStatsPanel();
-	}
-
+    
     public void showWelcome() {
     	mainpageFrame.showWelcomePanel();
 
@@ -307,6 +301,6 @@ public class Controller {
 
 
 
-
+    
     
 }
