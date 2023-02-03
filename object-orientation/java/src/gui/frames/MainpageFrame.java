@@ -40,6 +40,7 @@ public class MainpageFrame extends JFrame {
 		welcomePanel.setVisible(false);
 		makeReservationPanel.setVisible(false);
 		handleReservationPanel.setVisible(false);
+		strumentoStatsPanel.setVisible(false);
         profilePanel.setVisible(true);
         getContentPane().add(profilePanel, BorderLayout.CENTER);
 	}
@@ -48,6 +49,7 @@ public class MainpageFrame extends JFrame {
 		welcomePanel.setVisible(false);
 		profilePanel.setVisible(false);
 		handleReservationPanel.setVisible(false);
+        strumentoStatsPanel.setVisible(false);
         makeReservationPanel.setVisible(true);
         getContentPane().add(makeReservationPanel, BorderLayout.CENTER);
 	}
@@ -56,9 +58,9 @@ public class MainpageFrame extends JFrame {
 		welcomePanel.setVisible(false);
 		makeReservationPanel.setVisible(false);
 		profilePanel.setVisible(false);
+        strumentoStatsPanel.setVisible(false);
         handleReservationPanel.setVisible(true);
         handleReservationPanel.loadListContent();
-		strumentoStatsPanel.setVisible(false);
         getContentPane().add(handleReservationPanel, BorderLayout.CENTER);
 	}
 	
@@ -66,8 +68,8 @@ public class MainpageFrame extends JFrame {
 		handleReservationPanel.setVisible(false);
 		makeReservationPanel.setVisible(false);
 		profilePanel.setVisible(false);
-        welcomePanel.setVisible(true);
-		strumentoStatsPanel.setVisible(false);
+        strumentoStatsPanel.setVisible(false);
+		welcomePanel.setVisible(true);
         getContentPane().add(welcomePanel, BorderLayout.CENTER);
 	}
 	public void showStatsPanel() {
@@ -78,9 +80,6 @@ public class MainpageFrame extends JFrame {
 		strumentoStatsPanel.setVisible(true);
 		getContentPane().add(strumentoStatsPanel, BorderLayout.CENTER);
 	}
-
-
-
 
 	public SidebarPanel getSidebarPanel() {
 		return sidebarPanel;

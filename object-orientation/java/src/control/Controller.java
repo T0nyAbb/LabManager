@@ -181,6 +181,14 @@ public class Controller {
 			prenotazioneDao.insert(newPrenotazione);
 			mainpageFrame.getMakeReservationPanel().setErrorMessageColor(new Color(60, 179, 113));
 			mainpageFrame.getMakeReservationPanel().showErrorMessage("Prenotazione inserita!");
+			timer = new Timer(1000, new ActionListener(){      
+	            public void actionPerformed(ActionEvent e) {
+	            	mainpageFrame.getMakeReservationPanel().clearErrorMessage();
+	        		mainpageFrame.getMakeReservationPanel().setErrorMessageColor(Color.RED);
+	            	stopTimer();
+	            }
+	        });
+			timer.start();
 		} catch (SQLException e) {
 			String SQLErrorMessage = e.toString().toUpperCase();
 			
@@ -251,6 +259,10 @@ public class Controller {
     public void showHandleReservation() {
     	mainpageFrame.showHandleReservationPanel();
     }
+    
+    public void showStats() {
+		mainpageFrame.showStatsPanel();
+	}
     
     public void showWelcome() {
     	mainpageFrame.showWelcomePanel();

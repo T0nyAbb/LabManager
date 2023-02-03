@@ -9,11 +9,12 @@ import dao.StrumentoDao;
 import dto.Strumento;
 import control.Controller;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
 public class StrumentoStatsPanel extends JPanel {
-    private Controller controller;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Controller controller;
     private JComboBox<String> strumentoComboBox;
     private JTextField textField;
     private JLabel strumentoLabel;

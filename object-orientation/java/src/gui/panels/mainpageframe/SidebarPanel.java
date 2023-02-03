@@ -58,7 +58,7 @@ public class SidebarPanel extends JPanel {
 		profileButton.setVerticalAlignment(SwingConstants.TOP);
 		profileButton.setOpaque(true);
 		profileButton.setForeground(Color.WHITE);
-		profileButton.setBorder(new EmptyBorder(15, 25, 15, 25));
+		profileButton.setBorder(new EmptyBorder(15, 15, 15, 15));
 		profileButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		controller.showProfile();
