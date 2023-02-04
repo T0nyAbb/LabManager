@@ -115,7 +115,7 @@ public class HandleReservationPanel extends JPanel{
 				for(int x=0; x<prenotazioni.size(); ++x) {
 					stringArr[x] = timeFormat.format(prenotazioni.get(x).getDataInizio()) +
 							" [" + prenotazioni.get(x).getDurata() + " ore] - " + prenotazioni.get(x).getStrumento().getDescrizione() +
-							" - " + prenotazioni.get(x).getStrumento().getPostazione().getSede().getIndirizzo() + "-" +
+							" - " + prenotazioni.get(x).getStrumento().getPostazione().getSede().getIndirizzo() + " Postazione: " +
 							prenotazioni.get(x).getStrumento().getPostazione().getNome();
 				}
 				list.setListData(stringArr);

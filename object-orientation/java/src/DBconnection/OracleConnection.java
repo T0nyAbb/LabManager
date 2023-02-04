@@ -2,6 +2,7 @@ package DBconnection;
 
 import oracle.jdbc.pool.OracleDataSource;
 
+import java.net.URL;
 import java.sql.*;
 
 import exceptions.InvalidTextFileContentException;
@@ -35,7 +36,8 @@ public class OracleConnection {
 
     //metodo privato per stabilire la connessione
     private void establishConnection() throws ClassNotFoundException, SQLException, IOException, InvalidTextFileContentException {
-        BufferedReader leggiCredenziali = new BufferedReader(new FileReader("src/DBconnection/credentials.txt"));
+        URL credentialsURL = OracleConnection.class.getResource("credentials.txt");
+        BufferedReader leggiCredenziali = new BufferedReader(new FileReader(credentialsURL.getFile()));
         String DB_URL = leggiCredenziali.readLine();
         String DB_USERNAME = leggiCredenziali.readLine();
         String DB_PASSWORD = leggiCredenziali.readLine();
@@ -43,6 +45,7 @@ public class OracleConnection {
         if(DB_URL==null || DB_USERNAME==null || DB_PASSWORD==null) {
         	throw new InvalidTextFileContentException("File credentials.txt contiene campi vuoti per le credenziali di accesso al database.", null);
         }
+
         
         Class.forName("oracle.jdbc.driver.OracleDriver");
         OracleDataSource ods = new OracleDataSource();

@@ -49,7 +49,11 @@ public class Controller {
 			public void run() {
 				try {
 					Controller ctrl = new Controller();
+
 					ctrl.startApplication();
+					Strumento s = new Strumento(null,null,null);
+					s.setId(1);
+					ctrl.strumentoDao.getAvailableMonthForStats(s);
 					
 					
 				} catch(Exception e) {
@@ -157,11 +161,11 @@ public class Controller {
 		catch (SQLException e) {
 			String SQLErrorMessage = e.toString().toUpperCase();
 			
-			if(SQLErrorMessage.indexOf("EMAIL") != -1)
+			if(SQLErrorMessage.contains("EMAIL"))
 				accessFrame.showSignupErrorMessage("Email non valida!");
-			else if(SQLErrorMessage.indexOf("USERNAME") != -1)
+			else if(SQLErrorMessage.contains("USERNAME"))
 				accessFrame.showSignupErrorMessage("Username non valido! (6-18 caratteri alfanumerici)");
-			else if(SQLErrorMessage.indexOf("INSERISCI_PW") != -1)
+			else if(SQLErrorMessage.contains("INSERISCI_PW"))
 				accessFrame.showSignupErrorMessage("Password non valida! (6-18 caratteri alfanumerici, almeno un numero)");
 			else
 				accessFrame.showSignupErrorMessage("Campi non validi!");
@@ -177,35 +181,45 @@ public class Controller {
 		Prenotazione newPrenotazione = new Prenotazione(0, strumento, loggedUser, null, durata, data_inizio);
 		mainpageFrame.getMakeReservationPanel().clearErrorMessage();
 		mainpageFrame.getMakeReservationPanel().setErrorMessageColor(Color.RED);
+		timer = new Timer(2000, new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				mainpageFrame.getMakeReservationPanel().clearErrorMessage();
+				mainpageFrame.getMakeReservationPanel().setErrorMessageColor(Color.RED);
+				stopTimer();
+			}
+		});
 		try {
 			prenotazioneDao.insert(newPrenotazione);
 			mainpageFrame.getMakeReservationPanel().setErrorMessageColor(new Color(60, 179, 113));
 			mainpageFrame.getMakeReservationPanel().showErrorMessage("Prenotazione inserita!");
-			timer = new Timer(1000, new ActionListener(){      
-	            public void actionPerformed(ActionEvent e) {
-	            	mainpageFrame.getMakeReservationPanel().clearErrorMessage();
-	        		mainpageFrame.getMakeReservationPanel().setErrorMessageColor(Color.RED);
-	            	stopTimer();
-	            }
-	        });
 			timer.start();
 		} catch (SQLException e) {
 			String SQLErrorMessage = e.toString().toUpperCase();
-			
-			if(SQLErrorMessage.indexOf("NO_OVERLAP_PREN") != -1)
+			System.out.println(SQLErrorMessage);
+			if(SQLErrorMessage.contains("NO_OVERLAP_PREN"))
 				mainpageFrame.getMakeReservationPanel().showErrorMessage("Strumento gia' prenotato nella data esposta!");
-			else if(SQLErrorMessage.indexOf("VALID_PREN_INIZIO") != -1)
+			else if(SQLErrorMessage.contains("VALID_PREN_INIZIO"))
 				mainpageFrame.getMakeReservationPanel().showErrorMessage("La data prenotazione non puo' essere una data presente o passata!");
-			else if(SQLErrorMessage.indexOf("VALID_PREN_DURATA") != -1)
+			else if(SQLErrorMessage.contains("VALID_PREN_DURATA"))
 				mainpageFrame.getMakeReservationPanel().showErrorMessage("La durata deve essere compresa tra 1 e 24!");
+			else if(SQLErrorMessage.contains("NO_DOUBLE_PREN"))
+				mainpageFrame.getMakeReservationPanel().showErrorMessage("Non è possibile prenotare due strumenti diversi alla stessa data e ora");
 			else
 				mainpageFrame.getMakeReservationPanel().showErrorMessage("Campi non validi!");
+			timer.start();
 		}
 		
 	}
 	
 	public void deletePrenotazione(Prenotazione prenotazione) {
 		mainpageFrame.getHandleReservationPanel().clearErrorMessage();
+		timer = new Timer(2000, new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				mainpageFrame.getHandleReservationPanel().clearErrorMessage();
+				stopTimer();
+			}
+		});
+
 		
 		try {
 			mainpageFrame.getHandleReservationPanel().clearErrorMessage();
@@ -214,15 +228,22 @@ public class Controller {
 		} catch (SQLException e) {
 			String SQLErrorMessage = e.toString().toUpperCase();
 			
-			if(SQLErrorMessage.indexOf("DELETE_OR_MODIFY_PREN") != -1)
+			if(SQLErrorMessage.contains("DELETE_OR_MODIFY_PREN"))
 				mainpageFrame.getHandleReservationPanel().showErrorMessage("Non si puo' cancellare una prenotazione passata!");
 			else
 				mainpageFrame.getHandleReservationPanel().showErrorMessage("Campi non validi!");
+			timer.start();
 		}
 	}
 	
 	public void updatePrenotazione(Prenotazione prenotazione) {
 		mainpageFrame.getHandleReservationPanel().clearErrorMessage();
+		timer = new Timer(2000, new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				mainpageFrame.getHandleReservationPanel().clearErrorMessage();
+				stopTimer();
+			}
+		});
 		
 		ModifyDialog modifyDialog = new ModifyDialog(mainpageFrame);
 		modifyDialog.setVisible(true);
@@ -237,14 +258,17 @@ public class Controller {
 		}catch(SQLException e){
 			String SQLErrorMessage = e.toString().toUpperCase();
 			
-			if(SQLErrorMessage.indexOf("DELETE_OR_MODIFY_PREN") != -1)
-				mainpageFrame.getHandleReservationPanel().showErrorMessage("Non si puo' modificare una prenotazione passata!");
-			else if(SQLErrorMessage.indexOf("VALID_PREN_INIZIO") != -1)
+			if(SQLErrorMessage.contains("DELETE_OR_MODIFY_PREN"))
+				mainpageFrame.getHandleReservationPanel().showErrorMessage("La data inserita non puo' essere una data presente o passata");
+			else if(SQLErrorMessage.contains("VALID_PREN_INIZIO"))
 				mainpageFrame.getHandleReservationPanel().showErrorMessage("La data prenotazione non puo' essere una data presente o passata!");
-			else if(SQLErrorMessage.indexOf("VALID_PREN_DURATA") != -1)
+			else if(SQLErrorMessage.contains("VALID_PREN_DURATA"))
 				mainpageFrame.getHandleReservationPanel().showErrorMessage("La durata deve essere compresa tra 1 e 24!");
+			else if(SQLErrorMessage.contains("NO_DOUBLE_PREN"))
+				mainpageFrame.getHandleReservationPanel().showErrorMessage("Non può essere inserita una prenotazione per due strumenti diversi alla stessa data e ora");
 			else
 				mainpageFrame.getHandleReservationPanel().showErrorMessage("Campi non validi!");
+			timer.start();
 		}
 	}
     
@@ -270,7 +294,7 @@ public class Controller {
     }
     
     private void signupSuccessful() {
-    	timer = new Timer(1000, new ActionListener(){      
+    	timer = new Timer(2000, new ActionListener(){
             public void actionPerformed(ActionEvent e) {
             	accessFrame.showLoginPanel();
             	accessFrame.setEnabled(true);

@@ -59,9 +59,9 @@ public class MainpageFrame extends JFrame {
 		makeReservationPanel.setVisible(false);
 		profilePanel.setVisible(false);
         strumentoStatsPanel.setVisible(false);
+		handleReservationPanel.loadListContent();
         handleReservationPanel.setVisible(true);
-        handleReservationPanel.loadListContent();
-        getContentPane().add(handleReservationPanel, BorderLayout.CENTER);
+		getContentPane().add(handleReservationPanel, BorderLayout.CENTER);
 	}
 	
 	public void showWelcomePanel() {

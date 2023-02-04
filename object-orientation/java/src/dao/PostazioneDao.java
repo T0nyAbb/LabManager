@@ -53,7 +53,8 @@ public class PostazioneDao implements Dao<Postazione>{
             if(params.size()!=1) throw new RuntimeException("numero di parametri non validi");
             Sede s = postazione.getSede();
             String query = "UPDATE POSTAZIONE SET NOME=? WHERE NOME=? AND ID_SEDE=(SELECT POSTAZIONE.ID_SEDE FROM SEDE JOIN POSTAZIONE ON SEDE.ID_SEDE=POSTAZIONE.ID_SEDE WHERE POSTAZIONE.NOME =? AND UPPER(SEDE.INDIRIZZO) = UPPER(?))";
-            PreparedStatement sql = conn.prepareStatement(query);            sql.setString(1, params.get(1));
+            PreparedStatement sql = conn.prepareStatement(query);
+            sql.setString(1, params.get(1));
             sql.setString(2, postazione.getNome());
             sql.setString(3, postazione.getNome());
             sql.setString(4, s.getIndirizzo());

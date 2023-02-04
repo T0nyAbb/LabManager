@@ -71,9 +71,9 @@ public class UtenteDao implements Dao<Utente> {
 
         String query = "UPDATE UTENTE SET EMAIL=?, USERNAME=?, USR_PASSWORD=(SELECT UTL_I18N.STRING_TO_RAW(LTRIM(RTRIM(?)), 'AL32UTF8') FROM DUAL) WHERE UPPER(USERNAME)=UPPER(?)";
         PreparedStatement sql = conn.prepareStatement(query);
-        sql.setString(1, params.get(1));
-        sql.setString(2, params.get(2));
-        sql.setString(3, params.get(3));
+        sql.setString(1, params.get(0));
+        sql.setString(2, params.get(1));
+        sql.setString(3, params.get(2));
         sql.setString(4, utente.getUsername());
         sql.executeUpdate();
         sql.close();

@@ -3,12 +3,12 @@ package dao;
 import dto.Postazione;
 import dto.Sede;
 import dto.Strumento;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.Date;
 
 public class StrumentoDao implements Dao<Strumento> {
     private Connection conn;
@@ -134,5 +134,33 @@ public class StrumentoDao implements Dao<Strumento> {
         rs.close();
         sql.close();
         return strumento;
+    }
+    public List<String> getAvailableMonthForStats(Strumento strumento) throws SQLException {
+        SimpleDateFormat monthFormat = new SimpleDateFormat("yyyy-MMM", Locale.ITALY);
+        List<String> mesiDisponibili = new ArrayList<>();
+        //La query prende solo i mesi che sono già passati
+        String query = "SELECT MESE FROM RIEPILOGO_UTILIZZO_STRUMENTO_MESE WHERE MESE<(SELECT SYSDATE FROM DUAL) AND ID_STRUMENTO=?";
+        PreparedStatement sql = conn.prepareStatement(query);
+        sql.setInt(1, strumento.getId());
+        ResultSet rs = sql.executeQuery();
+        while (rs.next()) {
+            String mese = monthFormat.format(rs.getTimestamp(1));
+            mesiDisponibili.add(mese);
+        }
+        rs.close();
+        sql.close();
+        return mesiDisponibili;
+    }
+    public String getStatsByMese(Strumento strumento, String mese) throws SQLException {
+        String query = "SELECT * FROM RIEPILOGO_UTILIZZO_STRUMENTO_MESE R JOIN TOP_UTILIZZATORE_PER_STRUMENTO_MESE T ON R.ID_STRUMENTO=T.ID_STRUMENTO WHERE R.MESE = TO_DATE(?, 'YYYY/MON') AND R.ID_STRUMENTO=?";
+        PreparedStatement sql = conn.prepareStatement(query);
+        sql.setString(1, mese);
+        sql.setInt(2, strumento.getId());
+        ResultSet rs = sql.executeQuery();
+        if(rs.next()) {
+            return "Lo strumento durante il mese è stato utilizzato per un totale di " + rs.getInt(4) + " ore. L'utente che lo ha utilizzato di più è stato " + rs.getString(7) + " con ben " + rs.getInt(8) + " ore di utilizzo";
+        } else {
+            return "Non sono disponibili statistiche per il mese selezionato";
+        }
     }
 }

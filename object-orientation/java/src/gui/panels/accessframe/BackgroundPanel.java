@@ -25,7 +25,7 @@ public class BackgroundPanel extends JPanel {
 	private void generateBackgroundLabel() {
 		backgroundLabel = new JLabel();
 		
-		ImageIcon backgroundImage = new ImageIcon("src/background/bg03.jpg");
+		ImageIcon backgroundImage = new ImageIcon(BackgroundPanel.class.getResource("/background/bg03.jpg"));
         backgroundLabel.setIcon(backgroundImage);
         backgroundLabel.setBounds(0, 0, backgroundImage.getIconWidth(), backgroundImage.getIconHeight());
         add(backgroundLabel);
