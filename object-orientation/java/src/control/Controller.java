@@ -12,6 +12,7 @@ import gui.frames.*;
 import gui.utility.ModifyDialog;
 import DBconnection.OracleConnection;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,8 +26,6 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.JOptionPane;
-import javax.swing.Timer;
 
 public class Controller {
 	
@@ -49,13 +48,8 @@ public class Controller {
 			public void run() {
 				try {
 					Controller ctrl = new Controller();
-
 					ctrl.startApplication();
-					Strumento s = new Strumento(null,null,null);
-					s.setId(1);
-					ctrl.strumentoDao.getAvailableMonthForStats(s);
-					
-					
+
 				} catch(Exception e) {
 					JOptionPane.showMessageDialog(null ,"Si e' verificato un errore di tipo\n"+ e.getClass().getName()
 							+" a runtime.\n L'applicazione sara' terminata.\n\nCausa:\n"
@@ -203,7 +197,7 @@ public class Controller {
 			else if(SQLErrorMessage.contains("VALID_PREN_DURATA"))
 				mainpageFrame.getMakeReservationPanel().showErrorMessage("La durata deve essere compresa tra 1 e 24!");
 			else if(SQLErrorMessage.contains("NO_DOUBLE_PREN"))
-				mainpageFrame.getMakeReservationPanel().showErrorMessage("Non è possibile prenotare due strumenti diversi alla stessa data e ora");
+				mainpageFrame.getMakeReservationPanel().showErrorMessage("Non è possibile prenotare due strumenti diversi alla stessa data e ora!");
 			else
 				mainpageFrame.getMakeReservationPanel().showErrorMessage("Campi non validi!");
 			timer.start();

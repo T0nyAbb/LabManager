@@ -3,6 +3,7 @@ package dao;
 import dto.Postazione;
 import dto.Sede;
 import dto.Strumento;
+import oracle.jdbc.proxy.annotation.Pre;
 
 import java.sql.*;
 import java.text.ParseException;
@@ -135,11 +136,11 @@ public class StrumentoDao implements Dao<Strumento> {
         sql.close();
         return strumento;
     }
-    public List<String> getAvailableMonthForStats(Strumento strumento) throws SQLException {
+    public List<String> getAvailableMonthsForStats(Strumento strumento) throws SQLException {
         SimpleDateFormat monthFormat = new SimpleDateFormat("yyyy-MMM", Locale.ITALY);
         List<String> mesiDisponibili = new ArrayList<>();
-        //La query prende solo i mesi che sono già passati
-        String query = "SELECT MESE FROM RIEPILOGO_UTILIZZO_STRUMENTO_MESE WHERE MESE<(SELECT SYSDATE FROM DUAL) AND ID_STRUMENTO=?";
+        //La query prende solo il mese corrente e quelli che sono già passati
+        String query = "SELECT MESE FROM RIEPILOGO_UTILIZZO_STRUMENTO_MESE WHERE MESE<=(SELECT SYSDATE FROM DUAL) AND ID_STRUMENTO=?";
         PreparedStatement sql = conn.prepareStatement(query);
         sql.setInt(1, strumento.getId());
         ResultSet rs = sql.executeQuery();
@@ -151,16 +152,67 @@ public class StrumentoDao implements Dao<Strumento> {
         sql.close();
         return mesiDisponibili;
     }
-    public String getStatsByMese(Strumento strumento, String mese) throws SQLException {
+    public String getStatsByMonth(Strumento strumento, String mese) throws SQLException {
+        String result;
         String query = "SELECT * FROM RIEPILOGO_UTILIZZO_STRUMENTO_MESE R JOIN TOP_UTILIZZATORE_PER_STRUMENTO_MESE T ON R.ID_STRUMENTO=T.ID_STRUMENTO WHERE R.MESE = TO_DATE(?, 'YYYY/MON') AND R.ID_STRUMENTO=?";
         PreparedStatement sql = conn.prepareStatement(query);
         sql.setString(1, mese);
         sql.setInt(2, strumento.getId());
         ResultSet rs = sql.executeQuery();
         if(rs.next()) {
-            return "Lo strumento durante il mese è stato utilizzato per un totale di " + rs.getInt(4) + " ore. L'utente che lo ha utilizzato di più è stato " + rs.getString(7) + " con ben " + rs.getInt(8) + " ore di utilizzo";
+            result =  "Lo strumento durante il mese è stato utilizzato per un totale di " + rs.getInt(4) + " ore. L'utente che lo ha utilizzato di più è stato " + rs.getString(7) + " con ben " + rs.getInt(8) + " ore di utilizzo.";
         } else {
-            return "Non sono disponibili statistiche per il mese selezionato";
+            result = "Non sono disponibili statistiche per il periodo selezionato";
         }
+        rs.close();
+        sql.close();
+        return result;
+    }
+    public List<String> getAvailableYearsForStats(Strumento strumento) throws SQLException {
+        SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.ITALY);
+        List<String> anniDisponibili = new ArrayList<>();
+        //La query prende l'anno corrente e gli anni passati
+        String query = "SELECT ANNO FROM RIEPILOGO_UTILIZZO_STRUMENTO_ANNO WHERE ANNO<=(SELECT SYSDATE FROM DUAL) AND ID_STRUMENTO=?";
+        PreparedStatement sql = conn.prepareStatement(query);
+        sql.setInt(1, strumento.getId());
+        ResultSet rs = sql.executeQuery();
+        while (rs.next()) {
+            String anno = yearFormat.format(rs.getTimestamp(1));
+            anniDisponibili.add(anno);
+        }
+        rs.close();
+        sql.close();
+        return anniDisponibili;
+    }
+    public String getStatsByYear(Strumento strumento, String year) throws SQLException {
+        String result;
+        String query = "SELECT * FROM RIEPILOGO_UTILIZZO_STRUMENTO_ANNO R JOIN TOP_UTILIZZATORE_PER_STRUMENTO_ANNO T ON R.ID_STRUMENTO=T.ID_STRUMENTO WHERE R.ANNO = TO_DATE(?, 'YYYY') AND R.ID_STRUMENTO=?";
+        PreparedStatement sql = conn.prepareStatement(query);
+        sql.setString(1, year);
+        sql.setInt(2, strumento.getId());
+        ResultSet rs = sql.executeQuery();
+        if(rs.next()) {
+            result =  "Lo strumento durante l'anno è stato utilizzato per un totale di " + rs.getInt(4) + " ore. L'utente che lo ha utilizzato di più è stato " + rs.getString(7) + " con ben " + rs.getInt(8) + " ore di utilizzo.";
+        } else {
+            result = "Non sono disponibili statistiche per il periodo selezionato";
+        }
+        rs.close();
+        sql.close();
+        return result;
+    }
+    public Strumento getById(int id) throws SQLException {
+        Strumento strumento;
+        String query = "SELECT * FROM STRUMENTO WHERE ID_STRUMENTO=?";
+        PreparedStatement sql = conn.prepareStatement(query);
+        sql.setInt(1, id);
+        ResultSet rs = sql.executeQuery();
+        if(rs.next()) {
+            strumento = new Strumento(rs.getInt(1), rs.getString(2), rs.getString(3));
+        } else {
+            return null;
+        }
+        rs.close();
+        sql.close();
+        return strumento;
     }
 }

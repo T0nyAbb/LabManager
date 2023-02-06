@@ -19,7 +19,7 @@ public class UtenteDao implements Dao<Utente> {
 
 	public Utente getByCredentials(String username, String usr_password) throws SQLException, IncorrectCredentialsException {
         Utente utente = null;
-        String query = "SELECT * FROM UTENTE WHERE USERNAME = ? AND USR_PASSWORD = ENCRYPT_PWD(?)";
+        String query = "SELECT * FROM UTENTE WHERE UPPER(USERNAME) = UPPER(?) AND USR_PASSWORD = ENCRYPT_PWD(?)";
         PreparedStatement sql = conn.prepareStatement(query);
 	    sql.setString(1, username);
 	    sql.setString(2, usr_password);

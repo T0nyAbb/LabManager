@@ -92,7 +92,7 @@ public class MakeReservationPanel extends JPanel{
 	}
 	
 	public void fillSedeComboBox() throws SQLException {
-		List<Sede> sedi = new SedeDao(controller.getDatabaseConnection()).getAll();
+		List<Sede> sedi = controller.getSedeDao().getAll();
 		
 		if(sedi.size() > 0) {
 			String[] stringSedi = new String[sedi.size()+1];
@@ -110,15 +110,14 @@ public class MakeReservationPanel extends JPanel{
 	public void fillStrumentoComboBox() throws SQLException {
 		String item = sedeComboBox.getSelectedItem().toString();
 		List<Strumento> strumenti;
-		StrumentoDao sDao = new StrumentoDao(controller.getDatabaseConnection());
 		if(item.indexOf(":") != -1) {
 			Sede sede = new Sede(null);
 			sede.setId(Integer.parseInt(item.split(":")[0]));
-			strumenti = sDao.getStrumentoBySede(sede);
+			strumenti = controller.getStrumentoDao().getStrumentoBySede(sede);
 		}else {
-			strumenti = sDao.getAll();
+			strumenti = controller.getStrumentoDao().getAll();
 		}
-		
+
 		if(strumenti.size() > 0) {
 			String[] stringStrumenti = new String[strumenti.size()];
 			for(int x=0; x<strumenti.size(); x++) {

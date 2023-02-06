@@ -49,6 +49,8 @@ public class ModifyDialog extends JDialog {
 		setAlwaysOnTop (true);
 		setModalityType (ModalityType.APPLICATION_MODAL);
 		setBounds(100, 100, 754, 334);
+		setTitle("Modifica Prenotazione");
+		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

@@ -8,11 +8,21 @@ public class Strumento {
     private String schedaTecnica;
 
     //Costruttori
+    public Strumento(int id_strumento, String descrizione, String schedaTecnica) {
+        this.id_strumento = id_strumento;
+        this.descrizione = descrizione;
+        this.schedaTecnica = schedaTecnica;
+    }
     public Strumento(String descrizione, String schedaTecnica) {
         this.descrizione = descrizione;
         this.schedaTecnica = schedaTecnica;
     }
-
+    public Strumento(Postazione postazione, int id_strumento, String descrizione, String schedaTecnica) {
+        this.id_strumento = id_strumento;
+        this.postazione = postazione;
+        this.descrizione = descrizione;
+        this.schedaTecnica = schedaTecnica;
+    }
     public Strumento(Postazione postazione, String descrizione, String schedaTecnica) {
         this.postazione = postazione;
         this.descrizione = descrizione;
