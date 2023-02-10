@@ -8,10 +8,6 @@ import control.Controller;
 import dto.Prenotazione;
 import gui.buttons.RectangleButton;
 
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -30,7 +26,6 @@ import javax.swing.JList;
 import javax.swing.border.LineBorder;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
-import javax.swing.JButton;
 
 public class HandleReservationPanel extends JPanel{
 

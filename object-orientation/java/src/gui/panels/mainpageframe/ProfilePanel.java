@@ -9,21 +9,14 @@ import gui.buttons.UnderlineButton;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.BorderFactory;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.SwingConstants;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
-import java.awt.Component;
-import javax.swing.Box;
-import javax.swing.ImageIcon;
 
 public class ProfilePanel extends JPanel{
 	
@@ -36,9 +29,10 @@ public class ProfilePanel extends JPanel{
 	private JLabel emailLabel;
 	private JLabel headerLabel;
 	private JLabel lineLabel;
+	private UnderlineButton deleteAccountButton;
+	private RectangleButton changePasswordButton;
 	
 	public ProfilePanel(Controller controller) {
-		setBackground(Color.WHITE);
 		this.controller = controller;
 		
 		setPanelSettings();
@@ -48,6 +42,7 @@ public class ProfilePanel extends JPanel{
 	}
 
 	private void setPanelSettings() {
+		setBackground(Color.WHITE);
 	}
 
 	private void generateLabels() {
@@ -86,7 +81,30 @@ public class ProfilePanel extends JPanel{
 	}
 	
 	private void generateButtons() {
-		}
+		deleteAccountButton = new UnderlineButton();
+		deleteAccountButton.setFont(new Font("Century Gothic", Font.BOLD, 16));
+		deleteAccountButton.setText("Elimina Account");
+		deleteAccountButton.setDefaultColor(Color.GRAY);
+		deleteAccountButton.setEnteredColor(new Color(180, 0, 0));
+		deleteAccountButton.setPressedColor(new Color(220, 0, 0));
+		deleteAccountButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				deleteAccount();
+			}
+		});
+		
+		changePasswordButton = new RectangleButton();
+		changePasswordButton.setText("Cambia Password");
+		changePasswordButton.setDefaultColor(new Color(0, 40, 83));
+		changePasswordButton.setEnteredColor(new Color(0, 68, 140));
+		changePasswordButton.setPressedColor(new Color(90, 120, 200));
+		changePasswordButton.setForeground(Color.WHITE);
+		changePasswordButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				changePassword();
+			}
+		});
+	}
 	
 	private void layoutComponents() {
 		
@@ -102,9 +120,14 @@ public class ProfilePanel extends JPanel{
 								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 									.addComponent(emailLabel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 									.addComponent(usernameLabel, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 799, GroupLayout.PREFERRED_SIZE))
+								.addComponent(changePasswordButton, GroupLayout.PREFERRED_SIZE, 214, GroupLayout.PREFERRED_SIZE)
 								.addComponent(lineLabel, GroupLayout.PREFERRED_SIZE, 750, GroupLayout.PREFERRED_SIZE)))
 						.addComponent(headerLabel, GroupLayout.PREFERRED_SIZE, 839, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(18, Short.MAX_VALUE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addContainerGap(615, Short.MAX_VALUE)
+					.addComponent(deleteAccountButton, GroupLayout.PREFERRED_SIZE, 214, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -114,10 +137,22 @@ public class ProfilePanel extends JPanel{
 					.addComponent(usernameLabel, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(emailLabel, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
+					.addGap(33)
+					.addComponent(changePasswordButton, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+					.addGap(33)
 					.addComponent(lineLabel, GroupLayout.PREFERRED_SIZE, 5, GroupLayout.PREFERRED_SIZE)
-					.addGap(318))
+					.addGap(210)
+					.addComponent(deleteAccountButton, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
 		);
 		setLayout(groupLayout);
+	}
+	
+	private void deleteAccount() {
+		controller.deleteLoggedUserAccount();
+	}
+	
+	private void changePassword() {
+		
 	}
 }

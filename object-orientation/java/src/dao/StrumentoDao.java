@@ -3,13 +3,9 @@ package dao;
 import dto.Postazione;
 import dto.Sede;
 import dto.Strumento;
-import oracle.jdbc.proxy.annotation.Pre;
-
 import java.sql.*;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.Date;
 
 public class StrumentoDao implements Dao<Strumento> {
     private Connection conn;

@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.swing.GroupLayout.Alignment;
 
-import dao.StrumentoDao;
 import dto.Sede;
 import dto.Strumento;
 import control.Controller;

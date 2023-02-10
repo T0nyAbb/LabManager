@@ -4,8 +4,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import control.Controller;
-import dao.SedeDao;
-import dao.StrumentoDao;
 import dto.Sede;
 import dto.Strumento;
 import gui.buttons.RectangleButton;
@@ -13,7 +11,6 @@ import gui.utility.DatePicker;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;

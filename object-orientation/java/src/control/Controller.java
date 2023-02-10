@@ -7,11 +7,8 @@ import exceptions.EmptyFieldException;
 import exceptions.IncorrectCredentialsException;
 import exceptions.InvalidTextFileContentException;
 import exceptions.PasswordsNotMatchingException;
-import dao.*;
 import gui.frames.*;
 import gui.utility.ModifyDialog;
-import DBconnection.OracleConnection;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -155,10 +152,14 @@ public class Controller {
 		catch (SQLException e) {
 			String SQLErrorMessage = e.toString().toUpperCase();
 			
-			if(SQLErrorMessage.contains("EMAIL"))
+			if(SQLErrorMessage.contains("VALID_EMAIL_USR"))
 				accessFrame.showSignupErrorMessage("Email non valida!");
-			else if(SQLErrorMessage.contains("USERNAME"))
+			else if(SQLErrorMessage.contains("UNIQ_EMAIL"))
+				accessFrame.showSignupErrorMessage("Email gia' in uso da un altro utente!");
+			else if(SQLErrorMessage.contains("VALID_USERNAME"))
 				accessFrame.showSignupErrorMessage("Username non valido! (6-18 caratteri alfanumerici)");
+			else if(SQLErrorMessage.contains("UTENTE_PK"))
+				accessFrame.showSignupErrorMessage("Username gia' in uso da un altro utente!");
 			else if(SQLErrorMessage.contains("INSERISCI_PW"))
 				accessFrame.showSignupErrorMessage("Password non valida! (6-18 caratteri alfanumerici, almeno un numero)");
 			else
@@ -186,7 +187,6 @@ public class Controller {
 			prenotazioneDao.insert(newPrenotazione);
 			mainpageFrame.getMakeReservationPanel().setErrorMessageColor(new Color(60, 179, 113));
 			mainpageFrame.getMakeReservationPanel().showErrorMessage("Prenotazione inserita!");
-			timer.start();
 		} catch (SQLException e) {
 			String SQLErrorMessage = e.toString().toUpperCase();
 			System.out.println(SQLErrorMessage);
@@ -197,10 +197,12 @@ public class Controller {
 			else if(SQLErrorMessage.contains("VALID_PREN_DURATA"))
 				mainpageFrame.getMakeReservationPanel().showErrorMessage("La durata deve essere compresa tra 1 e 24!");
 			else if(SQLErrorMessage.contains("NO_DOUBLE_PREN"))
-				mainpageFrame.getMakeReservationPanel().showErrorMessage("Non è possibile prenotare due strumenti diversi alla stessa data e ora!");
+				mainpageFrame.getMakeReservationPanel().showErrorMessage("Non e' possibile prenotare due strumenti diversi alla stessa data e ora!");
 			else
 				mainpageFrame.getMakeReservationPanel().showErrorMessage("Campi non validi!");
-			timer.start();
+		}
+		finally {
+			timer.restart();
 		}
 		
 	}
@@ -226,7 +228,7 @@ public class Controller {
 				mainpageFrame.getHandleReservationPanel().showErrorMessage("Non si puo' cancellare una prenotazione passata!");
 			else
 				mainpageFrame.getHandleReservationPanel().showErrorMessage("Campi non validi!");
-			timer.start();
+			timer.restart();
 		}
 	}
 	
@@ -253,19 +255,31 @@ public class Controller {
 			String SQLErrorMessage = e.toString().toUpperCase();
 			
 			if(SQLErrorMessage.contains("DELETE_OR_MODIFY_PREN"))
-				mainpageFrame.getHandleReservationPanel().showErrorMessage("La data inserita non puo' essere una data presente o passata");
+				mainpageFrame.getHandleReservationPanel().showErrorMessage("Impossibile modificare una prenotazione passata");
 			else if(SQLErrorMessage.contains("VALID_PREN_INIZIO"))
-				mainpageFrame.getHandleReservationPanel().showErrorMessage("La data prenotazione non puo' essere una data presente o passata!");
+				mainpageFrame.getHandleReservationPanel().showErrorMessage("La data inserita non puo' essere una data presente o passata!");
 			else if(SQLErrorMessage.contains("VALID_PREN_DURATA"))
 				mainpageFrame.getHandleReservationPanel().showErrorMessage("La durata deve essere compresa tra 1 e 24!");
 			else if(SQLErrorMessage.contains("NO_DOUBLE_PREN"))
-				mainpageFrame.getHandleReservationPanel().showErrorMessage("Non può essere inserita una prenotazione per due strumenti diversi alla stessa data e ora");
+				mainpageFrame.getHandleReservationPanel().showErrorMessage("Non puo' essere inserita una prenotazione per due strumenti diversi alla stessa data e ora");
 			else
 				mainpageFrame.getHandleReservationPanel().showErrorMessage("Campi non validi!");
 			timer.start();
 		}
 	}
     
+	public void deleteLoggedUserAccount() {
+		if(loggedUser != null) {
+			try {
+				closeMainpageOpenAccess();
+				utenteDao.delete(loggedUser);
+				loggedUser = null;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
     public void showProfile() {
     	mainpageFrame.showProfilePanel();
     }
@@ -288,7 +302,7 @@ public class Controller {
     }
     
     private void signupSuccessful() {
-    	timer = new Timer(2000, new ActionListener(){
+    	timer = new Timer(1000, new ActionListener(){
             public void actionPerformed(ActionEvent e) {
             	accessFrame.showLoginPanel();
             	accessFrame.setEnabled(true);
@@ -298,7 +312,7 @@ public class Controller {
     	
     	accessFrame.setEnabled(false);
     	accessFrame.showSignupSuccessfulMessage();
-    	timer.start();
+    	timer.restart();
     }
     
     @SuppressWarnings("unused")
