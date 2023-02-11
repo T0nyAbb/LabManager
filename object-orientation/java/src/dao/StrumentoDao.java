@@ -135,8 +135,8 @@ public class StrumentoDao implements Dao<Strumento> {
     public List<String> getAvailableMonthsForStats(Strumento strumento) throws SQLException {
         SimpleDateFormat monthFormat = new SimpleDateFormat("yyyy-MMM", Locale.ITALY);
         List<String> mesiDisponibili = new ArrayList<>();
-        //La query prende solo il mese corrente e quelli che sono già passati
-        String query = "SELECT MESE FROM RIEPILOGO_UTILIZZO_STRUMENTO_MESE WHERE MESE<=(SELECT SYSDATE FROM DUAL) AND ID_STRUMENTO=?";
+        //La query prende solo il mese corrente e quelli che sono gia'� passati
+        String query = "SELECT MESE FROM RIEPILOGO_UTILIZZO_STRUMENTO_MESE WHERE ID_STRUMENTO=?";
         PreparedStatement sql = conn.prepareStatement(query);
         sql.setInt(1, strumento.getId());
         ResultSet rs = sql.executeQuery();
@@ -156,7 +156,7 @@ public class StrumentoDao implements Dao<Strumento> {
         sql.setInt(2, strumento.getId());
         ResultSet rs = sql.executeQuery();
         if(rs.next()) {
-            result =  "Lo strumento durante il mese è stato utilizzato per un totale di " + rs.getInt(4) + " ore. L'utente che lo ha utilizzato di più è stato " + rs.getString(7) + " con ben " + rs.getInt(8) + " ore di utilizzo.";
+            result =  "Lo strumento durante il mese e' stato utilizzato per un totale di " + rs.getInt(4) + " ore. L'utente che lo ha utilizzato di piu' e' stato " + rs.getString(7) + " con ben " + rs.getInt(8) + " ore di utilizzo.";
         } else {
             result = "Non sono disponibili statistiche per il periodo selezionato";
         }
@@ -168,7 +168,7 @@ public class StrumentoDao implements Dao<Strumento> {
         SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.ITALY);
         List<String> anniDisponibili = new ArrayList<>();
         //La query prende l'anno corrente e gli anni passati
-        String query = "SELECT ANNO FROM RIEPILOGO_UTILIZZO_STRUMENTO_ANNO WHERE ANNO<=(SELECT SYSDATE FROM DUAL) AND ID_STRUMENTO=?";
+        String query = "SELECT ANNO FROM RIEPILOGO_UTILIZZO_STRUMENTO_ANNO WHERE ID_STRUMENTO=?";
         PreparedStatement sql = conn.prepareStatement(query);
         sql.setInt(1, strumento.getId());
         ResultSet rs = sql.executeQuery();
@@ -188,7 +188,7 @@ public class StrumentoDao implements Dao<Strumento> {
         sql.setInt(2, strumento.getId());
         ResultSet rs = sql.executeQuery();
         if(rs.next()) {
-            result =  "Lo strumento durante l'anno è stato utilizzato per un totale di " + rs.getInt(4) + " ore. L'utente che lo ha utilizzato di più è stato " + rs.getString(7) + " con ben " + rs.getInt(8) + " ore di utilizzo.";
+            result =  "Lo strumento durante l'anno e' stato utilizzato per un totale di " + rs.getInt(4) + " ore. L'utente che lo ha utilizzato di piu' e' stato " + rs.getString(7) + " con ben " + rs.getInt(8) + " ore di utilizzo.";
         } else {
             result = "Non sono disponibili statistiche per il periodo selezionato";
         }

@@ -8,6 +8,7 @@ import dto.Sede;
 import dto.Strumento;
 import gui.buttons.RectangleButton;
 import gui.utility.DatePicker;
+import gui.utility.Style;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -69,7 +70,7 @@ public class MakeReservationPanel extends JPanel{
 		generateDatePicker();
 		setLayoutComponents();
 		clearErrorMessage();
-		setErrorMessageColor(Color.RED);
+		setErrorMessageColor(Style.foreground_color_error);
 		
 		fillSedeComboBox();
 		fillStrumentoComboBox();
@@ -130,19 +131,19 @@ public class MakeReservationPanel extends JPanel{
 	}
 	
 	public void setPanelSettings() {
-		setBackground(Color.WHITE);
+		setBackground(Style.background_color_01);
 	}
 	
 	private void generateDatePicker() {
 		datePicker = new DatePicker();
-		datePicker.setFormattedTextField(dateTextField);
-		datePicker.setBorder(new LineBorder(new Color(128, 128, 128), 1, true));
+		datePicker.setLinkedTextField(dateTextField);
+		datePicker.setBorder(new LineBorder(Style.background_color_04, 1, true));
 		datePicker.setVisible(false);
 	}
 	
 	private void generateTextFields() {
 		dateTextField = new JFormattedTextField(new DateFormatter(new SimpleDateFormat("yyyy-MM-dd")));
-		dateTextField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		dateTextField.setFont(new Font(Style.font_name_02, Font.PLAIN, 14));
 		dateTextField.setValue(new Date());
 		dateTextField.setEditable(false);
 	}
@@ -160,9 +161,8 @@ public class MakeReservationPanel extends JPanel{
 			}
 		});
 		
-		effettuaPrenotazioneButton = new RectangleButton(new Color(0, 40, 83), new Color(0, 68, 140), new Color(90, 120, 200));
+		effettuaPrenotazioneButton = new RectangleButton();
 		effettuaPrenotazioneButton.setText("Effettua Prenotazione");
-		effettuaPrenotazioneButton.setForeground(Color.white);
 		effettuaPrenotazioneButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				makeReservation();
@@ -173,47 +173,47 @@ public class MakeReservationPanel extends JPanel{
 	private void generateLabels() {
 		headerLabel = new JLabel();
 		headerLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		headerLabel.setForeground(Color.WHITE);
+		headerLabel.setForeground(Style.background_color_01);
 		headerLabel.setText("Effettua Prenotazione");
-		headerLabel.setFont(new Font("Century Gothic", Font.ITALIC, 25));
-		headerLabel.setBackground(Color.GRAY);
+		headerLabel.setFont(new Font(Style.font_name_01, Font.ITALIC, 25));
+		headerLabel.setBackground(Style.background_color_03);
 		headerLabel.setOpaque(true);
 		headerLabel.setBorder(new EmptyBorder(10, 25, 10, 25));
 		
 		sedeLabel = new JLabel("Sede");
-		sedeLabel.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-		sedeLabel.setForeground(new Color(0, 68, 140));
+		sedeLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 18));
+		sedeLabel.setForeground(Style.entered_color_01);
 		
 		strumentoLabel = new JLabel("Strumento");
-		strumentoLabel.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-		strumentoLabel.setForeground(new Color(0, 68, 140));
+		strumentoLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 18));
+		strumentoLabel.setForeground(Style.entered_color_01);
 		
 		dataInizioLabel = new JLabel("Data Inizio");
-		dataInizioLabel.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-		dataInizioLabel.setForeground(new Color(0, 68, 140));
+		dataInizioLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 18));
+		dataInizioLabel.setForeground(Style.entered_color_01);
 		
 		oraInizioLabel = new JLabel("Ora Inizio");
-		oraInizioLabel.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-		oraInizioLabel.setForeground(new Color(0, 68, 140));
+		oraInizioLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 18));
+		oraInizioLabel.setForeground(Style.entered_color_01);
 		
 		durataLabel = new JLabel("Durata (Ore)");
 		durataLabel.setForeground(Color.RED);
-		durataLabel.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-		durataLabel.setForeground(new Color(0, 68, 140));
+		durataLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 18));
+		durataLabel.setForeground(Style.entered_color_01);
 		
 		errorLabel = new JLabel("ERROR");
         errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        errorLabel.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-        errorLabel.setForeground(Color.RED);
+        errorLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 14));
+        errorLabel.setForeground(Style.foreground_color_error);
         errorLabel.setBounds(0, 196, 440, 31);
 	}
 	
 	private void generateComboBox() {
 		strumentoComboBox = new JComboBox<String>();
-		strumentoComboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		strumentoComboBox.setFont(new Font(Style.font_name_02, Font.PLAIN, 12));
 		
 		sedeComboBox = new JComboBox<String>();
-		sedeComboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		sedeComboBox.setFont(new Font(Style.font_name_02, Font.PLAIN, 12));
 		sedeComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -226,12 +226,12 @@ public class MakeReservationPanel extends JPanel{
 		
 		timeComboBox = new JComboBox<String>();
 		timeComboBox.setModel(new DefaultComboBoxModel<String> (new String[] {"00:00", "00:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30", "04:00", "04:30", "05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",  "15:00", "15:30",  "16:00", "16:30",  "17:00", "17:30",  "18:00", "18:30",  "19:00", "19:30",  "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30"}));
-		timeComboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		timeComboBox.setFont(new Font(Style.font_name_02, Font.PLAIN, 14));
 	}
 	
 	private void generateSpinner() {
 		spinner = new JSpinner();
-		spinner.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		spinner.setFont(new Font(Style.font_name_02, Font.PLAIN, 14));
 		spinner.setModel(new SpinnerNumberModel(1, 1, 24, 1));
 	}
 	

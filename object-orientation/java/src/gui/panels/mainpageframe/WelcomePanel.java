@@ -1,12 +1,12 @@
 package gui.panels.mainpageframe;
 
-import java.awt.Color;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 
 import control.Controller;
+import gui.utility.Style;
 
 import java.awt.Font;
 
@@ -30,7 +30,7 @@ public class WelcomePanel extends JPanel {
 	
 	private void setPanelSettings() {
 		setOpaque(true);
-		setBackground(Color.GRAY);
+		setBackground(Style.background_color_03);
 		setLayout(null);
 	}
 	
@@ -50,10 +50,10 @@ public class WelcomePanel extends JPanel {
 		}
 		nameLabel.setText(username);
 		nameLabel.setBounds(340, 210, 340, 240);
-		nameLabel.setForeground(Color.WHITE);
+		nameLabel.setForeground(Style.background_color_01);
         int font = 50;
         if(username.length() > 10) font = font - (username.length() + username.length()/2);
-        nameLabel.setFont(new Font("Century Gothic", Font.BOLD, font));
+        nameLabel.setFont(new Font(Style.font_name_01, Font.BOLD, font));
         nameLabel.setHorizontalTextPosition(SwingConstants.RIGHT);
         nameLabel.setVerticalTextPosition(JLabel.BOTTOM);
         add(nameLabel);
@@ -64,8 +64,8 @@ public class WelcomePanel extends JPanel {
         welcomeLabel.setIconTextGap(30);
 		welcomeLabel.setText("Benvenuto,");
         welcomeLabel.setBounds(182, 155, 718, 295);
-        welcomeLabel.setForeground(Color.WHITE);
-        welcomeLabel.setFont(new Font("Century Gothic", Font.BOLD, 50));
+        welcomeLabel.setForeground(Style.background_color_01);
+        welcomeLabel.setFont(new Font(Style.font_name_01, Font.BOLD, 50));
         welcomeLabel.setHorizontalTextPosition(SwingConstants.RIGHT);
         welcomeLabel.setVerticalTextPosition(JLabel.TOP);
         add(welcomeLabel);

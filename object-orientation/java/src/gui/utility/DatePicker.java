@@ -12,33 +12,32 @@ public class DatePicker extends JPanel
     
     private SimpleDateFormat dateFormat;
     private Calendar calendar;
-    private JFormattedTextField formattedTextField;
+    private JFormattedTextField linkedTextField;
     private String pickedDate = "";
-    private CalendarPanel calendarPanel;
-    private DateSelectionBarPanel selectionBarPanel;
+    private DateSelectionPanel dateSelectionPanel;
+    private YearMonthSelectionPanel yearMonthSelectionPanel;
 
     public DatePicker()
     {
-        
         dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         calendar = Calendar.getInstance();
         
         setPanelSettings();
-        generateCalendarPanel();
-        generateSelectionBarPanel();
+        generateDateSelectionPanel();
+        generateYearMonthSelectionPanel();
         
         displayDate();
     }
 
-    public void setFormattedTextField(JFormattedTextField ftf) {
-    	formattedTextField = ftf;
+    public void setLinkedTextField(JFormattedTextField linkedTextField) {
+    	this.linkedTextField = linkedTextField;
     }
     
     public void displayDate()
     {
-        calendar.set(selectionBarPanel.getYear(), selectionBarPanel.getMonth(), 1);
-        calendarPanel.displayDate(calendar);
-        selectionBarPanel.displayDate(calendar, new SimpleDateFormat("yyyy-MM"));
+        calendar.set(yearMonthSelectionPanel.getYear(), yearMonthSelectionPanel.getMonth(), 1);
+        dateSelectionPanel.displayDate(calendar);
+        yearMonthSelectionPanel.displayDate(calendar, new SimpleDateFormat("yyyy-MM"));
         
     }
 
@@ -48,13 +47,13 @@ public class DatePicker extends JPanel
     }
     
     public void pickDate(){
-    	if (calendarPanel.getDay().equals("")) {
-            pickedDate = calendarPanel.getDay();
+    	if (dateSelectionPanel.getDay().equals("")) {
+            pickedDate = dateSelectionPanel.getDay();
     	} else {
-	        calendar.set(selectionBarPanel.getYear(), selectionBarPanel.getMonth(), Integer.parseInt(calendarPanel.getDay()));
+	        calendar.set(yearMonthSelectionPanel.getYear(), yearMonthSelectionPanel.getMonth(), Integer.parseInt(dateSelectionPanel.getDay()));
 	        pickedDate = dateFormat.format(calendar.getTime());
-	        if(formattedTextField != null) {
-	        	formattedTextField.setValue(calendar.getTime());
+	        if(linkedTextField != null) {
+	        	linkedTextField.setValue(calendar.getTime());
 	        }
     	}
     }
@@ -64,13 +63,13 @@ public class DatePicker extends JPanel
         setLayout(new BorderLayout(0, 0));
     }
     
-    private void generateCalendarPanel() {
-    	calendarPanel = new CalendarPanel(this);
-        add(calendarPanel, BorderLayout.CENTER);
+    private void generateDateSelectionPanel() {
+    	dateSelectionPanel = new DateSelectionPanel(this);
+        add(dateSelectionPanel, BorderLayout.CENTER);
     }
     
-    private void generateSelectionBarPanel() {
-    	selectionBarPanel = new DateSelectionBarPanel(this);
-        add(selectionBarPanel, BorderLayout.SOUTH);
+    private void generateYearMonthSelectionPanel() {
+    	yearMonthSelectionPanel = new YearMonthSelectionPanel(this);
+        add(yearMonthSelectionPanel, BorderLayout.SOUTH);
     }
 }

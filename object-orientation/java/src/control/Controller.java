@@ -9,6 +9,8 @@ import exceptions.InvalidTextFileContentException;
 import exceptions.PasswordsNotMatchingException;
 import gui.frames.*;
 import gui.utility.ModifyDialog;
+import gui.utility.Style;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -124,7 +126,7 @@ public class Controller {
 			Pattern p = Pattern.compile(".*@.*");
 			Matcher m = p.matcher(username);
 			if(m.find())
-				msg = msg + " Stai forse tentando di inserire un indirizzo e-mail?";
+				msg += " Stai forse tentando di inserire un indirizzo e-mail?";
 			
 			accessFrame.showLoginErrorMessage(msg);
 		} catch (SQLException e) {
@@ -175,21 +177,21 @@ public class Controller {
 	public void makePrenotazione(Strumento strumento, Date data_inizio, int durata) {
 		Prenotazione newPrenotazione = new Prenotazione(0, strumento, loggedUser, null, durata, data_inizio);
 		mainpageFrame.getMakeReservationPanel().clearErrorMessage();
-		mainpageFrame.getMakeReservationPanel().setErrorMessageColor(Color.RED);
+		mainpageFrame.getMakeReservationPanel().setErrorMessageColor(Style.foreground_color_error);
 		timer = new Timer(2000, new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				mainpageFrame.getMakeReservationPanel().clearErrorMessage();
-				mainpageFrame.getMakeReservationPanel().setErrorMessageColor(Color.RED);
+				mainpageFrame.getMakeReservationPanel().setErrorMessageColor(Style.foreground_color_error);
 				stopTimer();
 			}
 		});
 		try {
 			prenotazioneDao.insert(newPrenotazione);
-			mainpageFrame.getMakeReservationPanel().setErrorMessageColor(new Color(60, 179, 113));
+			mainpageFrame.getMakeReservationPanel().setErrorMessageColor(Style.foreground_color_success);
 			mainpageFrame.getMakeReservationPanel().showErrorMessage("Prenotazione inserita!");
 		} catch (SQLException e) {
 			String SQLErrorMessage = e.toString().toUpperCase();
-			System.out.println(SQLErrorMessage);
+			
 			if(SQLErrorMessage.contains("NO_OVERLAP_PREN"))
 				mainpageFrame.getMakeReservationPanel().showErrorMessage("Strumento gia' prenotato nella data esposta!");
 			else if(SQLErrorMessage.contains("VALID_PREN_INIZIO"))
@@ -242,13 +244,16 @@ public class Controller {
 		});
 		
 		ModifyDialog modifyDialog = new ModifyDialog(mainpageFrame);
+		modifyDialog.setDataInizio(prenotazione.getDataInizio());
+		modifyDialog.setDurata(prenotazione.getDurata());
 		modifyDialog.setVisible(true);
+		
 		DateFormat timeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm"); 
 		ArrayList<String> params = new ArrayList<>();
-		params.add(timeFormat.format(modifyDialog.getDataInizio()));
-		params.add(modifyDialog.getDurata() + "");
 		
 		try {
+			params.add(timeFormat.format(modifyDialog.getDataInizio()));
+			params.add(modifyDialog.getDurata() + "");
 			getPrenotazioneDao().update(prenotazione, params);
 			mainpageFrame.getHandleReservationPanel().loadListContent();
 		}catch(SQLException e){
@@ -264,16 +269,22 @@ public class Controller {
 				mainpageFrame.getHandleReservationPanel().showErrorMessage("Non puo' essere inserita una prenotazione per due strumenti diversi alla stessa data e ora");
 			else
 				mainpageFrame.getHandleReservationPanel().showErrorMessage("Campi non validi!");
-			timer.start();
+			timer.restart();
+		}catch(NullPointerException e) {
+			
 		}
 	}
     
 	public void deleteLoggedUserAccount() {
 		if(loggedUser != null) {
 			try {
-				closeMainpageOpenAccess();
-				utenteDao.delete(loggedUser);
-				loggedUser = null;
+				int result = JOptionPane.showConfirmDialog(mainpageFrame, "Sei sicuro di voler eliminare il tuo account\ne tutti i dati associati?.", "ATTENZIONE", JOptionPane.YES_NO_CANCEL_OPTION);
+
+				if(result == JOptionPane.YES_OPTION) {
+					closeMainpageOpenAccess();
+					utenteDao.delete(loggedUser);
+					loggedUser = null;
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

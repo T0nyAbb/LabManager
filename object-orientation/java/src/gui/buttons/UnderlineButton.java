@@ -8,6 +8,8 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 
+import gui.utility.Style;
+
 public class UnderlineButton extends JButton{
 
 	/**
@@ -19,11 +21,11 @@ public class UnderlineButton extends JButton{
 	private Color pressedColor;
 	
 	public UnderlineButton() {
-		setDefaultColor(Color.DARK_GRAY);
-		setEnteredColor(Color.GRAY);
-		setPressedColor(Color.LIGHT_GRAY);
+		setDefaultColor(Style.default_color_01);
+		setEnteredColor(Style.entered_color_01);
+		setPressedColor(Style.pressed_color_01);
 		
-		setFont(new Font("Century Gothic", Font.BOLD, 14));
+		setFont(new Font(Style.font_name_01, Font.BOLD, 14));
         setFocusable(false);
 		setForeground(defaultColor);
         setContentAreaFilled(false);

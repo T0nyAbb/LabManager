@@ -7,6 +7,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 
+import gui.utility.Style;
+
 public class RectangleButton extends JButton{
 
 	/**
@@ -18,13 +20,13 @@ public class RectangleButton extends JButton{
 	private Color pressedColor;
 	
 	public RectangleButton() {
-		setDefaultColor(Color.DARK_GRAY);
-		setEnteredColor(Color.GRAY);
-		setPressedColor(Color.LIGHT_GRAY);
+		setDefaultColor(Style.default_color_01);
+		setEnteredColor(Style.entered_color_01);
+		setPressedColor(Style.pressed_color_01);
 		
-        setFont(new Font("Century Gothic", Font.BOLD, 18));
+        setFont(new Font(Style.font_name_01, Font.BOLD, 18));
         setBackground(defaultColor);
-        setForeground(Color.BLACK);
+        setForeground(Style.foreground_color_02);
 		setBorderPainted(false);
 		setFocusable(false);
 		setContentAreaFilled(false);
@@ -52,14 +54,6 @@ public class RectangleButton extends JButton{
                 setBackground(defaultColor);
         	}
         });
-        
-	}
-	
-	public RectangleButton(Color defaultColor, Color enteredColor, Color pressedColor) {
-		this();
-		setDefaultColor(defaultColor);
-		setEnteredColor(enteredColor);
-		setPressedColor(pressedColor);
         
 	}
 

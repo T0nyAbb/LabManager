@@ -1,6 +1,5 @@
 package gui.panels.accessframe;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 
@@ -15,6 +14,7 @@ import javax.swing.SwingConstants;
 import control.Controller;
 import gui.buttons.RectangleButton;
 import gui.buttons.UnderlineButton;
+import gui.utility.Style;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -82,7 +82,7 @@ public class SignupPanel extends JPanel {
 	
 	private void setPanelSettings() {
 		setOpaque(true);
-        setBackground(Color.WHITE);
+        setBackground(Style.background_color_01);
         setPreferredSize(new Dimension(450, 600));
         setLayout(null);
 	}
@@ -95,36 +95,36 @@ public class SignupPanel extends JPanel {
         add(iconLabel);
         
 		emailLabel = new JLabel("E-mail");
-        emailLabel.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+        emailLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 14));
         emailLabel.setBounds(132, 146, 177, 14);
         add(emailLabel);
 		
         usernameLabel = new JLabel("Username");
-        usernameLabel.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+        usernameLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 14));
         usernameLabel.setBounds(132, 206, 177, 14);
         add(usernameLabel);
         
         passwordLabel = new JLabel("Password");
-        passwordLabel.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+        passwordLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 14));
         passwordLabel.setBounds(132, 266, 177, 14);
         add(passwordLabel);
         
         repeatPasswordLabel = new JLabel("Conferma Password");
-        repeatPasswordLabel.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+        repeatPasswordLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 14));
         repeatPasswordLabel.setBounds(132, 326, 177, 14);
         add(repeatPasswordLabel);
         
         errorLabel = new JLabel();
         errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        errorLabel.setFont(new Font("Century Gothic", Font.PLAIN, 12));
-        errorLabel.setForeground(Color.RED);
+        errorLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 12));
+        errorLabel.setForeground(Style.foreground_color_error);
         errorLabel.setBounds(0, 104, 440, 31);
         add(errorLabel);
         
         signupSuccessfulLabel = new JLabel();
         signupSuccessfulLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        signupSuccessfulLabel.setFont(new Font("Century Gothic", Font.PLAIN, 12));
-        signupSuccessfulLabel.setForeground(new Color(60, 179, 113));
+        signupSuccessfulLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 12));
+        signupSuccessfulLabel.setForeground(Style.foreground_color_success);
         signupSuccessfulLabel.setBounds(0, 104, 440, 31);
         add(signupSuccessfulLabel);
 	}
@@ -186,12 +186,12 @@ public class SignupPanel extends JPanel {
 	
 	private void generateSignupButton() {
 		signupButton = new RectangleButton();
-		signupButton.setFont(new Font("Century Gothic", Font.BOLD, 18));
+		signupButton.setFont(new Font(Style.font_name_01, Font.BOLD, 18));
 		signupButton.setText("Registrati");
-		signupButton.setDefaultColor(new Color(0, 40, 83));
-		signupButton.setEnteredColor(new Color(0, 68, 140));
-		signupButton.setPressedColor(new Color(90, 120, 200));
-		signupButton.setForeground(Color.WHITE);
+		signupButton.setDefaultColor(Style.default_color_01);
+		signupButton.setEnteredColor(Style.entered_color_01);
+		signupButton.setPressedColor(Style.pressed_color_01);
+		signupButton.setForeground(Style.foreground_color_02);
 		signupButton.setBounds(145, 410, 150, 37);
         signupButton.addActionListener(new ActionListener() { 
         	@Override
@@ -205,11 +205,11 @@ public class SignupPanel extends JPanel {
 	
 	private void generateLoginButton() {
         loginButton = new UnderlineButton();
-        loginButton.setFont(new Font("Century Gothic", Font.BOLD, 14));
+        loginButton.setFont(new Font(Style.font_name_01, Font.BOLD, 14));
         loginButton.setText("Sei gia' registrato? Accedi.");
-		loginButton.setDefaultColor(new Color(0, 40, 83));
-		loginButton.setEnteredColor(new Color(0, 68, 140));
-		loginButton.setPressedColor(new Color(90, 120, 200));
+		loginButton.setDefaultColor(Style.default_color_01);
+		loginButton.setEnteredColor(Style.entered_color_01);
+		loginButton.setPressedColor(Style.pressed_color_01);
         loginButton.setBounds(45, 489, 350, 31);
         loginButton.addActionListener(new ActionListener() { 
         	@Override

@@ -1,6 +1,5 @@
 package gui.panels.mainpageframe;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 
@@ -9,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 
 import control.Controller;
 import gui.buttons.UnderlineButton;
+import gui.utility.Style;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -42,22 +42,21 @@ public class SidebarPanel extends JPanel {
 	
 	private void setPanelSettings() {
 		setOpaque(true);
-		setBackground(new Color(0, 68, 140));
+		setBackground(Style.entered_color_01);
 	}
 	
 	private void generateButtons() {
 		profileButton = new UnderlineButton();
 		profileButton.setIcon(new ImageIcon(SidebarPanel.class.getResource("/icone/dot2.png")));
-		profileButton.setFont(new Font("Century Gothic", Font.BOLD, 28));
+		profileButton.setFont(new Font(Style.font_name_01, Font.BOLD, 28));
 		profileButton.setHorizontalAlignment(SwingConstants.LEFT);
 		profileButton.setText("Profilo");
-		profileButton.setDefaultColor(Color.white);
-		profileButton.setEnteredColor(Color.white);
-		profileButton.setPressedColor(Color.white);
-		profileButton.setBackground(new Color(0, 40, 83));
+		profileButton.setDefaultColor(Style.background_color_01);
+		profileButton.setEnteredColor(Style.background_color_01);
+		profileButton.setPressedColor(Style.background_color_01);
+		profileButton.setBackground(Style.default_color_01);
 		profileButton.setVerticalAlignment(SwingConstants.TOP);
 		profileButton.setOpaque(true);
-		profileButton.setForeground(Color.WHITE);
 		profileButton.setBorder(new EmptyBorder(15, 15, 15, 15));
 		profileButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -68,12 +67,11 @@ public class SidebarPanel extends JPanel {
         makeReservationButton = new UnderlineButton();
         makeReservationButton.setIcon(new ImageIcon(SidebarPanel.class.getResource("/icone/dot2.png")));
         makeReservationButton.setText("Effettua prenotazione");
-        makeReservationButton.setPressedColor(Color.WHITE);
+        makeReservationButton.setEnteredColor(Style.background_color_01);
+        makeReservationButton.setDefaultColor(Style.background_color_01);
+        makeReservationButton.setPressedColor(Style.background_color_01);
         makeReservationButton.setHorizontalAlignment(SwingConstants.LEFT);
-        makeReservationButton.setForeground(Color.WHITE);
-        makeReservationButton.setFont(new Font("Century Gothic", Font.BOLD, 20));
-        makeReservationButton.setEnteredColor(Color.WHITE);
-        makeReservationButton.setDefaultColor(Color.WHITE);
+        makeReservationButton.setFont(new Font(Style.font_name_01, Font.BOLD, 20));
         makeReservationButton.setBorder(new EmptyBorder(0, 15, 0, 15));
         makeReservationButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -84,12 +82,11 @@ public class SidebarPanel extends JPanel {
         handleReservationButton = new UnderlineButton();
         handleReservationButton.setIcon(new ImageIcon(SidebarPanel.class.getResource("/icone/dot2.png")));
         handleReservationButton.setText("Gestisci prenotazioni");
-        handleReservationButton.setPressedColor(Color.WHITE);
+        handleReservationButton.setPressedColor(Style.background_color_01);
         handleReservationButton.setHorizontalAlignment(SwingConstants.LEFT);
-        handleReservationButton.setForeground(Color.WHITE);
-        handleReservationButton.setFont(new Font("Century Gothic", Font.BOLD, 20));
-        handleReservationButton.setEnteredColor(Color.WHITE);
-        handleReservationButton.setDefaultColor(Color.WHITE);
+        handleReservationButton.setFont(new Font(Style.font_name_01, Font.BOLD, 20));
+        handleReservationButton.setEnteredColor(Style.background_color_01);
+        handleReservationButton.setDefaultColor(Style.background_color_01);
         handleReservationButton.setBorder(new EmptyBorder(0, 15, 0, 15));
         handleReservationButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -100,12 +97,11 @@ public class SidebarPanel extends JPanel {
         logoutButton = new UnderlineButton();
         logoutButton.setIcon(new ImageIcon(SidebarPanel.class.getResource("/icone/arrow.png")));
         logoutButton.setText("Esci");
-        logoutButton.setPressedColor(Color.WHITE);
+        logoutButton.setPressedColor(Style.background_color_01);
         logoutButton.setHorizontalAlignment(SwingConstants.LEFT);
-        logoutButton.setForeground(Color.WHITE);
-        logoutButton.setFont(new Font("Century Gothic", Font.BOLD, 28));
-        logoutButton.setEnteredColor(Color.WHITE);
-        logoutButton.setDefaultColor(Color.WHITE);
+        logoutButton.setFont(new Font(Style.font_name_01, Font.BOLD, 28));
+        logoutButton.setEnteredColor(Style.background_color_01);
+        logoutButton.setDefaultColor(Style.background_color_01);
         logoutButton.setBorder(new EmptyBorder(0, 15, 0, 15));
         logoutButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -114,15 +110,12 @@ public class SidebarPanel extends JPanel {
         });
 		statsButton = new UnderlineButton();
 		statsButton.setIcon(new ImageIcon(SidebarPanel.class.getResource("/icone/dot2.png")));
-		statsButton.setFont(new Font("Century Gothic", Font.BOLD, 20));
+		statsButton.setFont(new Font(Style.font_name_01, Font.BOLD, 20));
 		statsButton.setHorizontalAlignment(SwingConstants.LEFT);
 		statsButton.setText("Statistiche");
-		statsButton.setDefaultColor(Color.white);
-		statsButton.setEnteredColor(Color.white);
-		statsButton.setPressedColor(Color.white);
-		statsButton.setOpaque(true);
-		statsButton.setForeground(Color.WHITE);
-		statsButton.setBackground(new Color(0, 68, 140));
+		statsButton.setDefaultColor(Style.background_color_01);
+		statsButton.setEnteredColor(Style.background_color_01);
+		statsButton.setPressedColor(Style.background_color_01);
 		statsButton.setBorder(new EmptyBorder(0, 15, 0, 15));
 		statsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

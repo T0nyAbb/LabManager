@@ -15,6 +15,7 @@ import javax.swing.SwingConstants;
 import control.Controller;
 import gui.buttons.RectangleButton;
 import gui.buttons.UnderlineButton;
+import gui.utility.Style;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -67,7 +68,7 @@ public class LoginPanel extends JPanel {
 	
 	private void setPanelSettings() {
 		setOpaque(true);
-        setBackground(Color.WHITE);
+        setBackground(Style.background_color_01);
         setPreferredSize(new Dimension(450, 600));
         setLayout(null);
 	}
@@ -79,18 +80,18 @@ public class LoginPanel extends JPanel {
         add(iconLabel);
         
         usernameLabel = new JLabel("Username");
-        usernameLabel.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+        usernameLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 16));
         usernameLabel.setBounds(130, 249, 177, 20);
         add(usernameLabel);
         
         passwordLabel = new JLabel("Password");
-        passwordLabel.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+        passwordLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 16));
         passwordLabel.setBounds(130, 309, 177, 20);
         add(passwordLabel);
         
         errorLabel = new JLabel();
         errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        errorLabel.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+        errorLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 12));
         errorLabel.setForeground(Color.RED);
         errorLabel.setBounds(0, 196, 440, 31);
         add(errorLabel);
@@ -127,12 +128,12 @@ public class LoginPanel extends JPanel {
 	
 	private void generateLoginButton() {
 		loginButton = new RectangleButton();
-		loginButton.setFont(new Font("Century Gothic", Font.BOLD, 18));
+		loginButton.setFont(new Font(Style.font_name_01, Font.BOLD, 18));
 		loginButton.setText("Accedi");
-		loginButton.setDefaultColor(new Color(0, 40, 83));
-		loginButton.setEnteredColor(new Color(0, 68, 140));
-		loginButton.setPressedColor(new Color(90, 120, 200));
-        loginButton.setForeground(Color.WHITE);
+		loginButton.setDefaultColor(Style.default_color_01);
+		loginButton.setEnteredColor(Style.entered_color_01);
+		loginButton.setPressedColor(Style.pressed_color_01);
+        loginButton.setForeground(Style.foreground_color_02);
         loginButton.setBounds(145, 410, 150, 37);
         loginButton.addActionListener(new ActionListener() { 
         	@Override
@@ -146,11 +147,11 @@ public class LoginPanel extends JPanel {
 	
 	private void generateSignupButton() {
         signupButton = new UnderlineButton();
-        signupButton.setFont(new Font("Century Gothic", Font.BOLD, 14));
+        signupButton.setFont(new Font(Style.font_name_01, Font.BOLD, 14));
         signupButton.setText("Non hai un account? Registrati.");
-        signupButton.setDefaultColor(new Color(0, 40, 83));
-        signupButton.setEnteredColor(new Color(0, 68, 140));
-        signupButton.setPressedColor(new Color(90, 120, 200));
+        signupButton.setDefaultColor(Style.default_color_01);
+        signupButton.setEnteredColor(Style.entered_color_01);
+        signupButton.setPressedColor(Style.pressed_color_01);
         signupButton.setBounds(45, 489, 350, 31);
         signupButton.addActionListener(new ActionListener() { 
         	@Override

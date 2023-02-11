@@ -6,10 +6,13 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.border.EmptyBorder;
 
 import dto.Sede;
 import dto.Strumento;
+import gui.utility.Style;
 import control.Controller;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class StrumentoStatsPanel extends JPanel {
     /**
@@ -17,55 +20,69 @@ public class StrumentoStatsPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Controller controller;
+	
     private JComboBox<String> strumentoComboBox;
     private JComboBox<String> dateComboBox;
-
     private JComboBox<String> sedeComboBox;
-    private JTextField textField;
+    
     private JLabel strumentoLabel;
-
     private JLabel sedeLabel;
     private JLabel periodoLabel;
-
     private JLabel stats;
+    private JLabel headerLabel;
 
 
     /**
      * Create the panel.
+     * @throws SQLException 
      */
-    public StrumentoStatsPanel(Controller controller) throws SQLException {
+    public StrumentoStatsPanel(Controller controller) throws SQLException{
         this.controller = controller;
+        
         setPanelSettings();
-        generateTextFields();
         generateLabels();
         generateComboBox();
         setLayoutComponents();
+        
+        fillSedeComboBox();
+        fillStrumentoComboBox();
+        fillPeriodoComboBox();
     }
+    
     public void setPanelSettings() {
-        setBackground(Color.WHITE);
+        setBackground(Style.background_color_01);
     }
 
     private void generateLabels() {
+        headerLabel = new JLabel();
+        headerLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		headerLabel.setForeground(Style.background_color_01);
+		headerLabel.setText("Statistiche Prenotazioni");
+		headerLabel.setFont(new Font(Style.font_name_01, Font.ITALIC, 25));
+		headerLabel.setBackground(Style.background_color_03);
+		headerLabel.setOpaque(true);
+		headerLabel.setBorder(new EmptyBorder(10, 25, 10, 25));
+    	
         sedeLabel = new JLabel("Seleziona Sede");
-        sedeLabel.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-        sedeLabel.setForeground(new Color(0, 68, 140));
+        sedeLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 18));
+        sedeLabel.setForeground(Style.entered_color_01);
+        
         strumentoLabel = new JLabel("Seleziona Strumento");
-        strumentoLabel.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-        strumentoLabel.setForeground(new Color(0, 68, 140));
+        strumentoLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 18));
+        strumentoLabel.setForeground(Style.entered_color_01);
+        
         periodoLabel = new JLabel("Seleziona Periodo");
-        periodoLabel.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-        periodoLabel.setForeground(new Color(0, 68, 140));
+        periodoLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 18));
+        periodoLabel.setForeground(Style.entered_color_01);
+        
         stats = new JLabel("");
-        stats.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-        stats.setForeground(new Color(0, 0, 0));
+        stats.setFont(new Font(Style.font_name_01, Font.PLAIN, 16));
+        stats.setForeground(Style.foreground_color_01);
     }
+    
     private void generateComboBox()  {
         sedeComboBox = new JComboBox<String>();
-        sedeComboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        strumentoComboBox = new JComboBox<String>();
-        strumentoComboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        dateComboBox = new JComboBox<String>();
-        dateComboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        sedeComboBox.setFont(new Font(Style.font_name_02, Font.PLAIN, 12));
         sedeComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 try {
@@ -75,6 +92,9 @@ public class StrumentoStatsPanel extends JPanel {
                 }
             }
         });
+        
+        strumentoComboBox = new JComboBox<String>();
+        strumentoComboBox.setFont(new Font(Style.font_name_02, Font.PLAIN, 12));
         strumentoComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 try {
@@ -84,6 +104,9 @@ public class StrumentoStatsPanel extends JPanel {
                 }
             }
         });
+        
+        dateComboBox = new JComboBox<String>();
+        dateComboBox.setFont(new Font(Style.font_name_02, Font.PLAIN, 12));
         dateComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 try {
@@ -95,41 +118,56 @@ public class StrumentoStatsPanel extends JPanel {
         });
 
     }
-    private void generateTextFields() {
-        textField = new JTextField();
-        textField.setEditable(false);
-        textField.setColumns(20);
-
-    }
+    
     private void setLayoutComponents() {
+        
         GroupLayout groupLayout = new GroupLayout(this);
         groupLayout.setHorizontalGroup(
-                groupLayout.createParallelGroup(Alignment.LEADING)
-                        .addGroup(groupLayout.createSequentialGroup()
-                                .addGap(65)
-                                .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                                        .addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(groupLayout.createSequentialGroup()
-                                                .addComponent(strumentoLabel)
-                                                .addGap(18)
-                                                .addComponent(strumentoComboBox, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)))
-                                .addContainerGap(180, Short.MAX_VALUE))
+        	groupLayout.createParallelGroup(Alignment.LEADING)
+        		.addComponent(headerLabel, GroupLayout.DEFAULT_SIZE, 894, Short.MAX_VALUE)
+        		.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+        			.addGap(18)
+        			.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+        				.addComponent(stats, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 839, Short.MAX_VALUE)
+        				.addGroup(groupLayout.createSequentialGroup()
+        					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+        						.addGroup(groupLayout.createSequentialGroup()
+        							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+        								.addComponent(strumentoLabel, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+        								.addComponent(sedeLabel, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE))
+        							.addPreferredGap(ComponentPlacement.UNRELATED))
+        						.addGroup(groupLayout.createSequentialGroup()
+        							.addComponent(periodoLabel, GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+        							.addGap(7)))
+        					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+        						.addComponent(dateComboBox, 0, 480, Short.MAX_VALUE)
+        						.addComponent(strumentoComboBox, 0, 480, Short.MAX_VALUE)
+        						.addComponent(sedeComboBox, Alignment.LEADING, 0, 480, Short.MAX_VALUE))))
+        			.addGap(37))
         );
         groupLayout.setVerticalGroup(
-                groupLayout.createParallelGroup(Alignment.LEADING)
-                        .addGroup(groupLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-                                        .addComponent(strumentoLabel)
-                                        .addComponent(strumentoComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addGap(66)
-                                .addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(181, Short.MAX_VALUE))
+        	groupLayout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(groupLayout.createSequentialGroup()
+        			.addComponent(headerLabel, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
+        			.addGap(27)
+        			.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(sedeComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(sedeLabel))
+        			.addGap(18)
+        			.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(strumentoComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(strumentoLabel))
+        			.addGap(18)
+        			.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(periodoLabel)
+        				.addComponent(dateComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        			.addGap(160)
+        			.addComponent(stats, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(42, Short.MAX_VALUE))
         );
         setLayout(groupLayout);
 
     }
-
 
     public void fillStrumentoComboBox() throws SQLException {
         String item = sedeComboBox.getSelectedItem().toString();
@@ -152,9 +190,10 @@ public class StrumentoStatsPanel extends JPanel {
                 String lab_nome = strumenti.get(x).getPostazione().getSede().getLaboratorio().getNome();
                 stringStrumenti[x] = id + ": " +desc + ", "+ lab_nome + ", " + sede_indirizzo + ", " + post_nome;
             }
-            strumentoComboBox.setModel(new DefaultComboBoxModel<String> (stringStrumenti));
+            strumentoComboBox.setModel(new DefaultComboBoxModel<String>(stringStrumenti));
         }
     }
+    
     public void fillSedeComboBox() throws SQLException {
         List<Sede> sedi = controller.getSedeDao().getAll();
 
@@ -167,9 +206,10 @@ public class StrumentoStatsPanel extends JPanel {
                 String nome_lab = sedi.get(x-1).getLaboratorio().getNome();
                 stringSedi[x] = id +": "+ nome_lab + ", "+ indirizzo;
             }
-            sedeComboBox.setModel(new DefaultComboBoxModel<String> (stringSedi));
+            sedeComboBox.setModel(new DefaultComboBoxModel<String>(stringSedi));
         }
     }
+    
     public void fillPeriodoComboBox() throws SQLException {
         List<String> date;
         List<String> year;
@@ -179,25 +219,26 @@ public class StrumentoStatsPanel extends JPanel {
         date = controller.getStrumentoDao().getAvailableMonthsForStats(strumento);
         year = controller.getStrumentoDao().getAvailableYearsForStats(strumento);
         date.addAll(year);
-        String[] stringDate = date.toArray(new String[0]);
-        dateComboBox.setModel(new DefaultComboBoxModel<String> (stringDate));
+        
+        if(date.size() > 0) {
+            String[] stringDate = new String[date.size()];
+            for(int x=0; x<date.size(); x++) {
+                stringDate[x] = date.get(x);
+            }
+            dateComboBox.setModel(new DefaultComboBoxModel<String>(stringDate));
+        }
     }
+    
     public void setStats() throws SQLException {
         int id_strumento = Integer.parseInt(strumentoComboBox.getSelectedItem().toString().split(":")[0]);
         Strumento strumento = new Strumento(null, null, null);
         strumento.setId(id_strumento);
 
         String data = dateComboBox.getSelectedItem().toString();
-            if(data.length()==4) {
-                stats.setText(controller.getStrumentoDao().getStatsByYear(strumento, data));
-            } else {
-                stats.setText(controller.getStrumentoDao().getStatsByMonth(strumento, data));
-            }
-
-
+        if(data.length()==4) {
+            stats.setText("<html>" + controller.getStrumentoDao().getStatsByYear(strumento, data) + "</html>");
+        } else {
+            stats.setText("<html>" + controller.getStrumentoDao().getStatsByMonth(strumento, data) + "</html>");
+        }
     }
-
-
-
-
 }

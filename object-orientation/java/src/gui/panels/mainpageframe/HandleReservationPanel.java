@@ -7,8 +7,8 @@ import javax.swing.SwingConstants;
 import control.Controller;
 import dto.Prenotazione;
 import gui.buttons.RectangleButton;
+import gui.utility.Style;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -56,7 +56,7 @@ public class HandleReservationPanel extends JPanel{
 	}
 	
 	private void setPanelSettings() {
-		setBackground(new Color(255, 255, 255));
+		setBackground(Style.background_color_01);
 	}
 	
 	public void showErrorMessage(String msg) {
@@ -71,32 +71,33 @@ public class HandleReservationPanel extends JPanel{
 	private void generateLabels() {
 		headerLabel = new JLabel("Gestisci Prenotazione");
 		headerLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		headerLabel.setForeground(Color.WHITE);
-		headerLabel.setFont(new Font("Century Gothic", Font.ITALIC, 25));
-		headerLabel.setBackground(Color.GRAY);
+		headerLabel.setForeground(Style.background_color_01);
+		headerLabel.setFont(new Font(Style.font_name_01, Font.ITALIC, 25));
+		headerLabel.setBackground(Style.background_color_03);
 		headerLabel.setOpaque(true);
 		headerLabel.setBorder(new EmptyBorder(10, 25, 10, 25));
 		
 		selezionaLabel = new JLabel("Seleziona una delle prenotazioni effettuate");
-		selezionaLabel.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		selezionaLabel.setForeground(Style.entered_color_01);
+		selezionaLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 20));
 		
 		errorLabel = new JLabel("Error");
 		errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        errorLabel.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-        errorLabel.setForeground(Color.RED);
+        errorLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 14));
+        errorLabel.setForeground(Style.foreground_color_error);
         errorLabel.setBounds(0, 196, 440, 31);
 	}
 	
 	private void generateLists() {
 		list = new JList<String>();
-		list.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		list.setFont(new Font(Style.font_name_02, Font.PLAIN, 14));
 		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		list.setLayoutOrientation(JList.VERTICAL);
 		list.setVisibleRowCount(-1);
 		loadListContent();
 		
 		listScroller = new JScrollPane(list);
-		listScroller.setViewportBorder(new LineBorder(Color.GRAY, 1, true));
+		listScroller.setViewportBorder(new LineBorder(Style.background_color_03, 1, true));
 		listScroller.setViewportView(list);
 		listScroller.setPreferredSize(new Dimension(250, 80));
 	}
@@ -125,7 +126,9 @@ public class HandleReservationPanel extends JPanel{
 	private void generateButtons() {
 		modificaButton = new RectangleButton();
 		modificaButton.setText("Modifica");
-		modificaButton.setForeground(Color.white);
+		modificaButton.setDefaultColor(Style.default_color_03);
+		modificaButton.setEnteredColor(Style.entered_color_03);
+		modificaButton.setPressedColor(Style.bpressed_color_03);
 		modificaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				modifyPrenotazione();
@@ -134,7 +137,9 @@ public class HandleReservationPanel extends JPanel{
 		
 		eliminaButton = new RectangleButton();
 		eliminaButton.setText("Elimina");
-		eliminaButton.setForeground(Color.white);
+		eliminaButton.setDefaultColor(Style.default_color_03);
+		eliminaButton.setEnteredColor(Style.entered_color_03);
+		eliminaButton.setPressedColor(Style.bpressed_color_03);
 		eliminaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				deletePrenotazione();
@@ -190,7 +195,8 @@ public class HandleReservationPanel extends JPanel{
 	
 	private void modifyPrenotazione() {
 		int listIndex = list.getSelectedIndex();
-		if(listIndex != -1)
+		if(listIndex != -1) {
 			controller.updatePrenotazione(prenotazioni.get(listIndex));
+		}
 	}
 }

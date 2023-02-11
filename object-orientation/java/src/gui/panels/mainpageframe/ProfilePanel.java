@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import control.Controller;
 import gui.buttons.RectangleButton;
 import gui.buttons.UnderlineButton;
+import gui.utility.Style;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -52,41 +53,45 @@ public class ProfilePanel extends JPanel{
 		if(controller != null && controller.getLoggedUser() != null) {
 			username = controller.getLoggedUser().getUsername();
 		}
-		usernameLabel.setText("<html><font color = \"#00448C\">Username:</font> \""+username+"\"</html>");
+		usernameLabel.setText("<html><font color = \""+
+				String.format("#%02x%02x%02x", Style.entered_color_01.getRed(), Style.entered_color_01.getGreen(), Style.entered_color_01.getBlue())+
+				"\">Username:</font> \""+username+"\"</html>");
 		usernameLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		usernameLabel.setFont(new Font("Century Gothic", Font.PLAIN, 22));
+		usernameLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 22));
 		
 		emailLabel = new JLabel();
 		String email = "n/a";
 		if(controller != null && controller.getLoggedUser() != null) {
 			email = controller.getLoggedUser().getEmail();
 		}
-		emailLabel.setText("<html><font color = \"#00448C\">Email:</font> \""+email+"\"</html>");
+		emailLabel.setText("<html><font color = \""+
+				String.format("#%02x%02x%02x", Style.entered_color_01.getRed(), Style.entered_color_01.getGreen(), Style.entered_color_01.getBlue())+
+				"\">Email:</font> \""+email+"\"</html>");
 		emailLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		emailLabel.setFont(new Font("Century Gothic", Font.PLAIN, 22));
+		emailLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 22));
 		
 		headerLabel = new JLabel();
 		headerLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		headerLabel.setForeground(Color.WHITE);
+		headerLabel.setForeground(Style.background_color_01);
 		headerLabel.setText("Profilo Utente");
-		headerLabel.setFont(new Font("Century Gothic", Font.ITALIC, 25));
-		headerLabel.setBackground(Color.GRAY);
+		headerLabel.setFont(new Font(Style.font_name_01, Font.ITALIC, 25));
+		headerLabel.setBackground(Style.background_color_03);
 		headerLabel.setOpaque(true);
 		headerLabel.setBorder(new EmptyBorder(10, 25, 10, 25));
 		
 		lineLabel = new JLabel("");
 		lineLabel.setOpaque(true);
-		lineLabel.setBackground(Color.LIGHT_GRAY);
+		lineLabel.setBackground(Style.background_color_02);
 		
 	}
 	
 	private void generateButtons() {
 		deleteAccountButton = new UnderlineButton();
-		deleteAccountButton.setFont(new Font("Century Gothic", Font.BOLD, 16));
+		deleteAccountButton.setFont(new Font(Style.font_name_01, Font.BOLD, 16));
 		deleteAccountButton.setText("Elimina Account");
-		deleteAccountButton.setDefaultColor(Color.GRAY);
-		deleteAccountButton.setEnteredColor(new Color(180, 0, 0));
-		deleteAccountButton.setPressedColor(new Color(220, 0, 0));
+		deleteAccountButton.setDefaultColor(Style.default_color_02);
+		deleteAccountButton.setEnteredColor(Style.entered_color_02);
+		deleteAccountButton.setPressedColor(Style.pressed_color_02);
 		deleteAccountButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				deleteAccount();
@@ -95,10 +100,9 @@ public class ProfilePanel extends JPanel{
 		
 		changePasswordButton = new RectangleButton();
 		changePasswordButton.setText("Cambia Password");
-		changePasswordButton.setDefaultColor(new Color(0, 40, 83));
-		changePasswordButton.setEnteredColor(new Color(0, 68, 140));
-		changePasswordButton.setPressedColor(new Color(90, 120, 200));
-		changePasswordButton.setForeground(Color.WHITE);
+		changePasswordButton.setDefaultColor(Style.default_color_01);
+		changePasswordButton.setEnteredColor(Style.entered_color_01);
+		changePasswordButton.setPressedColor(Style.pressed_color_01);
 		changePasswordButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				changePassword();
