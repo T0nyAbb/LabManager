@@ -156,6 +156,7 @@ public class ProfilePanel extends JPanel{
 		controller.deleteLoggedUserAccount();
 	}
 	
+	//TODO: implementare funzione per il cambio di password
 	private void changePassword() {
 		
 	}

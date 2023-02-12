@@ -106,27 +106,33 @@ public class MakeReservationPanel extends JPanel{
 	}
 	
 	public void fillStrumentoComboBox() throws SQLException {
-		String item = sedeComboBox.getSelectedItem().toString();
-		List<Strumento> strumenti;
-		if(item.indexOf(":") != -1) {
-			Sede sede = new Sede(null);
-			sede.setId(Integer.parseInt(item.split(":")[0]));
-			strumenti = controller.getStrumentoDao().getStrumentoBySede(sede);
-		}else {
-			strumenti = controller.getStrumentoDao().getAll();
+		
+		if(sedeComboBox.getSelectedItem() == null) {
+			strumentoComboBox.setModel(new DefaultComboBoxModel<String> (new String[0]));
 		}
-
-		if(strumenti.size() > 0) {
-			String[] stringStrumenti = new String[strumenti.size()];
-			for(int x=0; x<strumenti.size(); x++) {
-				int id = strumenti.get(x).getId();
-				String desc = strumenti.get(x).getDescrizione();
-				String post_nome = strumenti.get(x).getPostazione().getNome();
-				String sede_indirizzo = strumenti.get(x).getPostazione().getSede().getIndirizzo();
-				String lab_nome = strumenti.get(x).getPostazione().getSede().getLaboratorio().getNome();
-				stringStrumenti[x] = id + ": " +desc + ", "+ lab_nome + ", " + sede_indirizzo + ", " + post_nome;
+		else {
+			String item = (String) sedeComboBox.getSelectedItem();
+			List<Strumento> strumenti;
+			if(item.indexOf(":") != -1) {
+				Sede sede = new Sede(null);
+				sede.setId(Integer.parseInt(item.split(":")[0]));
+				strumenti = controller.getStrumentoDao().getStrumentoBySede(sede);
+			}else {
+				strumenti = controller.getStrumentoDao().getAll();
 			}
-		strumentoComboBox.setModel(new DefaultComboBoxModel<String> (stringStrumenti));
+	
+			if(strumenti.size() > 0) {
+				String[] stringStrumenti = new String[strumenti.size()];
+				for(int x=0; x<strumenti.size(); x++) {
+					int id = strumenti.get(x).getId();
+					String desc = strumenti.get(x).getDescrizione();
+					String post_nome = strumenti.get(x).getPostazione().getNome();
+					String sede_indirizzo = strumenti.get(x).getPostazione().getSede().getIndirizzo();
+					String lab_nome = strumenti.get(x).getPostazione().getSede().getLaboratorio().getNome();
+					stringStrumenti[x] = id + ": " +desc + ", "+ lab_nome + ", " + sede_indirizzo + ", " + post_nome;
+				}
+			strumentoComboBox.setModel(new DefaultComboBoxModel<String> (stringStrumenti));
+			}
 		}
 	}
 	
@@ -321,24 +327,26 @@ public class MakeReservationPanel extends JPanel{
 	}
 	
 	private void makeReservation() {
-		int id_strumento = Integer.parseInt(strumentoComboBox.getSelectedItem().toString().split(":")[0]);
-		Strumento strumento = new Strumento(null, null, null);
-		strumento.setId(id_strumento);
-		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ITALY);
-		SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ITALY);
-        String strDate = dateFormat.format((Date) dateTextField.getValue());  
-        String dataInizioString;
-		Date dataInizio = null;
-		String ora = (String) timeComboBox.getSelectedItem();
-		dataInizioString = strDate + " " + ora;
-		try{
-			dataInizio = timeFormat.parse(dataInizioString);
-		} catch(ParseException e) {
-			e.printStackTrace();
+		if(strumentoComboBox.getSelectedItem() != null) {
+			int id_strumento = Integer.parseInt(strumentoComboBox.getSelectedItem().toString().split(":")[0]);
+			Strumento strumento = new Strumento(null, null, null);
+			strumento.setId(id_strumento);
+			
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ITALY);
+			SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ITALY);
+	        String strDate = dateFormat.format((Date) dateTextField.getValue());  
+	        String dataInizioString;
+			Date dataInizio = null;
+			String ora = (String) timeComboBox.getSelectedItem();
+			dataInizioString = strDate + " " + ora;
+			try{
+				dataInizio = timeFormat.parse(dataInizioString);
+			} catch(ParseException e) {
+				e.printStackTrace();
+			}
+	
+			int durata = (int) spinner.getValue();
+			controller.makePrenotazione(strumento, dataInizio, durata);
 		}
-
-		int durata = (int) spinner.getValue();
-		controller.makePrenotazione(strumento, dataInizio, durata);
 	}
 }

@@ -47,6 +47,7 @@ public class StrumentoStatsPanel extends JPanel {
         fillSedeComboBox();
         fillStrumentoComboBox();
         fillPeriodoComboBox();
+        setStats();
     }
     
     public void setPanelSettings() {
@@ -87,6 +88,7 @@ public class StrumentoStatsPanel extends JPanel {
             public void actionPerformed(ActionEvent ae) {
                 try {
                     fillStrumentoComboBox();
+                    setStats();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -99,6 +101,7 @@ public class StrumentoStatsPanel extends JPanel {
             public void actionPerformed(ActionEvent ae) {
                 try {
                     fillPeriodoComboBox();
+                    setStats();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -123,27 +126,28 @@ public class StrumentoStatsPanel extends JPanel {
         
         GroupLayout groupLayout = new GroupLayout(this);
         groupLayout.setHorizontalGroup(
-        	groupLayout.createParallelGroup(Alignment.LEADING)
+        	groupLayout.createParallelGroup(Alignment.TRAILING)
         		.addComponent(headerLabel, GroupLayout.DEFAULT_SIZE, 894, Short.MAX_VALUE)
-        		.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+        		.addGroup(groupLayout.createSequentialGroup()
         			.addGap(18)
-        			.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-        				.addComponent(stats, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 839, Short.MAX_VALUE)
+        			.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
         				.addGroup(groupLayout.createSequentialGroup()
         					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-        						.addGroup(groupLayout.createSequentialGroup()
-        							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-        								.addComponent(strumentoLabel, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
-        								.addComponent(sedeLabel, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE))
-        							.addPreferredGap(ComponentPlacement.UNRELATED))
-        						.addGroup(groupLayout.createSequentialGroup()
-        							.addComponent(periodoLabel, GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
-        							.addGap(7)))
-        					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-        						.addComponent(dateComboBox, 0, 480, Short.MAX_VALUE)
-        						.addComponent(strumentoComboBox, 0, 480, Short.MAX_VALUE)
-        						.addComponent(sedeComboBox, Alignment.LEADING, 0, 480, Short.MAX_VALUE))))
+        						.addComponent(strumentoLabel, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+        						.addComponent(sedeLabel, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE))
+        					.addPreferredGap(ComponentPlacement.UNRELATED))
+        				.addGroup(groupLayout.createSequentialGroup()
+        					.addComponent(periodoLabel, GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+        					.addGap(7)))
+        			.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+        				.addComponent(dateComboBox, 0, 480, Short.MAX_VALUE)
+        				.addComponent(strumentoComboBox, 0, 480, Short.MAX_VALUE)
+        				.addComponent(sedeComboBox, Alignment.LEADING, 0, 480, Short.MAX_VALUE))
         			.addGap(37))
+        		.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+        			.addGap(61)
+        			.addComponent(stats, GroupLayout.DEFAULT_SIZE, 763, Short.MAX_VALUE)
+        			.addGap(70))
         );
         groupLayout.setVerticalGroup(
         	groupLayout.createParallelGroup(Alignment.LEADING)
@@ -161,37 +165,43 @@ public class StrumentoStatsPanel extends JPanel {
         			.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(periodoLabel)
         				.addComponent(dateComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        			.addGap(160)
+        			.addPreferredGap(ComponentPlacement.RELATED, 159, Short.MAX_VALUE)
         			.addComponent(stats, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap(42, Short.MAX_VALUE))
+        			.addGap(43))
         );
         setLayout(groupLayout);
 
     }
 
     public void fillStrumentoComboBox() throws SQLException {
-        String item = sedeComboBox.getSelectedItem().toString();
-        List<Strumento> strumenti;
-        if(item.indexOf(":") != -1) {
-            Sede sede = new Sede(null);
-            sede.setId(Integer.parseInt(item.split(":")[0]));
-            strumenti = controller.getStrumentoDao().getStrumentoBySede(sede);
-        }else {
-            strumenti = controller.getStrumentoDao().getAll();
-        }
-
-        if(strumenti.size() > 0) {
-            String[] stringStrumenti = new String[strumenti.size()];
-            for(int x=0; x<strumenti.size(); x++) {
-                int id = strumenti.get(x).getId();
-                String desc = strumenti.get(x).getDescrizione();
-                String post_nome = strumenti.get(x).getPostazione().getNome();
-                String sede_indirizzo = strumenti.get(x).getPostazione().getSede().getIndirizzo();
-                String lab_nome = strumenti.get(x).getPostazione().getSede().getLaboratorio().getNome();
-                stringStrumenti[x] = id + ": " +desc + ", "+ lab_nome + ", " + sede_indirizzo + ", " + post_nome;
-            }
-            strumentoComboBox.setModel(new DefaultComboBoxModel<String>(stringStrumenti));
-        }
+    	if(sedeComboBox.getSelectedItem() == null) {
+            strumentoComboBox.setModel(new DefaultComboBoxModel<String>(new String[0]));
+    	}
+    	else {
+    		String item = (String) sedeComboBox.getSelectedItem();
+	        List<Strumento> strumenti;
+	        if(item.indexOf(":") != -1) {
+	            Sede sede = new Sede(null);
+	            sede.setId(Integer.parseInt(item.split(":")[0]));
+	            strumenti = controller.getStrumentoDao().getStrumentoBySede(sede);
+	        }else {
+	            strumenti = controller.getStrumentoDao().getAll();
+	        }
+	
+	        if(strumenti.size() > 0) {
+	            String[] stringStrumenti = new String[strumenti.size()];
+	            for(int x=0; x<strumenti.size(); x++) {
+	                int id = strumenti.get(x).getId();
+	                String desc = strumenti.get(x).getDescrizione();
+	                String post_nome = strumenti.get(x).getPostazione().getNome();
+	                String sede_indirizzo = strumenti.get(x).getPostazione().getSede().getIndirizzo();
+	                String lab_nome = strumenti.get(x).getPostazione().getSede().getLaboratorio().getNome();
+	                stringStrumenti[x] = id + ": " +desc + ", "+ lab_nome + ", " + sede_indirizzo + ", " + post_nome;
+	            }
+	            strumentoComboBox.setModel(new DefaultComboBoxModel<String>(stringStrumenti));
+	        }
+    	}
+        
     }
     
     public void fillSedeComboBox() throws SQLException {
@@ -211,34 +221,43 @@ public class StrumentoStatsPanel extends JPanel {
     }
     
     public void fillPeriodoComboBox() throws SQLException {
-        List<String> date;
-        List<String> year;
-        int id_strumento = Integer.parseInt(strumentoComboBox.getSelectedItem().toString().split(":")[0]);
-        Strumento strumento = new Strumento(null, null, null);
-        strumento.setId(id_strumento);
-        date = controller.getStrumentoDao().getAvailableMonthsForStats(strumento);
-        year = controller.getStrumentoDao().getAvailableYearsForStats(strumento);
-        date.addAll(year);
-        
-        if(date.size() > 0) {
-            String[] stringDate = new String[date.size()];
-            for(int x=0; x<date.size(); x++) {
-                stringDate[x] = date.get(x);
-            }
-            dateComboBox.setModel(new DefaultComboBoxModel<String>(stringDate));
-        }
+    	if(strumentoComboBox.getSelectedItem() == null) {
+            dateComboBox.setModel(new DefaultComboBoxModel<String>(new String[0]));
+    	}
+    	else {
+    		List<String> date;
+	        List<String> year;
+	        int id_strumento = Integer.parseInt(strumentoComboBox.getSelectedItem().toString().split(":")[0]);
+	        Strumento strumento = new Strumento(null, null, null);
+	        strumento.setId(id_strumento);
+	        date = controller.getStrumentoDao().getAvailableMonthsForStats(strumento);
+	        year = controller.getStrumentoDao().getAvailableYearsForStats(strumento);
+	        date.addAll(year);
+	        
+	        if(date.size() > 0) {
+	            String[] stringDate = new String[date.size()];
+	            for(int x=0; x<date.size(); x++) {
+	                stringDate[x] = date.get(x);
+	            }
+	            dateComboBox.setModel(new DefaultComboBoxModel<String>(stringDate));
+	        }
+    	}
     }
     
     public void setStats() throws SQLException {
-        int id_strumento = Integer.parseInt(strumentoComboBox.getSelectedItem().toString().split(":")[0]);
-        Strumento strumento = new Strumento(null, null, null);
-        strumento.setId(id_strumento);
-
-        String data = dateComboBox.getSelectedItem().toString();
-        if(data.length()==4) {
-            stats.setText("<html>" + controller.getStrumentoDao().getStatsByYear(strumento, data) + "</html>");
-        } else {
-            stats.setText("<html>" + controller.getStrumentoDao().getStatsByMonth(strumento, data) + "</html>");
-        }
+    	if(strumentoComboBox.getSelectedItem() == null || dateComboBox.getSelectedItem() == null) {
+    		stats.setText("");
+    	}
+    	else {
+    		String strumentoSelectedItem = (String) strumentoComboBox.getSelectedItem();
+        	String dateSelectedItem = (String) dateComboBox.getSelectedItem();
+	        Strumento strumento = new Strumento(null, null, null);
+	        strumento.setId(Integer.parseInt(strumentoSelectedItem.split(":")[0]));
+	        if(dateSelectedItem.length()==4) {
+	            stats.setText("<html>" + controller.getStrumentoDao().getStatsByYear(strumento, dateSelectedItem) + "</html>");
+	        } else {
+	            stats.setText("<html>" + controller.getStrumentoDao().getStatsByMonth(strumento, dateSelectedItem) + "</html>");
+	        }
+    	}
     }
 }

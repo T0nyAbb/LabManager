@@ -20,7 +20,7 @@ public class SedeDao implements Dao<Sede>{
     @Override
     public List<Sede> getAll() throws SQLException {
         List<Sede> sede = new ArrayList<>();
-        String query = "SELECT * FROM SEDE JOIN LABORATORIO L on L.ID_LAB = SEDE.ID_LAB ORDER BY L.ID_LAB";
+        String query = "SELECT * FROM SEDE JOIN LABORATORIO L on L.ID_LAB = SEDE.ID_LAB ORDER BY SEDE.ID_SEDE";
         PreparedStatement sql = conn.prepareStatement(query);
         ResultSet rs = sql.executeQuery();
         List<Laboratorio> labs = new LaboratorioDao(conn).getAll();

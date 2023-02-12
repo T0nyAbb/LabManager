@@ -136,7 +136,7 @@ public class StrumentoDao implements Dao<Strumento> {
         SimpleDateFormat monthFormat = new SimpleDateFormat("yyyy-MMM", Locale.ITALY);
         List<String> mesiDisponibili = new ArrayList<>();
         //La query prende solo il mese corrente e quelli che sono gia'  passati
-        String query = "SELECT MESE FROM RIEPILOGO_UTILIZZO_STRUMENTO_MESE WHERE ID_STRUMENTO=?";
+        String query = "SELECT DISTINCT MESE FROM RIEPILOGO_UTILIZZO_STRUMENTO_MESE WHERE ID_STRUMENTO=?";
         PreparedStatement sql = conn.prepareStatement(query);
         sql.setInt(1, strumento.getId());
         ResultSet rs = sql.executeQuery();
@@ -168,7 +168,7 @@ public class StrumentoDao implements Dao<Strumento> {
         SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.ITALY);
         List<String> anniDisponibili = new ArrayList<>();
         //La query prende l'anno corrente e gli anni passati
-        String query = "SELECT ANNO FROM RIEPILOGO_UTILIZZO_STRUMENTO_ANNO WHERE ID_STRUMENTO=?";
+        String query = "SELECT DISTINCT ANNO FROM RIEPILOGO_UTILIZZO_STRUMENTO_ANNO WHERE ID_STRUMENTO=?";
         PreparedStatement sql = conn.prepareStatement(query);
         sql.setInt(1, strumento.getId());
         ResultSet rs = sql.executeQuery();
