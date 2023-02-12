@@ -69,7 +69,7 @@ public class HandleReservationPanel extends JPanel{
 	}
 	
 	private void generateLabels() {
-		headerLabel = new JLabel("Gestisci Prenotazione");
+		headerLabel = new JLabel("Gestisci Prenotazioni");
 		headerLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		headerLabel.setForeground(Style.background_color_01);
 		headerLabel.setFont(new Font(Style.font_name_01, Font.ITALIC, 25));
