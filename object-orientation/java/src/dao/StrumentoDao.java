@@ -135,7 +135,7 @@ public class StrumentoDao implements Dao<Strumento> {
     public List<String> getAvailableMonthsForStats(Strumento strumento) throws SQLException {
         SimpleDateFormat monthFormat = new SimpleDateFormat("yyyy-MMM", Locale.ITALY);
         List<String> mesiDisponibili = new ArrayList<>();
-        //La query prende solo il mese corrente e quelli che sono gia'  passati
+        mesiDisponibili.add("");
         String query = "SELECT DISTINCT MESE FROM RIEPILOGO_UTILIZZO_STRUMENTO_MESE WHERE ID_STRUMENTO=?";
         PreparedStatement sql = conn.prepareStatement(query);
         sql.setInt(1, strumento.getId());
@@ -167,7 +167,6 @@ public class StrumentoDao implements Dao<Strumento> {
     public List<String> getAvailableYearsForStats(Strumento strumento) throws SQLException {
         SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.ITALY);
         List<String> anniDisponibili = new ArrayList<>();
-        //La query prende l'anno corrente e gli anni passati
         String query = "SELECT DISTINCT ANNO FROM RIEPILOGO_UTILIZZO_STRUMENTO_ANNO WHERE ID_STRUMENTO=?";
         PreparedStatement sql = conn.prepareStatement(query);
         sql.setInt(1, strumento.getId());
