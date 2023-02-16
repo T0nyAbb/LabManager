@@ -103,4 +103,28 @@ public class PrenotazioneDao implements Dao<Prenotazione> {
         sql.close();
 
     }
+
+    public List<Prenotazione> getCalendarByStrumento(Strumento strumento) throws SQLException {
+        String query = "SELECT * FROM PRENOTAZIONE WHERE ID_STRUMENTO = ?";
+        PreparedStatement sql = conn.prepareStatement(query);
+        sql.setInt(1, strumento.getId());
+        ResultSet rs = sql.executeQuery();
+        List<Prenotazione> prenotazioni = new ArrayList<>();
+        List<Utente> utenti = new UtenteDao(conn).getAll();
+        List<Strumento> strumenti = new StrumentoDao(conn).getAll();
+        while(rs.next()) {
+            for(Utente utente:utenti) {
+                for(Strumento s:strumenti) {
+                    if(rs.getString("USERNAME").equals(utente.getUsername()) && s.getId()==strumento.getId()) {
+                        Prenotazione p = new Prenotazione(rs.getInt("ID_PRENOTAZIONE"), s, utente, rs.getDate("DATAPRENOTAZIONE"), rs.getInt("DURATA"), rs.getDate("DATAINIZIO"));
+                        prenotazioni.add(p);
+                    }
+
+                }
+
+            }
+
+        }
+        return prenotazioni;
+    }
 }
