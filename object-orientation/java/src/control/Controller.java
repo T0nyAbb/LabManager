@@ -174,7 +174,7 @@ public class Controller {
     	loggedUser = null;
     }
     
-	public void makePrenotazione(Strumento strumento, Date data_inizio, int durata) {
+	public void insertPrenotazione(Strumento strumento, Date data_inizio, int durata) {
 		Prenotazione newPrenotazione = new Prenotazione(0, strumento, loggedUser, null, durata, data_inizio);
 		mainpageFrame.getMakeReservationPanel().clearErrorMessage();
 		mainpageFrame.getMakeReservationPanel().setErrorMessageColor(Style.foreground_color_error);
@@ -191,17 +191,21 @@ public class Controller {
 			mainpageFrame.getMakeReservationPanel().showErrorMessage("Prenotazione inserita!");
 		} catch (SQLException e) {
 			String SQLErrorMessage = e.toString().toUpperCase();
+			String LabelMessage = "<html>";
 			
 			if(SQLErrorMessage.contains("NO_OVERLAP_PREN"))
-				mainpageFrame.getMakeReservationPanel().showErrorMessage("Strumento gia' prenotato nella data esposta!");
+				LabelMessage += "Strumento gia' prenotato nella data e ora inserita!";
 			else if(SQLErrorMessage.contains("VALID_PREN_INIZIO"))
-				mainpageFrame.getMakeReservationPanel().showErrorMessage("La data prenotazione non puo' essere una data presente o passata!");
+				LabelMessage += "La data di inizio non puo' essere una data presente o passata!";
 			else if(SQLErrorMessage.contains("VALID_PREN_DURATA"))
-				mainpageFrame.getMakeReservationPanel().showErrorMessage("La durata deve essere compresa tra 1 e 24!");
+				LabelMessage += "La durata deve essere compresa tra 1 e 24!";
 			else if(SQLErrorMessage.contains("NO_DOUBLE_PREN"))
-				mainpageFrame.getMakeReservationPanel().showErrorMessage("Non e' possibile prenotare due strumenti diversi alla stessa data e ora!");
+				LabelMessage += "Non e' possibile prenotare due strumenti diversi alla stessa data e ora!";
 			else
-				mainpageFrame.getMakeReservationPanel().showErrorMessage("Campi non validi!");
+				LabelMessage += "Campi non validi!";
+			
+			LabelMessage += "</html>";
+			mainpageFrame.getMakeReservationPanel().showErrorMessage(LabelMessage);
 		}
 		finally {
 			timer.restart();
@@ -236,12 +240,6 @@ public class Controller {
 	
 	public void updatePrenotazione(Prenotazione prenotazione) {
 		mainpageFrame.getHandleReservationPanel().clearErrorMessage();
-		timer = new Timer(2000, new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				mainpageFrame.getHandleReservationPanel().clearErrorMessage();
-				stopTimer();
-			}
-		});
 		
 		ModifyDialog modifyDialog = new ModifyDialog(mainpageFrame);
 		modifyDialog.setDataInizio(prenotazione.getDataInizio());
@@ -258,18 +256,23 @@ public class Controller {
 			mainpageFrame.getHandleReservationPanel().loadListContent();
 		}catch(SQLException e){
 			String SQLErrorMessage = e.toString().toUpperCase();
+			String LabelMessage = "<html>";
 			
-			if(SQLErrorMessage.contains("DELETE_OR_MODIFY_PREN"))
-				mainpageFrame.getHandleReservationPanel().showErrorMessage("Impossibile modificare una prenotazione passata");
-			else if(SQLErrorMessage.contains("VALID_PREN_INIZIO"))
-				mainpageFrame.getHandleReservationPanel().showErrorMessage("La data inserita non puo' essere una data presente o passata!");
+			if(SQLErrorMessage.contains("VALID_PREN_INIZIO"))
+				LabelMessage += "La data di inizio non puo' essere una data presente o passata!";
 			else if(SQLErrorMessage.contains("VALID_PREN_DURATA"))
-				mainpageFrame.getHandleReservationPanel().showErrorMessage("La durata deve essere compresa tra 1 e 24!");
+				LabelMessage += "La durata deve essere compresa tra 1 e 24!";
 			else if(SQLErrorMessage.contains("NO_DOUBLE_PREN"))
-				mainpageFrame.getHandleReservationPanel().showErrorMessage("Non puo' essere inserita una prenotazione per due strumenti diversi alla stessa data e ora");
+				LabelMessage += "Non e' possibile prenotare due strumenti diversi alla stessa data e ora!";
+			else if(SQLErrorMessage.contains("DELETE_OR_MODIFY_PREN"))
+				LabelMessage += "Non si puo' modificare una prenotazione passata!";
+			else if(SQLErrorMessage.contains("NO_OVERLAP_PREN"))
+				LabelMessage += "Strumento gia' prenotato nella data e ora inserita!";
 			else
-				mainpageFrame.getHandleReservationPanel().showErrorMessage("Campi non validi!");
-			timer.restart();
+				LabelMessage += "Campi non validi!";
+			
+			LabelMessage += "</html>";
+			mainpageFrame.getHandleReservationPanel().showErrorMessage(LabelMessage);
 		}catch(NullPointerException e) {
 			
 		}
@@ -288,6 +291,13 @@ public class Controller {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	public void changeLoggedUserPassword() {
+		if(loggedUser != null) {
+			int result = JOptionPane.showConfirmDialog(mainpageFrame, "WIP", "WIP", JOptionPane.YES_NO_CANCEL_OPTION);
+
 		}
 	}
 	
@@ -356,6 +366,8 @@ public class Controller {
     		timer.stop();
     	}
     }
+
+	
 
 
 

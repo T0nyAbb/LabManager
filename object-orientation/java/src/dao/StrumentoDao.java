@@ -150,13 +150,13 @@ public class StrumentoDao implements Dao<Strumento> {
     }
     public String getStatsByMonth(Strumento strumento, String mese) throws SQLException {
         String result;
-        String query = "SELECT * FROM RIEPILOGO_UTILIZZO_STRUMENTO_MESE R JOIN TOP_UTILIZZATORE_PER_STRUMENTO_MESE T ON R.ID_STRUMENTO=T.ID_STRUMENTO WHERE R.MESE = TO_DATE(?, 'YYYY/MON') AND R.ID_STRUMENTO=?";
+        String query = "SELECT * FROM RIEPILOGO_UTILIZZO_STRUMENTO_MESE WHERE MESE = TO_DATE(?, 'YYYY/MON') AND ID_STRUMENTO=?";
         PreparedStatement sql = conn.prepareStatement(query);
         sql.setString(1, mese);
         sql.setInt(2, strumento.getId());
         ResultSet rs = sql.executeQuery();
         if(rs.next()) {
-            result =  "Lo strumento durante il mese e' stato utilizzato per un totale di " + rs.getInt(4) + " ore. L'utente che lo ha utilizzato di piu' e' stato " + rs.getString(7) + " con ben " + rs.getInt(8) + " ore di utilizzo.";
+            result =  "Lo strumento durante il mese e' stato utilizzato per un totale di " + rs.getInt("ORE_UTILIZZO_TOTALI") + " ore.<br>L'utente che lo ha utilizzato di piu' e' stato " + rs.getString("TOP_UTENTE") + " con ben " + rs.getInt("ORE_UTILIZZO_TOP_UTENTE") + " ore di utilizzo.";
         } else {
             result = "Non sono disponibili statistiche per il periodo selezionato";
         }
@@ -181,13 +181,13 @@ public class StrumentoDao implements Dao<Strumento> {
     }
     public String getStatsByYear(Strumento strumento, String year) throws SQLException {
         String result;
-        String query = "SELECT * FROM RIEPILOGO_UTILIZZO_STRUMENTO_ANNO R JOIN TOP_UTILIZZATORE_PER_STRUMENTO_ANNO T ON R.ID_STRUMENTO=T.ID_STRUMENTO WHERE R.ANNO = TO_DATE(?, 'YYYY') AND R.ID_STRUMENTO=?";
+        String query = "SELECT * FROM RIEPILOGO_UTILIZZO_STRUMENTO_ANNO WHERE ANNO = TO_DATE(?, 'YYYY') AND ID_STRUMENTO=?";
         PreparedStatement sql = conn.prepareStatement(query);
         sql.setString(1, year);
         sql.setInt(2, strumento.getId());
         ResultSet rs = sql.executeQuery();
         if(rs.next()) {
-            result =  "Lo strumento durante l'anno e' stato utilizzato per un totale di " + rs.getInt(4) + " ore. L'utente che lo ha utilizzato di piu' e' stato " + rs.getString(7) + " con ben " + rs.getInt(8) + " ore di utilizzo.";
+            result =  "Lo strumento durante l'anno e' stato utilizzato per un totale di " + rs.getInt("ORE_UTILIZZO_TOTALI") + " ore.<br>L'utente che lo ha utilizzato di piu' e' stato " + rs.getString("TOP_UTENTE") + " con ben " + rs.getInt("ORE_UTILIZZO_TOP_UTENTE") + " ore di utilizzo.";
         } else {
             result = "Non sono disponibili statistiche per il periodo selezionato";
         }
