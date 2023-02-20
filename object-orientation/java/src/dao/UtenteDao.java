@@ -78,6 +78,15 @@ public class UtenteDao implements Dao<Utente> {
         sql.executeUpdate();
         sql.close();
     }
+    
+    public void updatePassword(Utente utente, String pwd) throws SQLException {
+    	String query = "UPDATE UTENTE SET USR_PASSWORD=UTL_I18N.STRING_TO_RAW(LTRIM(RTRIM(?)), 'AL32UTF8') WHERE UPPER(USERNAME)=UPPER(?)";
+        PreparedStatement sql = conn.prepareStatement(query);
+        sql.setString(1, pwd);
+        sql.setString(2, utente.getUsername());
+        sql.executeUpdate();
+        sql.close();
+    }
 
     @Override
     public void delete(Utente utente) throws SQLException{

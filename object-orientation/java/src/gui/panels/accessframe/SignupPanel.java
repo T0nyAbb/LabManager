@@ -59,7 +59,7 @@ public class SignupPanel extends JPanel {
 	}
 	
 	public void clearErrorMessage() {
-		errorLabel.setVisible(false);
+		errorLabel.setText("");
 	}
 	
 	public void showSignupSuccessfulMessage() {

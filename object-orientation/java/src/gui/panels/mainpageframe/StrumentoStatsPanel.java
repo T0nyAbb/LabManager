@@ -47,7 +47,7 @@ public class StrumentoStatsPanel extends JPanel {
         fillSedeComboBox();
         fillStrumentoComboBox();
         fillPeriodoComboBox();
-        setStats();
+        loadStats();
     }
     
     public void setPanelSettings() {
@@ -77,7 +77,7 @@ public class StrumentoStatsPanel extends JPanel {
         periodoLabel.setForeground(Style.entered_color_01);
         
         stats = new JLabel("");
-        stats.setFont(new Font(Style.font_name_01, Font.PLAIN, 16));
+        stats.setFont(new Font(Style.font_name_01, Font.ITALIC, 16));
         stats.setForeground(Style.foreground_color_01);
     }
     
@@ -88,7 +88,7 @@ public class StrumentoStatsPanel extends JPanel {
             public void actionPerformed(ActionEvent ae) {
                 try {
                     fillStrumentoComboBox();
-                    setStats();
+                    loadStats();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -101,7 +101,7 @@ public class StrumentoStatsPanel extends JPanel {
             public void actionPerformed(ActionEvent ae) {
                 try {
                     fillPeriodoComboBox();
-                    setStats();
+                    loadStats();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -112,11 +112,7 @@ public class StrumentoStatsPanel extends JPanel {
         dateComboBox.setFont(new Font(Style.font_name_02, Font.PLAIN, 12));
         dateComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                try {
-                    setStats();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                loadStats();
             }
         });
 
@@ -244,7 +240,7 @@ public class StrumentoStatsPanel extends JPanel {
     	}
     }
     
-    public void setStats() throws SQLException {
+    public void loadStats() {
     	if(strumentoComboBox.getSelectedItem() == null || dateComboBox.getSelectedItem() == null) {
     		stats.setText("");
     	}
@@ -253,10 +249,15 @@ public class StrumentoStatsPanel extends JPanel {
         	String dateSelectedItem = (String) dateComboBox.getSelectedItem();
 	        Strumento strumento = new Strumento(null, null, null);
 	        strumento.setId(Integer.parseInt(strumentoSelectedItem.split(":")[0]));
-	        if(dateSelectedItem.length()==4) {
-	            stats.setText("<html>" + controller.getStrumentoDao().getStatsByYear(strumento, dateSelectedItem) + "</html>");
-	        } else {
-	            stats.setText("<html>" + controller.getStrumentoDao().getStatsByMonth(strumento, dateSelectedItem) + "</html>");
+	        try {
+		        if(dateSelectedItem.length()==4) {
+		            stats.setText("<html>" + controller.getStrumentoDao().getStatsByYear(strumento, dateSelectedItem) + "</html>");
+		        } else {
+		            stats.setText("<html>" + controller.getStrumentoDao().getStatsByMonth(strumento, dateSelectedItem) + "</html>");
+		        }
+	        }
+	        catch(SQLException e) {
+	        	e.printStackTrace();
 	        }
     	}
     }

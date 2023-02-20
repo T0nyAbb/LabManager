@@ -22,7 +22,7 @@ public class Style {
 	
 	public static final Color default_color_03 = Color.DARK_GRAY;
 	public static final Color entered_color_03 = new Color(60, 60, 60);
-	public static final Color bpressed_color_03 = new Color(25, 25, 25);
+	public static final Color pressed_color_03 = new Color(25, 25, 25);
 	
 	//Sfondo
 	public static final Color background_color_01 = Color.WHITE;

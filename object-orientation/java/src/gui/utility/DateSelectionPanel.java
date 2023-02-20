@@ -48,6 +48,8 @@ public class DateSelectionPanel extends Panel {
         int daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         for (int x = 6 + dayOfWeek, day = 1; day <= daysInMonth; x++, day++)
         	dateButtons.get(x).setText("" + day);
+        
+        setDay("1");
 	}
 	
 	private void setPanelSettings() {

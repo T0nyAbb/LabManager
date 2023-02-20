@@ -35,6 +35,41 @@ public class StrumentoDao implements Dao<Strumento> {
         sql.close();
         return strumento;
     }
+    
+    public List<Strumento> getStrumentoByDescrizione(String desc) throws SQLException {
+        List<Strumento> strumento = new ArrayList<>();
+        String query = "SELECT * FROM STRUMENTO JOIN POSTAZIONE P on P.ID_POSTAZIONE = STRUMENTO.ID_POSTAZIONE WHERE STRUMENTO.DESCRIZIONE = ?";
+        PreparedStatement sql = conn.prepareStatement(query);
+        sql.setString(1, desc);
+        ResultSet rs = sql.executeQuery();
+        List<Postazione> postazioni = new PostazioneDao(conn).getAll();
+        while(rs.next()) {
+            for(Postazione postazione:postazioni) {
+                if(postazione.getId() == rs.getInt("ID_POSTAZIONE")) {
+                    Strumento s = new Strumento(postazione, rs.getString("DESCRIZIONE"), rs.getString("SCHEDATECNICA"));
+                    s.setId(rs.getInt("ID_STRUMENTO"));
+                    strumento.add(s);
+                }
+            }
+
+        }
+        rs.close();
+        sql.close();
+        return strumento;
+    }
+    
+    public List<String> getDescrizioneFromAll() throws SQLException {
+        List<String> descrizioni = new ArrayList<>();
+        String query = "SELECT DISTINCT DESCRIZIONE FROM STRUMENTO";
+        PreparedStatement sql = conn.prepareStatement(query);
+        ResultSet rs = sql.executeQuery();
+        while(rs.next()) {
+            descrizioni.add(rs.getString("DESCRIZIONE"));
+        }
+        rs.close();
+        sql.close();
+        return descrizioni;
+    }
 
 
     @Override
@@ -88,27 +123,6 @@ public class StrumentoDao implements Dao<Strumento> {
         sql.executeUpdate();
         sql.close();
     }
-    
-    public List<Strumento> getStrumentoByDescription(String description) throws SQLException {
-        List<Strumento> strumento = new ArrayList<>();
-        String query = "SELECT * FROM STRUMENTO JOIN POSTAZIONE P on P.ID_POSTAZIONE = STRUMENTO.ID_POSTAZIONE JOIN SEDE S on P.ID_SEDE = S.ID_SEDE WHERE UPPER(STRUMENTO.DESCRIZIONE) LIKE UPPER(?)";
-        PreparedStatement sql = conn.prepareStatement(query);
-        sql.setString(1, "%"+description+"%");
-        ResultSet rs = sql.executeQuery();
-        List<Postazione> postazioni = new PostazioneDao(conn).getAll();
-        while(rs.next()) {
-            for(Postazione postazione:postazioni) {
-                Sede sede = postazione.getSede();
-                if(rs.getString(4).equals(rs.getString(5)) && postazione.getNome().equals(rs.getString(6)) && sede.getIndirizzo().equals(rs.getString(9))) {
-                    Strumento s = new Strumento(postazione, rs.getString(2), rs.getString(3));
-                    strumento.add(s);
-                }
-            }
-        }
-        rs.close();
-        sql.close();
-        return strumento;
-    }
 
     public List<Strumento> getStrumentoBySede(Sede sede) throws SQLException {
         List<Strumento> strumento = new ArrayList<>();
@@ -132,6 +146,31 @@ public class StrumentoDao implements Dao<Strumento> {
         sql.close();
         return strumento;
     }
+    
+    public List<Strumento> getStrumentoBySedeAndDescrizione(Sede sede, String desc) throws SQLException {
+        List<Strumento> strumento = new ArrayList<>();
+        String query = "SELECT * FROM STRUMENTO JOIN POSTAZIONE P on STRUMENTO.ID_POSTAZIONE = P.ID_POSTAZIONE JOIN SEDE S on P.ID_SEDE = S.ID_SEDE WHERE S.ID_SEDE=? AND STRUMENTO.DESCRIZIONE = ?";
+        PreparedStatement sql = conn.prepareStatement(query);
+        sql.setInt(1, sede.getId());
+        sql.setString(2, desc);
+        ResultSet rs = sql.executeQuery();
+        List<Postazione> postazioni = new PostazioneDao(conn).getAll();
+        while(rs.next()) {
+            for(Postazione postazione:postazioni) {
+                if(postazione.getId() == rs.getInt("ID_POSTAZIONE")) {
+                    Strumento s = new Strumento(postazione, rs.getString("DESCRIZIONE"), rs.getString("SCHEDATECNICA"));
+                    s.setId(rs.getInt("ID_STRUMENTO"));
+                    strumento.add(s);
+
+                }
+            }
+
+        }
+        rs.close();
+        sql.close();
+        return strumento;
+    }
+    
     public List<String> getAvailableMonthsForStats(Strumento strumento) throws SQLException {
         SimpleDateFormat monthFormat = new SimpleDateFormat("yyyy-MMM", Locale.ITALY);
         List<String> mesiDisponibili = new ArrayList<>();

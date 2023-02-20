@@ -22,8 +22,8 @@ public class YearMonthSelectionPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private DatePicker datePicker;
-	private int month = 0;
-    private int year = 2023;
+	private int month = Calendar.getInstance().get(Calendar.MONTH);
+    private int year = Calendar.getInstance().get(Calendar.YEAR);
     private JTextField displayDateTextField;
     private JButton previousMonthButton;
     private JButton previousYearButton;
@@ -63,7 +63,9 @@ public class YearMonthSelectionPanel extends JPanel {
 	}
 
 	public void displayDate(Calendar calendar, SimpleDateFormat dateFormat) {
-		displayDateTextField.setText(dateFormat.format(calendar.getTime()));		
+		displayDateTextField.setText(dateFormat.format(calendar.getTime()));	
+		setYear(calendar.get(Calendar.YEAR));
+		setMonth(calendar.get(Calendar.MONTH));
 	}
 	
 	private void setPanelSettings() {

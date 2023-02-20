@@ -3,7 +3,11 @@ package gui.utility;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+
 import javax.swing.*;
+
+import control.Controller;
 
 
 public class DatePicker extends JPanel
@@ -11,6 +15,8 @@ public class DatePicker extends JPanel
     private static final long serialVersionUID = 1L;
     
     private SimpleDateFormat dateFormat;
+    private SimpleDateFormat yearFormat;
+    private SimpleDateFormat monthFormat;
     private Calendar calendar;
     private JFormattedTextField linkedTextField;
     private String pickedDate = "";
@@ -20,6 +26,8 @@ public class DatePicker extends JPanel
     public DatePicker()
     {
         dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        yearFormat = new SimpleDateFormat("yyyy");
+        monthFormat = new SimpleDateFormat("MM");
         calendar = Calendar.getInstance();
         
         setPanelSettings();
@@ -36,6 +44,14 @@ public class DatePicker extends JPanel
     public void displayDate()
     {
         calendar.set(yearMonthSelectionPanel.getYear(), yearMonthSelectionPanel.getMonth(), 1);
+        dateSelectionPanel.displayDate(calendar);
+        yearMonthSelectionPanel.displayDate(calendar, new SimpleDateFormat("yyyy-MM"));
+        
+    }
+    
+    public void displayDate(Date date)
+    {
+        calendar.set(Integer.parseInt(yearFormat.format(date), 10), Integer.parseInt(monthFormat.format(date), 10)-1, 1);
         dateSelectionPanel.displayDate(calendar);
         yearMonthSelectionPanel.displayDate(calendar, new SimpleDateFormat("yyyy-MM"));
         

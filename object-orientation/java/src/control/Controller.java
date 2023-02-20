@@ -8,6 +8,7 @@ import exceptions.IncorrectCredentialsException;
 import exceptions.InvalidTextFileContentException;
 import exceptions.PasswordsNotMatchingException;
 import gui.frames.*;
+import gui.utility.ChangePasswordDialog;
 import gui.utility.ModifyDialog;
 import gui.utility.Style;
 
@@ -176,19 +177,12 @@ public class Controller {
     
 	public void insertPrenotazione(Strumento strumento, Date data_inizio, int durata) {
 		Prenotazione newPrenotazione = new Prenotazione(0, strumento, loggedUser, null, durata, data_inizio);
-		mainpageFrame.getMakeReservationPanel().clearErrorMessage();
-		mainpageFrame.getMakeReservationPanel().setErrorMessageColor(Style.foreground_color_error);
-		timer = new Timer(2000, new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				mainpageFrame.getMakeReservationPanel().clearErrorMessage();
-				mainpageFrame.getMakeReservationPanel().setErrorMessageColor(Style.foreground_color_error);
-				stopTimer();
-			}
-		});
+		mainpageFrame.getMakeReservationDatePanel().clearErrorMessage();
+		mainpageFrame.getMakeReservationDatePanel().setErrorMessageColor(Style.foreground_color_error);
 		try {
 			prenotazioneDao.insert(newPrenotazione);
-			mainpageFrame.getMakeReservationPanel().setErrorMessageColor(Style.foreground_color_success);
-			mainpageFrame.getMakeReservationPanel().showErrorMessage("Prenotazione inserita!");
+			mainpageFrame.getMakeReservationDatePanel().setErrorMessageColor(Style.foreground_color_success);
+			mainpageFrame.getMakeReservationDatePanel().showErrorMessage("Prenotazione inserita!");
 		} catch (SQLException e) {
 			String SQLErrorMessage = e.toString().toUpperCase();
 			String LabelMessage = "<html>";
@@ -205,23 +199,13 @@ public class Controller {
 				LabelMessage += "Campi non validi!";
 			
 			LabelMessage += "</html>";
-			mainpageFrame.getMakeReservationPanel().showErrorMessage(LabelMessage);
-		}
-		finally {
-			timer.restart();
+			mainpageFrame.getMakeReservationDatePanel().showErrorMessage(LabelMessage);
 		}
 		
 	}
 	
 	public void deletePrenotazione(Prenotazione prenotazione) {
 		mainpageFrame.getHandleReservationPanel().clearErrorMessage();
-		timer = new Timer(2000, new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				mainpageFrame.getHandleReservationPanel().clearErrorMessage();
-				stopTimer();
-			}
-		});
-
 		
 		try {
 			mainpageFrame.getHandleReservationPanel().clearErrorMessage();
@@ -234,7 +218,6 @@ public class Controller {
 				mainpageFrame.getHandleReservationPanel().showErrorMessage("Non si puo' cancellare una prenotazione passata!");
 			else
 				mainpageFrame.getHandleReservationPanel().showErrorMessage("Campi non validi!");
-			timer.restart();
 		}
 	}
 	
@@ -296,8 +279,42 @@ public class Controller {
 	
 	public void changeLoggedUserPassword() {
 		if(loggedUser != null) {
-			int result = JOptionPane.showConfirmDialog(mainpageFrame, "WIP", "WIP", JOptionPane.YES_NO_CANCEL_OPTION);
-
+			String errorMessage = "";
+			while(true) {
+				ChangePasswordDialog changePasswordDialog = new ChangePasswordDialog(mainpageFrame);
+				changePasswordDialog.showErrorMessage(errorMessage);
+				changePasswordDialog.setVisible(true);
+				try {
+					String oldPass = changePasswordDialog.getOldPassword();
+					String newPass = changePasswordDialog.getNewPassword();
+					if(oldPass == null || newPass == null) {
+						throw new EmptyFieldException();
+					}
+					
+					utenteDao.getByCredentials(loggedUser.getUsername(), oldPass);
+					utenteDao.updatePassword(loggedUser, newPass);
+					
+					closeMainpageOpenAccess();
+					break;
+				}
+				catch(SQLException e) {
+					String SQLErrorMessage = e.toString().toUpperCase();
+					
+					if(SQLErrorMessage.contains("INSERISCI_PW")) {
+						errorMessage = "Password non valida! (6-18 caratteri alfanumerici, almeno un numero)";
+					}
+					else {
+						errorMessage = "Campi non validi!";
+					}
+				}
+				catch (IncorrectCredentialsException e) {
+					errorMessage = "Password incorretta!";
+				}
+				catch(EmptyFieldException e) {
+					System.out.println("DIO");
+					break;
+				}
+			}
 		}
 	}
 	
@@ -305,10 +322,15 @@ public class Controller {
     	mainpageFrame.showProfilePanel();
     }
     
-    public void showMakeReservation() {
-    	mainpageFrame.showMakeReservationPanel();
+    public void showMakeReservationStrumento() {
+    	mainpageFrame.showMakeReservationStrumentoPanel();
     }
-    
+
+	public void showMakeReservationDate(int idStrumento) {
+    	mainpageFrame.showMakeReservationDatePanel(idStrumento);
+    	mainpageFrame.getMakeReservationDatePanel().clearErrorMessage();
+	}
+	
     public void showHandleReservation() {
     	mainpageFrame.showHandleReservationPanel();
     }
@@ -366,6 +388,7 @@ public class Controller {
     		timer.stop();
     	}
     }
+
 
 	
 

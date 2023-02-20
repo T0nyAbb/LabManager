@@ -56,7 +56,7 @@ public class LoginPanel extends JPanel {
 	}
 	
 	public void clearErrorMessage() {
-		errorLabel.setVisible(false);
+		errorLabel.setText("");
 	}
 	
 	public void clear() {
