@@ -2,10 +2,7 @@ package dao;
 
 import dto.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -105,7 +102,7 @@ public class PrenotazioneDao implements Dao<Prenotazione> {
     }
 
     public List<Prenotazione> getCalendarByStrumento(Strumento strumento) throws SQLException {
-        String query = "SELECT * FROM PRENOTAZIONE WHERE ID_STRUMENTO = ?";
+        String query = "SELECT * FROM PRENOTAZIONE WHERE ID_STRUMENTO = ? ORDER BY DATAINIZIO DESC";
         PreparedStatement sql = conn.prepareStatement(query);
         sql.setInt(1, strumento.getId());
         ResultSet rs = sql.executeQuery();
@@ -126,5 +123,38 @@ public class PrenotazioneDao implements Dao<Prenotazione> {
 
         }
         return prenotazioni;
+    }
+    public List<Postazione> getAvailableSlot(Strumento strumento, Date dataInizio, int durata) throws SQLException {
+        DateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        String dataString = formatDate.format(dataInizio);
+        //NB: La descrizione dello strumento passato in input non deve essere null
+        String query = "SELECT * FROM POSTAZIONE P JOIN STRUMENTO S ON P.ID_POSTAZIONE = S.ID_POSTAZIONE" +
+                " WHERE UPPER(S.DESCRIZIONE)=UPPER(?) AND S.ID_STRUMENTO NOT IN (SELECT S.ID_STRUMENTO FROM PRENOTAZIONE P JOIN STRUMENTO S on P.ID_STRUMENTO = S.ID_STRUMENTO" +
+                "                                                                 WHERE S.ID_STRUMENTO=? AND DATAINIZIO+(1/24*P.DURATA)" +
+                "                                                                     BETWEEN TO_DATE(?, 'YYYY/MM/DD HH24:MI') AND TO_DATE(?, 'YYYY/MM/DD HH24:MI')+(1/24*?)" +
+                "                                                                    OR DATAINIZIO BETWEEN TO_DATE(?, 'YYYY/MM/DD HH24:MI') AND TO_DATE(?, 'YYYY/MM/DD HH24:MI')+(1/24*?))";
+        PreparedStatement sql = conn.prepareStatement(query);
+        sql.setString(1, strumento.getDescrizione());
+        sql.setInt(2, strumento.getId());
+        sql.setString(3, dataString);
+        sql.setString(4, dataString);
+        sql.setInt(5, durata);
+        sql.setString(6, dataString);
+        sql.setString(7, dataString);
+        sql.setInt(8, durata);
+
+        ResultSet rs = sql.executeQuery();
+        List<Postazione> postazioni = new ArrayList<>();
+        List<Postazione> post = new PostazioneDao(conn).getAll();
+        while(rs.next()) {
+            for(Postazione p:post) {
+                if(p.getId()==rs.getInt(1)) {
+                    postazioni.add(p);
+                }
+            }
+        }
+        rs.close();
+        sql.close();
+        return postazioni;
     }
 }
