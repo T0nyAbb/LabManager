@@ -195,7 +195,7 @@ public class StrumentoDao implements Dao<Strumento> {
         sql.setInt(2, strumento.getId());
         ResultSet rs = sql.executeQuery();
         if(rs.next()) {
-            result =  "Lo strumento durante il mese e' stato utilizzato per un totale di " + rs.getInt("ORE_UTILIZZO_TOTALI") + " ore.<br>L'utente che lo ha utilizzato di piu' e' stato " + rs.getString("TOP_UTENTE") + " con ben " + rs.getInt("ORE_UTILIZZO_TOP_UTENTE") + " ore di utilizzo.";
+            result =  "Lo strumento durante il mese e' stato utilizzato per un totale di <b>" + rs.getInt("ORE_UTILIZZO_TOTALI") + "</b> ore.<br>L'utente che lo ha utilizzato di piu' e' stato <b>" + rs.getString("TOP_UTENTE") + "</b> con ben <b>" + rs.getInt("ORE_UTILIZZO_TOP_UTENTE") + "</b> ore di utilizzo.";
         } else {
             result = "Non sono disponibili statistiche per il periodo selezionato";
         }
@@ -226,7 +226,7 @@ public class StrumentoDao implements Dao<Strumento> {
         sql.setInt(2, strumento.getId());
         ResultSet rs = sql.executeQuery();
         if(rs.next()) {
-            result =  "Lo strumento durante l'anno e' stato utilizzato per un totale di " + rs.getInt("ORE_UTILIZZO_TOTALI") + " ore.<br>L'utente che lo ha utilizzato di piu' e' stato " + rs.getString("TOP_UTENTE") + " con ben " + rs.getInt("ORE_UTILIZZO_TOP_UTENTE") + " ore di utilizzo.";
+            result =  "Lo strumento durante l'anno e' stato utilizzato per un totale di <b>" + rs.getInt("ORE_UTILIZZO_TOTALI") + "</b> ore.<br>L'utente che lo ha utilizzato di piu' e' stato <b>" + rs.getString("TOP_UTENTE") + "</b> con ben <b>" + rs.getInt("ORE_UTILIZZO_TOP_UTENTE") + "</b> ore di utilizzo.";
         } else {
             result = "Non sono disponibili statistiche per il periodo selezionato";
         }

@@ -94,7 +94,7 @@ public class ChangePasswordDialog extends JDialog {
 		getContentPane().add(newRepeatPasswordLabel);
 		
 		errorLabel = new JLabel("ERROR");
-		errorLabel.setBounds(50, 315, 271, 56);
+		errorLabel.setBounds(40, 315, 271, 56);
         errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
         errorLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 12));
         errorLabel.setForeground(Color.RED);

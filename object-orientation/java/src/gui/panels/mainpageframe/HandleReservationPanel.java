@@ -44,6 +44,7 @@ public class HandleReservationPanel extends JPanel{
 	private JLabel selezionaLabel;
 	private JLabel errorLabel;
 	
+	
 	public HandleReservationPanel(Controller controller) {
 		this.controller = controller;
 		
@@ -90,7 +91,7 @@ public class HandleReservationPanel extends JPanel{
 	
 	private void generateLists() {
 		list = new JList<String>();
-		list.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		list.setFont(new Font(Style.font_name_01, Font.PLAIN, 16));
 		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		list.setLayoutOrientation(JList.VERTICAL);
 		list.setVisibleRowCount(-1);
@@ -109,10 +110,11 @@ public class HandleReservationPanel extends JPanel{
 				DateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
 				String[] stringArr = new String[prenotazioni.size()];
 				for(int x=0; x<prenotazioni.size(); ++x) {
-					stringArr[x] = timeFormat.format(prenotazioni.get(x).getDataInizio()) +
-							" [" + prenotazioni.get(x).getDurata() + " ore] - " + prenotazioni.get(x).getStrumento().getId() + ": "+ prenotazioni.get(x).getStrumento().getDescrizione() +
-							" - " + prenotazioni.get(x).getStrumento().getPostazione().getSede().getIndirizzo() + ", Postazione " +
-							prenotazioni.get(x).getStrumento().getPostazione().getNome();
+					Prenotazione p = prenotazioni.get(x);
+					stringArr[x] = timeFormat.format(p.getDataInizio()) +
+							" [" + p.getDurata() + " ore] - " + p.getStrumento().getId() + ": "+ p.getStrumento().getDescrizione() +
+							" - " + p.getStrumento().getPostazione().getSede().getIndirizzo() + ", Postazione " +
+							p.getStrumento().getPostazione().getNome();
 				}
 				list.setListData(stringArr);
 			}else {
@@ -152,22 +154,22 @@ public class HandleReservationPanel extends JPanel{
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addComponent(headerLabel, GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
+				.addComponent(headerLabel, GroupLayout.DEFAULT_SIZE, 894, Short.MAX_VALUE)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(94)
-					.addComponent(errorLabel, GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
-					.addGap(111))
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 					.addGap(27)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(listScroller, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 637, Short.MAX_VALUE)
+						.addComponent(listScroller, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 833, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(selezionaLabel)
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, 200, Short.MAX_VALUE)
 							.addComponent(eliminaButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(modificaButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 					.addGap(34))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(94)
+					.addComponent(errorLabel, GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE)
+					.addGap(111))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -180,9 +182,9 @@ public class HandleReservationPanel extends JPanel{
 						.addComponent(selezionaLabel))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(listScroller, GroupLayout.PREFERRED_SIZE, 308, GroupLayout.PREFERRED_SIZE)
-					.addGap(88)
-					.addComponent(errorLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGap(42))
+					.addPreferredGap(ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+					.addComponent(errorLabel, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
+					.addGap(32))
 		);
 		setLayout(groupLayout);
 	}

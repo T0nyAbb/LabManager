@@ -8,9 +8,9 @@ import control.Controller;
 import dto.Strumento;
 import gui.buttons.RectangleButton;
 import gui.utility.CalendarDialog;
-import gui.utility.DatePicker;
 import gui.utility.ReservationTimeComboBox;
 import gui.utility.Style;
+import gui.utility.date.DatePicker;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -56,7 +56,6 @@ public class MakeReservationDatePanel extends JPanel{
 	private JSpinner spinner;
 	private ReservationTimeComboBox timeComboBox;
 	private RectangleButton effettuaPrenotazioneButton;
-	private RectangleButton visualizzaCalendarioButton;
 	private RectangleButton goBackButton;
 	private JLabel strumentoLabel;
 	private JLabel strumentoLabel2;
@@ -166,13 +165,6 @@ public class MakeReservationDatePanel extends JPanel{
 				loadTimeComboBox();
 			}
 		});
-		visualizzaCalendarioButton = new RectangleButton();
-		visualizzaCalendarioButton.setText("Mostra calendario");
-		visualizzaCalendarioButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				showCalendar();
-			}
-		});
 		
 
 		goBackButton = new RectangleButton("Indietro");
@@ -194,7 +186,7 @@ public class MakeReservationDatePanel extends JPanel{
 		headerLabel.setFont(new Font(Style.font_name_01, Font.ITALIC, 25));
 		headerLabel.setBackground(Style.background_color_03);
 		headerLabel.setOpaque(true);
-		headerLabel.setBorder(new EmptyBorder(10, 25, 10, 25));
+		headerLabel.setBorder(new EmptyBorder(10, 25, 10, 45));
 		
 		dataInizioLabel = new JLabel("Data Inizio");
 		dataInizioLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 18));
@@ -239,75 +231,72 @@ public class MakeReservationDatePanel extends JPanel{
 		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addComponent(headerLabel, GroupLayout.DEFAULT_SIZE, 867, Short.MAX_VALUE)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(27)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(errorLabel, GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(dataInizioLabel, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)
-								.addComponent(oraInizioLabel)
-								.addComponent(durataLabel, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
-								.addComponent(strumentoLabel, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE))
-							.addGap(18)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(timeComboBox, 0, 389, Short.MAX_VALUE)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(dateTextField, GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
-									.addGap(18)
-									.addComponent(dateButton, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED, 338, GroupLayout.PREFERRED_SIZE))
-								.addComponent(strumentoLabel2, GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE))))
-					.addGap(18)
-					.addComponent(datePicker, GroupLayout.PREFERRED_SIZE, 266, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(goBackButton, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)
-					.addGap(98)
-					.addComponent(visualizzaCalendarioButton, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE)
-					.addGap(98)
-					.addComponent(effettuaPrenotazioneButton, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(267, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(headerLabel, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap()
+					.addComponent(goBackButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGap(216)
+					.addComponent(effettuaPrenotazioneButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGap(318))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(34)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(strumentoLabel, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-								.addComponent(strumentoLabel2, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
-							.addGap(18)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+									.addComponent(durataLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(oraInizioLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(dataInizioLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+								.addComponent(strumentoLabel, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
+								.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+									.addComponent(dateTextField, GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
+									.addGap(18)
+									.addComponent(dateButton))
+								.addComponent(timeComboBox, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+								.addComponent(strumentoLabel2, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED))
+						.addComponent(errorLabel, GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE))
+					.addGap(18)
+					.addComponent(datePicker, GroupLayout.PREFERRED_SIZE, 286, GroupLayout.PREFERRED_SIZE)
+					.addGap(62))
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addComponent(headerLabel, GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addComponent(headerLabel, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
+					.addGap(39)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(strumentoLabel2, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+								.addComponent(strumentoLabel, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE, false)
 								.addComponent(dataInizioLabel)
-								.addComponent(dateTextField, GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+								.addComponent(dateTextField, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
 								.addComponent(dateButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
 							.addGap(18)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(oraInizioLabel, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
+								.addComponent(oraInizioLabel, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
 								.addComponent(timeComboBox, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
 							.addGap(18)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 								.addComponent(durataLabel)
 								.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(errorLabel, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(18)
-							.addComponent(datePicker, GroupLayout.PREFERRED_SIZE, 243, GroupLayout.PREFERRED_SIZE)))
-					.addGap(203)
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(errorLabel, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE))
+						.addComponent(datePicker, GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE))
+					.addGap(146)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(effettuaPrenotazioneButton, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
-							.addComponent(visualizzaCalendarioButton, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
 						.addComponent(goBackButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
-					.addGap(12))
+					.addGap(15))
 		);
 		setLayout(groupLayout);
 	}
@@ -345,11 +334,5 @@ public class MakeReservationDatePanel extends JPanel{
 			e1.printStackTrace();
 		}
 		
-	}
-
-	private void showCalendar() {
-		Strumento s = new Strumento(null, null);
-		s.setId(idStrumento);
-		CalendarDialog cd = new CalendarDialog(this, controller, s.getId());
 	}
 }

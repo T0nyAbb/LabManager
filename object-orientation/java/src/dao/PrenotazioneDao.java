@@ -61,6 +61,21 @@ public class PrenotazioneDao implements Dao<Prenotazione> {
         return prenotazione;
     }
 
+    public int getCountByUtente(Utente u) throws SQLException{
+        String query = "SELECT COUNT(PRENOTAZIONE.ID_PRENOTAZIONE) FROM PRENOTAZIONE WHERE PRENOTAZIONE.USERNAME = ?";
+        PreparedStatement sql = conn.prepareStatement(query);
+        sql.setString(1, u.getUsername());
+        ResultSet rs = sql.executeQuery();
+
+        int count = 0;
+        if(rs.next()) {
+            count = rs.getInt(1);
+        }
+        rs.close();
+        sql.close();
+        return count;
+    }
+    
     @Override
     public void insert(Prenotazione prenotazione) throws SQLException {
         Utente u = prenotazione.getUtente();
@@ -112,7 +127,7 @@ public class PrenotazioneDao implements Dao<Prenotazione> {
         while(rs.next()) {
             for(Utente utente:utenti) {
                 for(Strumento s:strumenti) {
-                    if(rs.getString("USERNAME").equals(utente.getUsername()) && s.getId()==strumento.getId()) {
+                    if(rs.getString("USERNAME")!= null && rs.getString("USERNAME").equals(utente.getUsername()) && s.getId()==strumento.getId()) {
                         Prenotazione p = new Prenotazione(rs.getInt("ID_PRENOTAZIONE"), s, utente, rs.getDate("DATAPRENOTAZIONE"), rs.getInt("DURATA"), rs.getDate("DATAINIZIO"));
                         prenotazioni.add(p);
                     }

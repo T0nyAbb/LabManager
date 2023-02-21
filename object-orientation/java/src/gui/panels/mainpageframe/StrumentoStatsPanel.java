@@ -10,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 
 import dto.Sede;
 import dto.Strumento;
+import gui.buttons.RectangleButton;
+import gui.utility.CalendarDialog;
 import gui.utility.Style;
 import control.Controller;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -30,6 +32,7 @@ public class StrumentoStatsPanel extends JPanel {
     private JLabel periodoLabel;
     private JLabel stats;
     private JLabel headerLabel;
+    private JButton mostraCalendarioButton;
 
 
     /**
@@ -42,7 +45,8 @@ public class StrumentoStatsPanel extends JPanel {
         setPanelSettings();
         generateLabels();
         generateComboBox();
-        setLayoutComponents();
+        generateButtons();
+        setLayoutComponents();  
         
         fillSedeComboBox();
         fillStrumentoComboBox();
@@ -77,8 +81,18 @@ public class StrumentoStatsPanel extends JPanel {
         periodoLabel.setForeground(Style.entered_color_01);
         
         stats = new JLabel("");
-        stats.setFont(new Font(Style.font_name_01, Font.ITALIC, 16));
+        stats.setFont(new Font(Style.font_name_01, Font.ITALIC, 18));
         stats.setForeground(Style.foreground_color_01);
+    }
+    
+    private void generateButtons() {
+		mostraCalendarioButton = new RectangleButton();
+		mostraCalendarioButton.setText("Mostra calendario");
+		mostraCalendarioButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showCalendar();
+			}
+		});
     }
     
     private void generateComboBox()  {
@@ -122,28 +136,31 @@ public class StrumentoStatsPanel extends JPanel {
         
         GroupLayout groupLayout = new GroupLayout(this);
         groupLayout.setHorizontalGroup(
-        	groupLayout.createParallelGroup(Alignment.TRAILING)
-        		.addComponent(headerLabel, GroupLayout.DEFAULT_SIZE, 894, Short.MAX_VALUE)
+        	groupLayout.createParallelGroup(Alignment.LEADING)
+        		.addComponent(headerLabel, GroupLayout.DEFAULT_SIZE, 922, Short.MAX_VALUE)
+        		.addGroup(groupLayout.createSequentialGroup()
+        			.addGap(55)
+        			.addComponent(stats, GroupLayout.DEFAULT_SIZE, 791, Short.MAX_VALUE)
+        			.addGap(76))
         		.addGroup(groupLayout.createSequentialGroup()
         			.addGap(18)
         			.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+        				.addComponent(mostraCalendarioButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         				.addGroup(groupLayout.createSequentialGroup()
         					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-        						.addComponent(strumentoLabel, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
-        						.addComponent(sedeLabel, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE))
-        					.addPreferredGap(ComponentPlacement.UNRELATED))
-        				.addGroup(groupLayout.createSequentialGroup()
-        					.addComponent(periodoLabel, GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
-        					.addGap(7)))
-        			.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-        				.addComponent(dateComboBox, 0, 480, Short.MAX_VALUE)
-        				.addComponent(strumentoComboBox, 0, 480, Short.MAX_VALUE)
-        				.addComponent(sedeComboBox, Alignment.LEADING, 0, 480, Short.MAX_VALUE))
-        			.addGap(37))
-        		.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-        			.addGap(61)
-        			.addComponent(stats, GroupLayout.DEFAULT_SIZE, 763, Short.MAX_VALUE)
-        			.addGap(70))
+        						.addGroup(groupLayout.createSequentialGroup()
+        							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+        								.addComponent(strumentoLabel, GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
+        								.addComponent(sedeLabel, GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE))
+        							.addPreferredGap(ComponentPlacement.UNRELATED))
+        						.addGroup(groupLayout.createSequentialGroup()
+        							.addComponent(periodoLabel, GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
+        							.addGap(7)))
+        					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+        						.addComponent(dateComboBox, 0, 494, Short.MAX_VALUE)
+        						.addComponent(sedeComboBox, Alignment.LEADING, 0, 494, Short.MAX_VALUE)
+        						.addComponent(strumentoComboBox, Alignment.LEADING, 0, 507, Short.MAX_VALUE))))
+        			.addContainerGap())
         );
         groupLayout.setVerticalGroup(
         	groupLayout.createParallelGroup(Alignment.LEADING)
@@ -161,9 +178,11 @@ public class StrumentoStatsPanel extends JPanel {
         			.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(periodoLabel)
         				.addComponent(dateComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        			.addPreferredGap(ComponentPlacement.RELATED, 159, Short.MAX_VALUE)
+        			.addGap(30)
+        			.addComponent(mostraCalendarioButton, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+        			.addPreferredGap(ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
         			.addComponent(stats, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
-        			.addGap(43))
+        			.addGap(89))
         );
         setLayout(groupLayout);
 
@@ -261,4 +280,13 @@ public class StrumentoStatsPanel extends JPanel {
 	        }
     	}
     }
+    
+	private void showCalendar() {
+		Strumento s = new Strumento(null, null);
+		if(strumentoComboBox.getSelectedItem() != null) {
+	        int id_strumento = Integer.parseInt(strumentoComboBox.getSelectedItem().toString().split(":")[0]);
+			s.setId(id_strumento);
+			new CalendarDialog(this, controller, s.getId());
+		}
+	}
 }

@@ -8,6 +8,7 @@ import control.Controller;
 import dto.Sede;
 import dto.Strumento;
 import gui.buttons.RectangleButton;
+import gui.utility.CalendarDialog;
 import gui.utility.Style;
 
 
@@ -46,6 +47,7 @@ public class MakeReservationStrumentoPanel extends JPanel{
 	private RectangleButton nextButton;
 	private JList<String> strumentoList;
 	private JScrollPane listScroller;
+	private RectangleButton mostraCalendarioButton;
 
 	public MakeReservationStrumentoPanel(Controller controller) throws SQLException {
 		this.controller = controller;
@@ -156,6 +158,15 @@ public class MakeReservationStrumentoPanel extends JPanel{
 			}
 
 		});
+		
+		mostraCalendarioButton = new RectangleButton();
+		mostraCalendarioButton.setText("Mostra calendario");
+		mostraCalendarioButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showCalendar();
+			}
+
+		});
 	}
 	
 	private void generateLabels() {
@@ -226,45 +237,49 @@ public class MakeReservationStrumentoPanel extends JPanel{
 	}
 
 	private void setLayoutComponents() {
+		
+		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addComponent(headerLabel, GroupLayout.DEFAULT_SIZE, 778, Short.MAX_VALUE)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(34)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(listScroller, GroupLayout.DEFAULT_SIZE, 699, Short.MAX_VALUE)
-						.addComponent(schedaTecnicaLabel, GroupLayout.DEFAULT_SIZE, 699, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(sedeLabel, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+							.addComponent(mostraCalendarioButton, GroupLayout.PREFERRED_SIZE, 286, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 407, Short.MAX_VALUE)
+							.addComponent(nextButton, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE))
+						.addComponent(schedaTecnicaLabel, GroupLayout.DEFAULT_SIZE, 867, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(sedeLabel, GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(sedeComboBox, 0, 331, Short.MAX_VALUE)
-							.addGap(32)
-							.addComponent(strumentoLabel, GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(strumentoComboBox, 0, 278, Short.MAX_VALUE)))
+							.addComponent(sedeComboBox, 0, 283, Short.MAX_VALUE)
+							.addGap(45)
+							.addComponent(strumentoLabel, GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(strumentoComboBox, 0, 296, Short.MAX_VALUE))
+						.addComponent(listScroller, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 867, Short.MAX_VALUE))
 					.addGap(45))
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addContainerGap(608, Short.MAX_VALUE)
-					.addComponent(nextButton, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
+				.addComponent(headerLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 932, Short.MAX_VALUE)
 		);
 		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
 					.addComponent(headerLabel, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
 					.addGap(27)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(sedeComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(sedeLabel)
 						.addComponent(strumentoComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(strumentoLabel)
-						.addComponent(sedeLabel))
+						.addComponent(strumentoLabel))
 					.addGap(18)
 					.addComponent(listScroller, GroupLayout.PREFERRED_SIZE, 278, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(schedaTecnicaLabel, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-					.addComponent(nextButton, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(nextButton, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
+						.addComponent(mostraCalendarioButton, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		setLayout(groupLayout);
@@ -277,17 +292,26 @@ public class MakeReservationStrumentoPanel extends JPanel{
 				Strumento st = controller.getStrumentoDao().getById(id);
 				setSchedaTecnicaLabelText(st.getSchedaTecnica());
 			}
-			catch(SQLException e){
+			catch(SQLException | NullPointerException e){
 				e.printStackTrace();
 			}
 		}
 		else {
 			setSchedaTecnicaLabelText("Scheda tecnica non disponibile.");
 		}
-		setSchedaTecnicaLabelText("<html>"+schedaTecnicaLabel.getText()+"</html>");
+		setSchedaTecnicaLabelText("<html>" + schedaTecnicaLabel.getText() + "</html>");
 	}
 	
 	private void openNextPage() {
 		controller.showMakeReservationDate(Integer.valueOf(strumentoList.getSelectedValue().toString().split(":")[0]));
+	}
+	
+	private void showCalendar() {
+		Strumento s = new Strumento(null, null);
+		if(strumentoList.getSelectedValue() != null) {
+	        int id_strumento = Integer.valueOf(strumentoList.getSelectedValue().toString().split(":")[0]);
+			s.setId(id_strumento);
+			new CalendarDialog(this, controller, s.getId());
+		}
 	}
 }

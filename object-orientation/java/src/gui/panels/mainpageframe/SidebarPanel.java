@@ -67,7 +67,7 @@ public class SidebarPanel extends JPanel {
 		profileButton.setText("Profilo");
 		profileButton.setPressedColor(Style.background_color_01);
 		profileButton.setHorizontalAlignment(SwingConstants.LEFT);
-		profileButton.setFont(new Font("Century Gothic", Font.BOLD, 22));
+		profileButton.setFont(new Font(Style.font_name_01, Font.BOLD, 22));
 		profileButton.setEnteredColor(Style.background_color_01);
 		profileButton.setDefaultColor(Style.background_color_01);
 		profileButton.setBorder(new EmptyBorder(0, 15, 0, 15));
@@ -84,7 +84,7 @@ public class SidebarPanel extends JPanel {
         makeReservationButton.setDefaultColor(Style.background_color_01);
         makeReservationButton.setPressedColor(Style.background_color_01);
         makeReservationButton.setHorizontalAlignment(SwingConstants.LEFT);
-        makeReservationButton.setFont(new Font("Century Gothic", Font.BOLD, 22));
+        makeReservationButton.setFont(new Font(Style.font_name_01, Font.BOLD, 22));
         makeReservationButton.setBorder(new EmptyBorder(0, 15, 0, 15));
         makeReservationButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -97,7 +97,7 @@ public class SidebarPanel extends JPanel {
         handleReservationButton.setText("Gestisci prenotazioni");
         handleReservationButton.setPressedColor(Style.background_color_01);
         handleReservationButton.setHorizontalAlignment(SwingConstants.LEFT);
-        handleReservationButton.setFont(new Font("Century Gothic", Font.BOLD, 22));
+        handleReservationButton.setFont(new Font(Style.font_name_01, Font.BOLD, 22));
         handleReservationButton.setEnteredColor(Style.background_color_01);
         handleReservationButton.setDefaultColor(Style.background_color_01);
         handleReservationButton.setBorder(new EmptyBorder(0, 15, 0, 15));

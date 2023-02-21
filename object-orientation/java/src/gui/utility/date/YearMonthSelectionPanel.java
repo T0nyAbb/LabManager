@@ -1,4 +1,4 @@
-package gui.utility;
+package gui.utility.date;
 
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+
+import gui.utility.Style;
 
 import java.awt.Font;
 

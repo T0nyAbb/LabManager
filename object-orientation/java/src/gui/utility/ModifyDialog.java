@@ -10,18 +10,20 @@ import java.util.Date;
 
 import javax.swing.JFrame;
 import javax.swing.border.LineBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.text.DateFormatter;
 
 import control.Controller;
+import dto.Strumento;
 import gui.buttons.RectangleButton;
+import gui.utility.date.DatePicker;
 
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JFormattedTextField;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 
 public class ModifyDialog extends JDialog {
@@ -30,11 +32,11 @@ public class ModifyDialog extends JDialog {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+	private Controller controller;
 	private DatePicker datePicker;
 	private JLabel dataInizioLabel;
 	private RectangleButton okButton;
-	private JComboBox<String> timeComboBox;
+	private ReservationTimeComboBox timeComboBox;
 	private JLabel durataLabel;
 	private JSpinner spinner;
 	private JFormattedTextField dateTextField;
@@ -42,12 +44,14 @@ public class ModifyDialog extends JDialog {
 	private DateFormat dateFormat;
 	private DateFormat dateTimeFormat;
 	private DateFormat timeFormat;
+	private int idStrumento;
 	
 	private Date dataInizio;
 	private int durata;
 	
-	public ModifyDialog(JFrame jframe) {
+	public ModifyDialog(Controller controller, JFrame jframe) {
 		super(jframe);
+		this.controller = controller;
 		setDialogSettings();
 		generateLabels();
 		generateButtons();
@@ -75,12 +79,29 @@ public class ModifyDialog extends JDialog {
 		spinner.setValue(durata);
 	}
 	
+	public void setIdStrumento(int idStrumento) {
+		this.idStrumento = idStrumento;
+	}
+	
 	private void generateTextFields() {
 		dateTextField = new JFormattedTextField(new DateFormatter(new SimpleDateFormat("yyyy-MM-dd")));
 		dateTextField.setFont(new Font(Style.font_name_02, Font.PLAIN, 14));
 		dateTextField.setValue(new Date());
 		dateTextField.setEditable(false);
 		dateTextField.setBounds(191, 52, 205, 28);
+		dateTextField.getDocument().addDocumentListener(new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+			}
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				loadTimeComboBox();				
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+			}
+		});
 		getContentPane().add(dateTextField);
 		
 	}
@@ -142,8 +163,7 @@ public class ModifyDialog extends JDialog {
 		spinner.setBounds(318, 194, 78, 33);
 		getContentPane().add(spinner);
 		
-		timeComboBox = new JComboBox<String>();
-		timeComboBox.setModel(new DefaultComboBoxModel<String> (new String[] {"00:00", "00:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30", "04:00", "04:30", "05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30"}));
+		timeComboBox = new ReservationTimeComboBox(controller);
 		timeComboBox.setFont(new Font(Style.font_name_02, Font.PLAIN, 14));
 		timeComboBox.setBounds(191, 127, 203, 28);
 		getContentPane().add(timeComboBox);
@@ -153,9 +173,7 @@ public class ModifyDialog extends JDialog {
 		datePicker.setBorder(new LineBorder(new Color(128, 128, 128), 1, true));
 		datePicker.setBounds(437, 11, 291, 291);
 		getContentPane().add(datePicker);
-		
 	}
-	
 	
 	private void confirm() {
 		String strDate = dateFormat.format((Date) dateTextField.getValue());
@@ -170,6 +188,14 @@ public class ModifyDialog extends JDialog {
 		setVisible(false);
 	};
 
-	
+	private void loadTimeComboBox() {
+		Strumento s = new Strumento(null, null);
+		s.setId(idStrumento);
+		try {
+			timeComboBox.fillForStrumentoAndDate(s, new SimpleDateFormat("yyyy-MM-dd").parse(dateTextField.getText()));
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+	}
 	
 }

@@ -1,4 +1,4 @@
-package gui.utility;
+package gui.utility.date;
 
 import java.awt.*;
 import java.text.SimpleDateFormat;
@@ -6,8 +6,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.*;
-
-import control.Controller;
 
 
 public class DatePicker extends JPanel

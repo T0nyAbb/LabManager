@@ -1,4 +1,4 @@
-package gui.utility;
+package gui.utility.date;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.border.LineBorder;
 
 import gui.buttons.RectangleButton;
+import gui.utility.Style;
 
 public class DateSelectionPanel extends Panel {
 

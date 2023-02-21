@@ -6,8 +6,6 @@ import javax.swing.border.LineBorder;
 import control.Controller;
 import dto.Prenotazione;
 import dto.Strumento;
-import gui.panels.mainpageframe.MakeReservationDatePanel;
-
 import java.awt.*;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -18,8 +16,6 @@ import java.util.List;
 public class CalendarDialog extends JDialog {
 
     private static final long serialVersionUID = 1L;
-    private MakeReservationDatePanel panel;
-
     private Controller controller;
 
     private JList<String> list;
@@ -29,8 +25,7 @@ public class CalendarDialog extends JDialog {
     private int idStrumento;
     private List<Prenotazione> prenotazioni;
 
-    public CalendarDialog(MakeReservationDatePanel panel, Controller ctrl,  int idStrumento) {
-        this.panel = panel;
+    public CalendarDialog(JComponent panel, Controller ctrl,  int idStrumento) {
         controller = ctrl;
         this.idStrumento = idStrumento;
         setDialogSettings();
@@ -58,10 +53,13 @@ public class CalendarDialog extends JDialog {
                 DateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 String[] stringArr = new String[prenotazioni.size()];
                 for(int x=0; x<prenotazioni.size(); ++x) {
-                    stringArr[x] = timeFormat.format(prenotazioni.get(x).getDataInizio()) +
-                            " [" + prenotazioni.get(x).getDurata() + " ore] - " + prenotazioni.get(x).getStrumento().getId() + ": "+ prenotazioni.get(x).getStrumento().getDescrizione() +
-                            " - " + prenotazioni.get(x).getStrumento().getPostazione().getSede().getIndirizzo() + ", Postazione " +
-                            prenotazioni.get(x).getStrumento().getPostazione().getNome();
+                	Prenotazione p = prenotazioni.get(x);
+                    stringArr[x] = "<html><font color = \""+
+            				String.format("#%02x%02x%02x", Style.foreground_color_success.getRed(), Style.foreground_color_success.getGreen(), Style.foreground_color_success.getBlue())
+                    		+ "\">" + p.getUtente().getUsername() + "</font>: " + timeFormat.format(p.getDataInizio()) +
+                            " [" + p.getDurata() + " ore] - " + p.getStrumento().getId() + ": "+ p.getStrumento().getDescrizione() +
+                            " - " + p.getStrumento().getPostazione().getSede().getIndirizzo() + ", Postazione " +
+                            p.getStrumento().getPostazione().getNome() + "</html>";
                 }
                 list.setListData(stringArr);
             }else {
@@ -74,7 +72,7 @@ public class CalendarDialog extends JDialog {
     }
     private void generateList() {
         list = new JList<>();
-        list.setFont(new Font("Century Gothic", Font.PLAIN, 17));
+        list.setFont(new Font(Style.font_name_01, Font.PLAIN, 14));
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setLayoutOrientation(JList.VERTICAL);
         list.setVisibleRowCount(-1);

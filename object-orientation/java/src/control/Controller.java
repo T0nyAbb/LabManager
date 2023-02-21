@@ -29,7 +29,6 @@ import java.util.regex.Pattern;
 
 public class Controller {
 	
-	//ATTRIBUTI:
 	private static Connection databaseConnection;
 	private Timer timer;
 	
@@ -42,14 +41,12 @@ public class Controller {
     private AccessFrame accessFrame;
     private MainpageFrame mainpageFrame;
 
-    //METODO MAIN:
     public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					Controller ctrl = new Controller();
 					ctrl.startApplication();
-
 				} catch(Exception e) {
 					JOptionPane.showMessageDialog(null ,"Si e' verificato un errore di tipo\n"+ e.getClass().getName()
 							+" a runtime.\n L'applicazione sara' terminata.\n\nCausa:\n"
@@ -61,12 +58,10 @@ public class Controller {
 		});
 	}
 
-    //COSTRUTTORI:
     public Controller(){
     	
     }
    
-    //ALTRI METODI:
     public Connection getDatabaseConnection() {
     	return databaseConnection;
     }
@@ -107,6 +102,32 @@ public class Controller {
     
     public void showLogin() {
     	accessFrame.showLoginPanel();
+    }
+    
+    public void showProfile() {
+    	mainpageFrame.showProfilePanel();
+    }
+    
+    public void showMakeReservationStrumento() {
+    	mainpageFrame.showMakeReservationStrumentoPanel();
+    }
+
+	public void showMakeReservationDate(int idStrumento) {
+    	mainpageFrame.showMakeReservationDatePanel(idStrumento);
+    	mainpageFrame.getMakeReservationDatePanel().clearErrorMessage();
+	}
+	
+    public void showHandleReservation() {
+    	mainpageFrame.showHandleReservationPanel();
+    }
+    
+    public void showStats() {
+		mainpageFrame.showStatsPanel();
+	}
+    
+    public void showWelcome() {
+    	mainpageFrame.showWelcomePanel();
+
     }
     
 	public void loginAccessFrame(String username, String password) {
@@ -159,7 +180,7 @@ public class Controller {
 				accessFrame.showSignupErrorMessage("Email non valida!");
 			else if(SQLErrorMessage.contains("UNIQ_EMAIL"))
 				accessFrame.showSignupErrorMessage("Email gia' in uso da un altro utente!");
-			else if(SQLErrorMessage.contains("VALID_USERNAME"))
+			else if(SQLErrorMessage.contains("USERNAME"))
 				accessFrame.showSignupErrorMessage("Username non valido! (6-18 caratteri alfanumerici)");
 			else if(SQLErrorMessage.contains("UTENTE_PK"))
 				accessFrame.showSignupErrorMessage("Username gia' in uso da un altro utente!");
@@ -224,7 +245,8 @@ public class Controller {
 	public void updatePrenotazione(Prenotazione prenotazione) {
 		mainpageFrame.getHandleReservationPanel().clearErrorMessage();
 		
-		ModifyDialog modifyDialog = new ModifyDialog(mainpageFrame);
+		ModifyDialog modifyDialog = new ModifyDialog(this, mainpageFrame);
+		modifyDialog.setIdStrumento(prenotazione.getStrumento().getId());
 		modifyDialog.setDataInizio(prenotazione.getDataInizio());
 		modifyDialog.setDurata(prenotazione.getDurata());
 		modifyDialog.setVisible(true);
@@ -257,7 +279,6 @@ public class Controller {
 			LabelMessage += "</html>";
 			mainpageFrame.getHandleReservationPanel().showErrorMessage(LabelMessage);
 		}catch(NullPointerException e) {
-			e.printStackTrace();
 		}
 	}
     
@@ -317,32 +338,6 @@ public class Controller {
 			}
 		}
 	}
-	
-    public void showProfile() {
-    	mainpageFrame.showProfilePanel();
-    }
-    
-    public void showMakeReservationStrumento() {
-    	mainpageFrame.showMakeReservationStrumentoPanel();
-    }
-
-	public void showMakeReservationDate(int idStrumento) {
-    	mainpageFrame.showMakeReservationDatePanel(idStrumento);
-    	mainpageFrame.getMakeReservationDatePanel().clearErrorMessage();
-	}
-	
-    public void showHandleReservation() {
-    	mainpageFrame.showHandleReservationPanel();
-    }
-    
-    public void showStats() {
-		mainpageFrame.showStatsPanel();
-	}
-    
-    public void showWelcome() {
-    	mainpageFrame.showWelcomePanel();
-
-    }
     
     private void signupSuccessful() {
     	timer = new Timer(1000, new ActionListener(){
@@ -358,18 +353,6 @@ public class Controller {
     	timer.restart();
     }
     
-    @SuppressWarnings("unused")
-	private void closeDatabaseConnection() {
-    	try {
-    		if(databaseConnection != null) {
-    			databaseConnection.close();
-    		}
-    	}
-    	catch(SQLException e) {
-    		e.printStackTrace();
-    	}
-    }
-    
     private void closeAccessOpenMainpage() throws SQLException {
 	    accessFrame.dispose();
 		mainpageFrame = new MainpageFrame(this);
@@ -380,7 +363,6 @@ public class Controller {
     	mainpageFrame.dispose();
 	   	accessFrame = new AccessFrame(this);
 	   	accessFrame.setVisible(true);
-    	
     }
     
     private void stopTimer() {

@@ -42,6 +42,7 @@ public class MainpageFrame extends JFrame {
         makeReservationDatePanel.setVisible(false);
 		handleReservationPanel.setVisible(false);
 		strumentoStatsPanel.setVisible(false);
+		profilePanel.showPrenCount();
         profilePanel.setVisible(true);
         getContentPane().add(profilePanel, BorderLayout.CENTER);
 	}
