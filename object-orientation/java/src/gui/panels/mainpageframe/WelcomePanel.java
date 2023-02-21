@@ -38,7 +38,11 @@ public class WelcomePanel extends JPanel {
 		
 		backgroundLabel = new JLabel();
         backgroundLabel.setBounds(0, 0, 900, 591);
-        backgroundLabel.setIcon(new ImageIcon(WelcomePanel.class.getResource("/background/lab01.jpeg")));
+        try {
+        	backgroundLabel.setIcon(new ImageIcon(WelcomePanel.class.getResource("/background/lab01.jpeg")));
+        }catch(Exception e) {
+        	e.printStackTrace();
+        }
         add(backgroundLabel);
         
         
@@ -59,7 +63,11 @@ public class WelcomePanel extends JPanel {
         add(nameLabel);
         
         welcomeLabel = new JLabel();
-        welcomeLabel.setIcon(new ImageIcon(WelcomePanel.class.getResource("/icone/labmanager-website-favicon-blue.png")));
+        try {
+        	welcomeLabel.setIcon(new ImageIcon(WelcomePanel.class.getResource("/icone/labmanager-website-favicon-blue.png")));
+        }catch(Exception e) {
+        	e.printStackTrace();
+        }
         welcomeLabel.setHorizontalAlignment(SwingConstants.LEFT);
         welcomeLabel.setIconTextGap(30);
 		welcomeLabel.setText("Benvenuto,");

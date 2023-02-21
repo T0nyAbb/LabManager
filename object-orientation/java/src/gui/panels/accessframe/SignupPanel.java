@@ -90,7 +90,11 @@ public class SignupPanel extends JPanel {
 	private void generateLabels() {
 
 		iconLabel = new JLabel();
-		iconLabel.setIcon(new ImageIcon(SignupPanel.class.getResource("/icone/logo-signup.png")));
+		try {
+			iconLabel.setIcon(new ImageIcon(SignupPanel.class.getResource("/icone/logo-signup.png")));
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
         iconLabel.setBounds(70, 25, 300, 63);
         add(iconLabel);
         

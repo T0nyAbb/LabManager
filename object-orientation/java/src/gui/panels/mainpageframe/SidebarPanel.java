@@ -48,7 +48,11 @@ public class SidebarPanel extends JPanel {
 		welcomeButton = new UnderlineButton();
 		welcomeButton.setText("</u>Home<u>");
 		welcomeButton.setHorizontalAlignment(SwingConstants.LEFT);
-		welcomeButton.setIcon(new ImageIcon(SidebarPanel.class.getResource("/icone/labmanager-website-favicon-white.png")));
+		try {
+			welcomeButton.setIcon(new ImageIcon(SidebarPanel.class.getResource("/icone/labmanager-website-favicon-white.png")));
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		welcomeButton.setFont(new Font(Style.font_name_01, Font.BOLD, 32));
 		welcomeButton.setDefaultColor(Style.background_color_01);
 		welcomeButton.setEnteredColor(Style.background_color_01);
@@ -63,7 +67,11 @@ public class SidebarPanel extends JPanel {
         });
         
 		profileButton = new UnderlineButton();
-		profileButton.setIcon(new ImageIcon(SidebarPanel.class.getResource("/icone/dot2.png")));
+		try {
+			profileButton.setIcon(new ImageIcon(SidebarPanel.class.getResource("/icone/dot2.png")));
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		profileButton.setText("Profilo");
 		profileButton.setPressedColor(Style.background_color_01);
 		profileButton.setHorizontalAlignment(SwingConstants.LEFT);
@@ -78,7 +86,11 @@ public class SidebarPanel extends JPanel {
         });
 		
         makeReservationButton = new UnderlineButton();
-        makeReservationButton.setIcon(new ImageIcon(SidebarPanel.class.getResource("/icone/dot2.png")));
+        try {
+            makeReservationButton.setIcon(new ImageIcon(SidebarPanel.class.getResource("/icone/dot2.png")));
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
         makeReservationButton.setText("Effettua prenotazione");
         makeReservationButton.setEnteredColor(Style.background_color_01);
         makeReservationButton.setDefaultColor(Style.background_color_01);
@@ -93,7 +105,11 @@ public class SidebarPanel extends JPanel {
         });
         
         handleReservationButton = new UnderlineButton();
-        handleReservationButton.setIcon(new ImageIcon(SidebarPanel.class.getResource("/icone/dot2.png")));
+        try {
+            handleReservationButton.setIcon(new ImageIcon(SidebarPanel.class.getResource("/icone/dot2.png")));
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
         handleReservationButton.setText("Gestisci prenotazioni");
         handleReservationButton.setPressedColor(Style.background_color_01);
         handleReservationButton.setHorizontalAlignment(SwingConstants.LEFT);
@@ -108,7 +124,11 @@ public class SidebarPanel extends JPanel {
         });
         
         logoutButton = new UnderlineButton();
-        logoutButton.setIcon(new ImageIcon(SidebarPanel.class.getResource("/icone/arrow.png")));
+        try {
+            logoutButton.setIcon(new ImageIcon(SidebarPanel.class.getResource("/icone/arrow.png")));
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
         logoutButton.setText("Esci");
         logoutButton.setPressedColor(Style.background_color_01);
         logoutButton.setHorizontalAlignment(SwingConstants.LEFT);
@@ -122,7 +142,11 @@ public class SidebarPanel extends JPanel {
         	}
         });
 		statsButton = new UnderlineButton();
-		statsButton.setIcon(new ImageIcon(SidebarPanel.class.getResource("/icone/dot2.png")));
+		try {
+			statsButton.setIcon(new ImageIcon(SidebarPanel.class.getResource("/icone/dot2.png")));
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		statsButton.setFont(new Font(Style.font_name_01, Font.BOLD, 22));
 		statsButton.setHorizontalAlignment(SwingConstants.LEFT);
 		statsButton.setText("Statistiche");

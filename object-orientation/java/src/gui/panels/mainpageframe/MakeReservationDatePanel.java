@@ -7,7 +7,6 @@ import control.Controller;
 
 import dto.Strumento;
 import gui.buttons.RectangleButton;
-import gui.utility.CalendarDialog;
 import gui.utility.ReservationTimeComboBox;
 import gui.utility.Style;
 import gui.utility.date.DatePicker;

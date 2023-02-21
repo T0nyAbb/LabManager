@@ -74,8 +74,12 @@ public class ChangePasswordDialog extends JDialog {
 	private void generateLabels() {
 		logoLabel = new JLabel("");
 		logoLabel.setBounds(40,30,256,64);
-		ImageIcon icon  = new ImageIcon(ChangePasswordDialog.class.getResource("/icone/logo-black-256x256.png"));
-		logoLabel.setIcon(icon);
+		try {
+			ImageIcon icon  = new ImageIcon(ChangePasswordDialog.class.getResource("/icone/logo-black-256x256.png"));
+			logoLabel.setIcon(icon);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		getContentPane().add(logoLabel);
 
 		oldPasswordLabel = new JLabel("Vecchia Password");

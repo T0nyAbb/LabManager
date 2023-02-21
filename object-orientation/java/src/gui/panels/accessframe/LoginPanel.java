@@ -75,7 +75,11 @@ public class LoginPanel extends JPanel {
 	
 	private void generateLabels() {
 		iconLabel = new JLabel();
-        iconLabel.setIcon(new ImageIcon(LoginPanel.class.getResource("/icone/logo-login.png")));
+		try {
+			iconLabel.setIcon(new ImageIcon(LoginPanel.class.getResource("/icone/logo-login.png")));
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
         iconLabel.setBounds(30, 80, 389, 63);
         add(iconLabel);
         
