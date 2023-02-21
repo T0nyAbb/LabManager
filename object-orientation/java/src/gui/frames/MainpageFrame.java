@@ -17,8 +17,8 @@ public class MainpageFrame extends JFrame {
 	private SidebarPanel sidebarPanel;
 	private WelcomePanel welcomePanel;
 	private ProfilePanel profilePanel;
-	private MakeReservationStrumentoPanel makeReservationPanel;
-	private MakeReservationDatePanel makeReservationPanel2;
+	private MakeReservationStrumentoPanel makeReservationStrumentoPanel;
+	private MakeReservationDatePanel makeReservationDatePanel;
 	private HandleReservationPanel handleReservationPanel;
 	private StrumentoStatsPanel strumentoStatsPanel;
 
@@ -29,8 +29,8 @@ public class MainpageFrame extends JFrame {
 		generateSidebarPanel();
 		generateWelcomePanel();
 		generateProfilePanel();
-		generateMakeReservationPanel();
-		generateMakeReservationPanel2();
+		generateMakeReservationStrumentoPanel();
+		generateMakeReservationDatePanel();
 		generateHandleReservationPanel();
 		generateStatsPanel();
 	}
@@ -38,8 +38,8 @@ public class MainpageFrame extends JFrame {
 
 	public void showProfilePanel() {
 		welcomePanel.setVisible(false);
-		makeReservationPanel.setVisible(false);
-        makeReservationPanel2.setVisible(false);
+		makeReservationStrumentoPanel.setVisible(false);
+        makeReservationDatePanel.setVisible(false);
 		handleReservationPanel.setVisible(false);
 		strumentoStatsPanel.setVisible(false);
         profilePanel.setVisible(true);
@@ -51,9 +51,9 @@ public class MainpageFrame extends JFrame {
 		profilePanel.setVisible(false);
 		handleReservationPanel.setVisible(false);
         strumentoStatsPanel.setVisible(false);
-        makeReservationPanel2.setVisible(false);
-        makeReservationPanel.setVisible(true);
-        getContentPane().add(makeReservationPanel, BorderLayout.CENTER);
+        makeReservationDatePanel.setVisible(false);
+        makeReservationStrumentoPanel.setVisible(true);
+        getContentPane().add(makeReservationStrumentoPanel, BorderLayout.CENTER);
 	}
 
 
@@ -62,16 +62,16 @@ public class MainpageFrame extends JFrame {
 		profilePanel.setVisible(false);
 		handleReservationPanel.setVisible(false);
         strumentoStatsPanel.setVisible(false);
-        makeReservationPanel.setVisible(false);
-        makeReservationPanel2.setIdStrumento(idStrumento);
-        makeReservationPanel2.setVisible(true);
-        getContentPane().add(makeReservationPanel2, BorderLayout.CENTER);
+        makeReservationStrumentoPanel.setVisible(false);
+        makeReservationDatePanel.setIdStrumento(idStrumento);
+        makeReservationDatePanel.setVisible(true);
+        getContentPane().add(makeReservationDatePanel, BorderLayout.CENTER);
 	}
 
 	public void showHandleReservationPanel() {
 		welcomePanel.setVisible(false);
-		makeReservationPanel.setVisible(false);
-        makeReservationPanel2.setVisible(false);
+		makeReservationStrumentoPanel.setVisible(false);
+        makeReservationDatePanel.setVisible(false);
 		profilePanel.setVisible(false);
         strumentoStatsPanel.setVisible(false);
 		handleReservationPanel.loadListContent();
@@ -81,8 +81,8 @@ public class MainpageFrame extends JFrame {
 	
 	public void showWelcomePanel() {
 		handleReservationPanel.setVisible(false);
-		makeReservationPanel.setVisible(false);
-        makeReservationPanel2.setVisible(false);
+		makeReservationStrumentoPanel.setVisible(false);
+        makeReservationDatePanel.setVisible(false);
 		profilePanel.setVisible(false);
         strumentoStatsPanel.setVisible(false);
 		welcomePanel.setVisible(true);
@@ -91,8 +91,8 @@ public class MainpageFrame extends JFrame {
 	
 	public void showStatsPanel() {
 		handleReservationPanel.setVisible(false);
-		makeReservationPanel.setVisible(false);
-        makeReservationPanel2.setVisible(false);
+		makeReservationStrumentoPanel.setVisible(false);
+        makeReservationDatePanel.setVisible(false);
 		profilePanel.setVisible(false);
 		welcomePanel.setVisible(false);
 		strumentoStatsPanel.loadStats();
@@ -113,11 +113,11 @@ public class MainpageFrame extends JFrame {
 	}
 
 	public MakeReservationStrumentoPanel getMakeReservationStrumentoPanel() {
-		return makeReservationPanel;
+		return makeReservationStrumentoPanel;
 	}
 	
 	public MakeReservationDatePanel getMakeReservationDatePanel() {
-		return makeReservationPanel2;
+		return makeReservationDatePanel;
 	}
 
 	public HandleReservationPanel getHandleReservationPanel() {
@@ -156,12 +156,12 @@ public class MainpageFrame extends JFrame {
 		profilePanel = new ProfilePanel(controller);
 	}
 	
-	private void generateMakeReservationPanel() throws SQLException {
-		makeReservationPanel = new MakeReservationStrumentoPanel(controller);
+	private void generateMakeReservationStrumentoPanel() throws SQLException {
+		makeReservationStrumentoPanel = new MakeReservationStrumentoPanel(controller);
 	}
 	
-	private void generateMakeReservationPanel2() throws SQLException {
-		makeReservationPanel2 = new MakeReservationDatePanel(controller);		
+	private void generateMakeReservationDatePanel() throws SQLException {
+		makeReservationDatePanel = new MakeReservationDatePanel(controller);
 	}
 	
 	private void generateHandleReservationPanel() {

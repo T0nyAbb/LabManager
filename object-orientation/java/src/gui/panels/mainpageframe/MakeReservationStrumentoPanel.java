@@ -40,10 +40,9 @@ public class MakeReservationStrumentoPanel extends JPanel{
 	private JLabel headerLabel;
 	private JLabel sedeLabel;
 	private JLabel strumentoLabel;
-	JLabel schedaTecnicaLabel;
+	private JLabel schedaTecnicaLabel;
 	private JComboBox<String> strumentoComboBox;
 	private JComboBox<String> sedeComboBox;
-	private List<Strumento> strumenti;
 	private RectangleButton nextButton;
 	private JList<String> strumentoList;
 	private JScrollPane listScroller;
@@ -83,7 +82,8 @@ public class MakeReservationStrumentoPanel extends JPanel{
 					s = new Sede(null);
 					s.setId(Integer.parseInt(sede.split(":")[0]));
 				}
-				
+
+				List<Strumento> strumenti;
 				if(s != null && descIndex != 0) {
 					strumenti = controller.getStrumentoDao().getStrumentoBySedeAndDescrizione(s, desc);
 				}
@@ -98,7 +98,7 @@ public class MakeReservationStrumentoPanel extends JPanel{
 				}
 
 				String[] stringArr = new String[strumenti.size()];
-				for(int x=0; x<strumenti.size(); ++x) {
+				for(int x = 0; x< strumenti.size(); ++x) {
 					Strumento st = strumenti.get(x);
 					stringArr[x] = st.getId() + ": " + st.getDescrizione() + " - " + st.getPostazione().getSede().getIndirizzo() + ", Postazione " + st.getPostazione().getNome();
 				}

@@ -81,11 +81,7 @@ public class MakeReservationDatePanel extends JPanel{
 		setErrorMessageColor(Style.foreground_color_error);
 		
 	}
-	
-	public MakeReservationDatePanel(Controller controller, int idStrumento) throws SQLException{
-		this(controller);
-		this.idStrumento = idStrumento;
-	}
+
 	
 	public void setStrumentoLabelText(String text) {
 		strumentoLabel2.setText(text);
