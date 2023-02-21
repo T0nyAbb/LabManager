@@ -4,10 +4,10 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import control.Controller;
-import dto.Sede;
+
 import dto.Strumento;
 import gui.buttons.RectangleButton;
-import gui.frames.MainpageFrame;
+import gui.utility.CalendarDialog;
 import gui.utility.DatePicker;
 import gui.utility.ReservationTimeComboBox;
 import gui.utility.Style;
@@ -17,13 +17,12 @@ import java.awt.Font;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
+
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.DateFormatter;
@@ -33,12 +32,11 @@ import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import java.util.Locale;
 import javax.swing.JSpinner;
-import javax.swing.JComboBox;
 import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.DefaultComboBoxModel;
+
 
 public class MakeReservationDatePanel extends JPanel{
 	
@@ -58,6 +56,7 @@ public class MakeReservationDatePanel extends JPanel{
 	private JSpinner spinner;
 	private ReservationTimeComboBox timeComboBox;
 	private RectangleButton effettuaPrenotazioneButton;
+	private RectangleButton visualizzaCalendarioButton;
 	private RectangleButton goBackButton;
 	private JLabel strumentoLabel;
 	private JLabel strumentoLabel2;
@@ -171,6 +170,13 @@ public class MakeReservationDatePanel extends JPanel{
 				loadTimeComboBox();
 			}
 		});
+		visualizzaCalendarioButton = new RectangleButton();
+		visualizzaCalendarioButton.setText("Mostra calendario");
+		visualizzaCalendarioButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showCalendar();
+			}
+		});
 		
 
 		goBackButton = new RectangleButton("Indietro");
@@ -267,7 +273,9 @@ public class MakeReservationDatePanel extends JPanel{
 					.addContainerGap()
 					.addComponent(goBackButton, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)
 					.addGap(98)
-					.addComponent(effettuaPrenotazioneButton, GroupLayout.PREFERRED_SIZE, 338, GroupLayout.PREFERRED_SIZE)
+					.addComponent(visualizzaCalendarioButton, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE)
+					.addGap(98)
+					.addComponent(effettuaPrenotazioneButton, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(267, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
@@ -301,6 +309,7 @@ public class MakeReservationDatePanel extends JPanel{
 					.addGap(203)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(effettuaPrenotazioneButton, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
+							.addComponent(visualizzaCalendarioButton, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
 						.addComponent(goBackButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
 					.addGap(12))
 		);
@@ -340,5 +349,11 @@ public class MakeReservationDatePanel extends JPanel{
 			e1.printStackTrace();
 		}
 		
+	}
+
+	private void showCalendar() {
+		Strumento s = new Strumento(null, null);
+		s.setId(idStrumento);
+		CalendarDialog cd = new CalendarDialog(this, controller, s.getId());
 	}
 }

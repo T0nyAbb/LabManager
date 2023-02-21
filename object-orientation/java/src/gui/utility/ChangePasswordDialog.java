@@ -1,17 +1,11 @@
 package gui.utility;
 
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JPasswordField;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 
 import exceptions.EmptyFieldException;
 import exceptions.PasswordsNotMatchingException;
 import exceptions.SimilarPasswordException;
 import gui.buttons.RectangleButton;
-
-import javax.swing.JLabel;
-import javax.swing.JButton;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -36,7 +30,7 @@ public class ChangePasswordDialog extends JDialog {
 	private JButton okButton;
 	private JButton cancelButton;
 	private JLabel errorLabel;
-	
+	private JLabel logoLabel;
 	private String oldPassword;
 	private String newPassword;
 
@@ -78,6 +72,12 @@ public class ChangePasswordDialog extends JDialog {
 	}
 	
 	private void generateLabels() {
+		logoLabel = new JLabel("");
+		logoLabel.setBounds(40,30,256,64);
+		ImageIcon icon  = new ImageIcon(ChangePasswordDialog.class.getResource("/icone/logo-black-256x256.png"));
+		logoLabel.setIcon(icon);
+		getContentPane().add(logoLabel);
+
 		oldPasswordLabel = new JLabel("Vecchia Password");
 		oldPasswordLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 14));
 		oldPasswordLabel.setBounds(70, 129, 201, 14);
@@ -94,7 +94,7 @@ public class ChangePasswordDialog extends JDialog {
 		getContentPane().add(newRepeatPasswordLabel);
 		
 		errorLabel = new JLabel("ERROR");
-		errorLabel.setBounds(38, 27, 271, 56);
+		errorLabel.setBounds(50, 315, 271, 56);
         errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
         errorLabel.setFont(new Font(Style.font_name_01, Font.PLAIN, 12));
         errorLabel.setForeground(Color.RED);

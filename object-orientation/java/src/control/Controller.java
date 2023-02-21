@@ -257,7 +257,7 @@ public class Controller {
 			LabelMessage += "</html>";
 			mainpageFrame.getHandleReservationPanel().showErrorMessage(LabelMessage);
 		}catch(NullPointerException e) {
-			
+			e.printStackTrace();
 		}
 	}
     
@@ -308,10 +308,10 @@ public class Controller {
 					}
 				}
 				catch (IncorrectCredentialsException e) {
-					errorMessage = "Password incorretta!";
+					errorMessage = "Password errata!";
 				}
 				catch(EmptyFieldException e) {
-					System.out.println("DIO");
+					errorMessage = "Campi vuoti!";
 					break;
 				}
 			}
@@ -389,11 +389,4 @@ public class Controller {
     	}
     }
 
-
-	
-
-
-
-    
-    
 }
