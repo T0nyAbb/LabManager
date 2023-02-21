@@ -10,7 +10,7 @@ import dto.Strumento;
 import gui.buttons.RectangleButton;
 import gui.utility.Style;
 
-import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.List;
@@ -21,7 +21,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
@@ -239,7 +238,7 @@ public class MakeReservationStrumentoPanel extends JPanel{
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(sedeLabel, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(sedeComboBox, 0, 231, Short.MAX_VALUE)
+							.addComponent(sedeComboBox, 0, 331, Short.MAX_VALUE)
 							.addGap(32)
 							.addComponent(strumentoLabel, GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)

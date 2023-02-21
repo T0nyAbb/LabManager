@@ -74,7 +74,7 @@ public class CalendarDialog extends JDialog {
     }
     private void generateList() {
         list = new JList<>();
-        list.setFont(new Font("Century Gothic", Font.PLAIN, 19));
+        list.setFont(new Font("Century Gothic", Font.PLAIN, 17));
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setLayoutOrientation(JList.VERTICAL);
         list.setVisibleRowCount(-1);
