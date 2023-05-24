@@ -296,7 +296,9 @@ BEGIN
             RAISE elim_non_valida;
         END IF;
         IF UPDATING THEN
-            RAISE modifica_non_valida;
+            IF :NEW.USERNAME IS NOT NULL THEN
+                RAISE modifica_non_valida;
+            END IF;
         END IF;
     END IF;
 
