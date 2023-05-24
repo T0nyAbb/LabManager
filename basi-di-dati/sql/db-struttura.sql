@@ -344,22 +344,23 @@ END no_double_pren;
 
 --TRIGGER: IMPLEMENTA IL VINCOLO VALID_PW ED ESEGUE LA CRITTOGRAFIA DELLA PASSWORD
 CREATE OR REPLACE TRIGGER inserisci_pw
-BEFORE INSERT ON UTENTE
+BEFORE INSERT OR UPDATE ON UTENTE
 FOR EACH ROW
 DECLARE
-password_non_valida EXCEPTION;
-psswd VARCHAR2(1000);
+    password_non_valida EXCEPTION;
+    psswd VARCHAR2(1000);
+    PRAGMA AUTONOMOUS_TRANSACTION;
 BEGIN
     psswd := UTL_RAW.CAST_TO_VARCHAR2(:NEW.USR_PASSWORD);
     IF(controlla_pw(psswd))
     THEN
-    :NEW.USR_PASSWORD := encrypt_pwd(psswd);
+        :NEW.USR_PASSWORD := encrypt_pwd(psswd);
     ELSE
-    RAISE password_non_valida;
+        RAISE password_non_valida;
     END IF;
     EXCEPTION
     WHEN password_non_valida THEN
-    RAISE_APPLICATION_ERROR(-20003, 'La password non rispetta i criteri');
+        RAISE_APPLICATION_ERROR(-20003, 'La password non rispetta i criteri');
 END inserisci_pw;
 /
 
