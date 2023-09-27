@@ -4,7 +4,8 @@
   </a>
 </h1>
 
-### Software per la gestione di prenotazioni agli strumenti di un laboratorio scientifico.
+# Eng
+### Software for managing reservations to scientific instruments in a lab
 #
 
 # Demo
@@ -18,6 +19,20 @@
 
 
 # Info
+### The Project is composed by:
+* An Application with a gui entirely written in Java.
+* An Oracle Relational Database running locally.
+
+### The App was realized as a final project for the Object Orientation and Databases classes.
+#
+#
+
+
+## Ita
+### Software per la gestione di prenotazioni agli strumenti di un laboratorio scientifico.
+#
+
+# Info
 ### Il progetto È composto da:
 * Un applicativo dotato di interfaccia grafica scritto interamente in Java.
 * Un database relazionale Oracle che gira localmente.
@@ -25,8 +40,9 @@
 ### Il progetto è stato realizzato come elaborato finale per gli insegnamenti di Object Orientation e Basi di dati.
 
 #
-# Crediti
-Applicativo e database interamente realizzati da https://github.com/T0nyAbb e https://github.com/LeoKM02
+# Credits
+App and database entirely developed by https://github.com/T0nyAbb and https://github.com/LeoKM02
+
 
 
 
